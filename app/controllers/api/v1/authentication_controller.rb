@@ -3,17 +3,20 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
 
   def login
     user = User.find_by_email(params[:email])
-    if user.confirmed_at != nil
+    if user && user.confirmed_at != nil
       if user&.valid_password?(params[:password])
         token = JsonWebToken.encode(user_id: user.id)
         time = Time.now + 24.hours.to_i
-        render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"),
-                       email: user.email }, status: :ok
+        render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"),email: user.email }, status: :ok
       else
-        render json: { error: 'unauthorized' }, status: :unauthorized
+        render json: { error: 'Invalid email or password' }, status: :unauthorized
       end
     else
-      render json: { error: 'please confirm your account' }, status: :unauthorized
+      if !user
+        render json: { error: 'Invalid email or password' }, status: :unauthorized
+      else
+        render json: { error: 'please confirm your email' }, status: :unauthorized
+      end
     end
   end
 end
