@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       
       resources :users, except: [:create]
-      
+       
       post '/signup', to: 'users#create'
       post '/login', to: 'authentication#login'
       get '/confirm_email/:id/:confirmation_token', to: 'users#confirm_email', as: 'confirm_email' 

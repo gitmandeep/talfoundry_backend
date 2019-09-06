@@ -19,9 +19,10 @@ class Api::V1::UsersController < Api::V1::ApiController
     @user = User.find(params[:id])
     if @user.confirmation_token == params[:confirmation_token]
       @user.update_attributes(confirmed_at: Time.now, updated_at: Time.now)
-      render json: @user, status: :updated
+      flash.now[:notice] = 'Successfully checked in'
+      redirect_to "http://localhost:3000/login_page/mail"
     else
-      render json: { errors: 'Invalid confirmation token' }, status: :unauthorized
+      confirm_email_error  
     end
   end
 
@@ -30,7 +31,9 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def user_params
     params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :country, :role)
-    #params.require(:users).permit(:first_name, :last_name, :email, :password, :password_confirmation)
   end
 
+  def confirm_email_error
+    render json: { errors: 'Invalid confirmation token' }, status: :unauthorized
+  end
 end
