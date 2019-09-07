@@ -10,6 +10,7 @@ Rails.application.routes.draw do
        
       post '/signup', to: 'users#create'
       post '/login', to: 'authentication#login'
+      get '/user_full_name/:email', to: 'users#user_full_name', as: 'user_full_name'
       get '/confirm_email/:id/:confirmation_token', to: 'users#confirm_email', as: 'confirm_email' 
       
     end
