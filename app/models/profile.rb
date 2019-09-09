@@ -1,3 +1,6 @@
 class Profile < ApplicationRecord
-  belongs_to :user
+	mount_uploader :profile_picture, :resume, AvatarUploader
+	#mount_uploader :resume, AvatarUploader
+
+  belongs_to :user, :dependent => :destroy
 end

@@ -19,6 +19,7 @@ gem 'devise'
 gem 'jwt'
 gem 'pry'
 gem 'figaro'
+gem 'carrierwave'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
