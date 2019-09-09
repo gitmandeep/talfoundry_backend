@@ -2,4 +2,4 @@
 
 <p>You can confirm your account email through the link below:</p>
 
-<p><%= link_to 'Confirm my account', api_v1_confirm_email_url(@resource, confirmation_token: @token) %></p>
+<p><%= link_to 'Confirm my account', "http://localhost:3000/login_page/#{@token}" %></p>

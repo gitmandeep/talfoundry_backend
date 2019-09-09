@@ -26,7 +26,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def confirm_email
     @user = User.confirm_by_token(params[:confirmation_token])
-    if @user.errors
+    if @user.errors.present?
       render_error(@user.errors.full_messages, 401)
     else
       render json: @user, success: true, message: "Email confirmed", status: 200  
