@@ -14,11 +14,12 @@ class User < ApplicationRecord
 
 
 
-  private
-
   def display_full_name
     "#{first_name} #{last_name}"
   end
+
+  
+  private
 
   def capitalize_names
     self.first_name = first_name.capitalize
