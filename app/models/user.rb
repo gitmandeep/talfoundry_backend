@@ -18,9 +18,6 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  
-  private
-
   def capitalize_names
     self.first_name = first_name.capitalize
     self.last_name = last_name.capitalize
