@@ -19,6 +19,7 @@ class Api::V1::UsersController < Api::V1::ApiController
     @user = User.new(user_params)
     if @user.role == "Project Manager"
       @user.skip_confirmation!
+      @user.confirmed_at = Time.now
     end  
     if @user.save
       render json: @user, status: :created
@@ -34,6 +35,11 @@ class Api::V1::UsersController < Api::V1::ApiController
     else
       render json: @user, success: true, message: "Email confirmed", status: 200  
     end
+  end
+
+  def interview_call_schedule
+    UserMailer.with(user: @current_user, slot: params[:slot]).interview_call_schedule_email.deliver_later
+    render json: @current_user, success: true, message: "Email sent", status: 200
   end
 
 
