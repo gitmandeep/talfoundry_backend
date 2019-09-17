@@ -17,6 +17,9 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def create
     @user = User.new(user_params)
+    if @user.role == "Project Manager"
+      @user.skip_confirmation!
+    end  
     if @user.save
       render json: @user, status: :created
     else
@@ -37,7 +40,7 @@ class Api::V1::UsersController < Api::V1::ApiController
   private
 
   def user_params
-    params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :country, :role)
+    params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :country, :role, :company_name, :phone_number)
   end
 
 end
