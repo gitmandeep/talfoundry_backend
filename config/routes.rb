@@ -10,8 +10,7 @@ Rails.application.routes.draw do
       
       resources :profiles
        
-      post '/login', to: 'authentication#login'
-      
+      post '/login', to: 'authentication#login'   
       post '/signup', to: 'users#create'
       get '/user_full_name', to: 'users#user_full_name', as: 'user_full_name'
       get '/confirm_email', to: 'users#confirm_email', as: 'confirm_email' 
@@ -20,6 +19,8 @@ Rails.application.routes.draw do
       post '/forgot_password', to: 'password#forgot_password'
       post '/reset_password', to: 'password#reset_password'
       
+      resources :jobs
+
     end
   end
 
