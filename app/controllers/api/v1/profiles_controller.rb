@@ -12,6 +12,7 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 		unless @current_user.profile.present? 
 			@profile = @current_user.build_profile(profile_params)
 			if @profile.save
+				@current_user.update_attributes(:profile_created => true )	
 				render :json => {success: true, message: "Profile created", status: 200} 
 			else
 				render_error(@profile.errors.full_messages, 422)
