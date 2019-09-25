@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       
       resources :users, except: [:create]
       
-      resources :profiles
+      resources :profiles 
        
       post '/login', to: 'authentication#login'   
       post '/signup', to: 'users#create'
@@ -19,7 +19,9 @@ Rails.application.routes.draw do
       post '/forgot_password', to: 'password#forgot_password'
       post '/reset_password', to: 'password#reset_password'
       
-      resources :jobs
+      resources :jobs do
+        get :jobs_by_user, on: :collection
+      end
 
     end
   end

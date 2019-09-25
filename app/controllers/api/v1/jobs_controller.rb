@@ -1,11 +1,27 @@
 class Api::V1::JobsController < Api::V1::ApiController
-
+  before_action :authorize_request
 	
   def index
+    @jobs = Job.all
+    if @jobs
+      render :json => {success: true, message: "All jobs", status: 200, jobs: @jobs}
+    else
+      render :json => {success: true, message: "No Jobs to show", status: 404}
+    end
   end
 
+  def jobs_by_user
+    @jobs = @current_user.jobs.all
+    if @jobs
+      render :json => {success: true, message: "current user's jobs", status: 200, jobs: @jobs}
+    else
+      render :json => {success: true, message: "No Jobs for current user", status: 404}
+    end
+  end
+
+
 	def create
-    @job = Job.new(job_params)
+    @job = @current_user.jobs.build(job_params)
     @job_screening_questions = @job.job_screening_questions.build(job_screening_question_params)
     @job_qualifications = @job.job_qualifications.build(job_qualification_params)
     if @job.save
@@ -14,10 +30,6 @@ class Api::V1::JobsController < Api::V1::ApiController
       render_error(@job.errors.full_messages, 422)
     end
   end
-
-
-
-
 
 
 	private
