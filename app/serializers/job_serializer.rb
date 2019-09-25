@@ -14,5 +14,8 @@ class JobSerializer < ActiveModel::Serializer
 	attributes :job_experience_level
 	attributes :job_duration
 	attributes :job_time_requirement
+
+	has_many :job_screening_questions, serializer: JobScreeningQuestionSerializer
+	has_many :job_qualifications, serializer: JobQualificationSerializer
 end
 

@@ -6,7 +6,7 @@ class Api::V1::JobsController < Api::V1::ApiController
     if jobs
       render json: jobs, each_serializer: JobSerializer
     else
-      render :json => { message: "No Jobs to show", status: 404}
+      render json: { error: 'jobs not found' }, status: 404
     end
   end
 
@@ -15,7 +15,7 @@ class Api::V1::JobsController < Api::V1::ApiController
     if job
       render json: job, serializer: JobSerializer
     else
-      render :json => { message: "No Job found", status: 404}     
+      render json: { error: 'job not found' }, status: 404
     end
   end
 
@@ -24,7 +24,7 @@ class Api::V1::JobsController < Api::V1::ApiController
     if jobs
       render json: jobs, each_serializer: JobSerializer
     else
-      render :json => {success: true, message: "No Jobs for current user", status: 404}
+      render json: { error: 'jobs not found' }, status: 404
     end
   end
 
@@ -34,7 +34,7 @@ class Api::V1::JobsController < Api::V1::ApiController
     @job_screening_questions = @job.job_screening_questions.build(job_screening_question_params)
     @job_qualifications = @job.job_qualifications.build(job_qualification_params)
     if @job.save
-      render :json => {success: true, message: "Job created", status: 200, job: @job, job_screening_questions: @job.job_screening_questions, job_qualifications: @job.job_qualifications}
+      render :json => {success: true, message: "Job created", status: 200, job: @job}
     else
       render_error(@job.errors.full_messages, 422)
     end
