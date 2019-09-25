@@ -8,6 +8,8 @@ class User < ApplicationRecord
          :confirmable, :trackable
 
   has_one :profile, :dependent => :destroy
+  has_many :jobs, :dependent => :destroy
+
 
   validates :first_name, :last_name, :role, presence: true
   validates :email, uniqueness: true
