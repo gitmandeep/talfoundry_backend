@@ -2,18 +2,27 @@ class Api::V1::JobsController < Api::V1::ApiController
   before_action :authorize_request
 	
   def index
-    @jobs = Job.all
-    if @jobs
-      render :json => {success: true, message: "All jobs", status: 200, jobs: @jobs}
+    jobs = Job.all
+    if jobs
+      render json: jobs, each_serializer: JobSerializer
     else
-      render :json => {success: true, message: "No Jobs to show", status: 404}
+      render :json => { message: "No Jobs to show", status: 404}
+    end
+  end
+
+  def show
+    job = Job.find(params[:id])
+    if job
+      render json: job, serializer: JobSerializer
+    else
+      render :json => { message: "No Job found", status: 404}     
     end
   end
 
   def jobs_by_user
-    @jobs = @current_user.jobs.all
-    if @jobs
-      render :json => {success: true, message: "current user's jobs", status: 200, jobs: @jobs}
+    jobs = @current_user.jobs.all
+    if jobs
+      render json: jobs, each_serializer: JobSerializer
     else
       render :json => {success: true, message: "No Jobs for current user", status: 404}
     end
