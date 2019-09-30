@@ -2,6 +2,12 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	before_action :authorize_request
 
 	def show
+		profile = Profile.find(params[:id])  #@current_user.profile
+    if profile
+    	render json: profile, serializer: ProfileSerializer
+    else
+			render_error(profile.errors.full_messages, 422)	
+		end
 	end
 
 	def new
@@ -13,7 +19,7 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 			@profile = @current_user.build_profile(profile_params)
 			if @profile.save
 				@current_user.update_attributes(:profile_created => true )	
-				render :json => {success: true, message: "Profile created", status: 200} 
+				render :json => {success: true, user: @current_user, message: "Profile created", status: 200} 
 			else
 				render_error(@profile.errors.full_messages, 422)
 			end
@@ -30,7 +36,7 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	def update
 		profile = Profile.find(params[:id])
 		if profile.update(update_profile_params)
-			render :json => {success: true, message: "Profile updated", status: 200} 
+      render json: profile, serializer: ProfileSerializer, success: true, message: "Profile updated", status: 200 
 		else
 			render_error(@profile.errors.full_messages, 422)
 		end
@@ -41,11 +47,7 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	private
 
 	def profile_params
-		params.require(:profile).permit(:profile_picture , :resume , :current_location_country ,
-		 :current_location_city , :citizenship_country , :citizenship_full_name ,
-		  :skype_user_name , :english_proficiency , :skill , :linkedin_profile , 
-		  :github_profile , :personal_website , :development_experience ,
-		   :look_for_in_company , :project_type_to_work , :project_contributed_on , :current_company_name , :current_job_title , :about_me , :worked_as_freelancer , :freelancing_pros_cons , :start_date , :current_working_hours , :working_hours_talfoundry , :engagement_time , :key_success_point , :problem_handling_strategy)
+		params.require(:profile).permit(:profile_picture , :resume , :current_location_country , :current_location_city , :citizenship_country , :citizenship_full_name , :skype_user_name , :english_proficiency , :skill , :linkedin_profile , :github_profile , :personal_website , :development_experience , :look_for_in_company , :project_type_to_work , :project_contributed_on , :current_company_name , :current_job_title , :about_me , :worked_as_freelancer , :freelancing_pros_cons , :start_date , :current_working_hours , :working_hours_talfoundry , :engagement_time , :key_success_point , :problem_handling_strategy)
 	end
 	
 	def update_profile_params
