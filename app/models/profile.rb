@@ -10,6 +10,9 @@ class Profile < ApplicationRecord
 	accepts_nested_attributes_for :employments
 	
 
+	has_many :certifications, :dependent => :destroy
+	accepts_nested_attributes_for :certifications
+
   validates :profile_picture , :resume , :current_location_country , :current_location_city , :citizenship_country , :citizenship_full_name, presence: true
   validates :current_company_name , :current_job_title , :about_me , :worked_as_freelancer , :freelancing_pros_cons , presence: true
 
