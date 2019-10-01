@@ -36,6 +36,7 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	def update
 		profile = Profile.find(params[:id])
 		if profile.update(update_profile_params)
+			@current_user.update_attributes(:professional_profile_created => true )	
       render json: profile, serializer: ProfileSerializer, success: true, message: "Profile updated", status: 200 
 		else
 			render_error(@profile.errors.full_messages, 422)

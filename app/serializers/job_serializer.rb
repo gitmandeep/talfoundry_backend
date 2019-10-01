@@ -21,18 +21,21 @@ class JobSerializer < ActiveModel::Serializer
 
 
 	def job_category
-		object.job_category.try.(:split,',')
+		object.job_category.try(:split, (','))
 	end
 
 	def job_expertise_required
-		object.job_expertise_required.try.(:split,',')
+		object.job_expertise_required.try(:split, (','))
 	end
 
 	def job_additional_expertise_required
-		object.job_additional_expertise_required.try.(:split,',')
+		object.job_additional_expertise_required.try(:split, (','))
 	end
 
 end
+
+
+
 
 
 
