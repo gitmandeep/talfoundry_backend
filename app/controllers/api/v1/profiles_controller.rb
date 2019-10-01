@@ -52,7 +52,7 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	
 	def update_profile_params
 		params.require(:profile).permit(:professional_title, :professional_overview, :youtube_video_link, :youtube_video_type, :hourly_rate, :availability, 
-			educations_attributes: [:school, :from_date, :to_date, :degree, :area_of_study, :education_description], employments_attributes: [:company_name, :country, :state, :city, :title, :role, :period_month_from, :period_year_from, :period_month_to, :period_year_to, :employment_description])
+			educations_attributes: [:school, :from_date, :to_date, :degree, :area_of_study, :education_description], employments_attributes: [:company_name, :country, :state, :city, :title, :role, :period_month_from, :period_year_from, :period_month_to, :period_year_to, :employment_description], certifications_attributes: [:certification_name, :certification_link])
 	end
 
 end
