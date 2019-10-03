@@ -16,4 +16,8 @@ class ProfileSerializer < ActiveModel::Serializer
 	has_many :employments, serializer: EmploymentSerializer
 	has_many :certifications, serializer: CertificationSerializer
 
+	def skill
+		object.skill.try(:split, (','))
+	end
+
 end
