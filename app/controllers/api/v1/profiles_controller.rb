@@ -2,7 +2,7 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	before_action :authorize_request
 
 	def show
-		profile = Profile.find(params[:id])  #@current_user.profile
+		profile = @current_user.profile   #Profile.find(params[:id])
     if profile
     	render json: profile, serializer: ProfileSerializer
     else
