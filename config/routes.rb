@@ -8,7 +8,9 @@ Rails.application.routes.draw do
       
       resources :users, except: [:create]
       
-      resources :profiles 
+      resources :profiles
+      resources :educations 
+      resources :employments
        
       post '/login', to: 'authentication#login'   
       post '/signup', to: 'users#create'
