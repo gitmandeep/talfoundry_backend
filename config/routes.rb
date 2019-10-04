@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       resources :profiles
       resources :educations 
       resources :employments
+      resources :certifications
+
        
       post '/login', to: 'authentication#login'   
       post '/signup', to: 'users#create'
