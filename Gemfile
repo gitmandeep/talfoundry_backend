@@ -21,6 +21,7 @@ gem 'pry'
 gem 'figaro'
 gem 'carrierwave'
 gem 'carrierwave-base64'
+gem 'fog-aws'
 gem 'rack-cors'
 gem "active_model_serializers"
 
