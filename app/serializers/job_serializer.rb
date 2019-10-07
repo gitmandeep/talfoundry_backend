@@ -20,6 +20,11 @@ class JobSerializer < ActiveModel::Serializer
 	has_many :job_qualifications, serializer: JobQualificationSerializer
 
 
+
+	def job_document
+		object.job_document.try(:url)
+	end
+
 	def job_category
 		object.job_category.try(:split, (','))
 	end

@@ -16,6 +16,11 @@ class ProfileSerializer < ActiveModel::Serializer
 	has_many :employments, serializer: EmploymentSerializer
 	has_many :certifications, serializer: CertificationSerializer
 
+	
+	def profile_picture
+		object.profile_picture.try(:url)
+	end
+
 	def skill
 		object.skill.try(:split, (','))
 	end
