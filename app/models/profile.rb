@@ -2,7 +2,7 @@ class Profile < ApplicationRecord
 	mount_base64_uploader :profile_picture, AvatarUploader
 	mount_base64_uploader :resume, AvatarUploader
 
-	before_save :skill_set
+	before_create :skill_set
 
   belongs_to :user
 	has_many :educations, :dependent => :destroy
