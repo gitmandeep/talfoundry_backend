@@ -2,6 +2,8 @@ class Profile < ApplicationRecord
 	mount_base64_uploader :profile_picture, AvatarUploader
 	mount_base64_uploader :resume, AvatarUploader
 
+	before_save :skill_set
+
   belongs_to :user
 	has_many :educations, :dependent => :destroy
 	accepts_nested_attributes_for :educations
@@ -15,5 +17,11 @@ class Profile < ApplicationRecord
 
   validates :profile_picture , :resume , :current_location_country , :current_location_city , :citizenship_country , :citizenship_full_name, presence: true
   validates :current_company_name , :current_job_title , :about_me , :worked_as_freelancer , :freelancing_pros_cons , presence: true
+
+
+  def skill_set
+    self.skill = eval(skill).try(:join, (','))
+  end
+
 
 end
