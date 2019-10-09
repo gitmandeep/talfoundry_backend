@@ -96,7 +96,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   host = ENV["BASE_URL"]
   config.action_mailer.default_url_options = { host: host }
-  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
   config.action_mailer.smtp_settings = {
     :user_name  =>      ENV["SMTP_USER_EMAIL"],
