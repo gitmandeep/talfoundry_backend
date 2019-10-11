@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       
-      resources :users, except: [:create]
+      resources :users, except: [:create] do
+        collection do
+          get 'freelancer_index'
+        end
+      end
       
       resources :profiles
       resources :educations 

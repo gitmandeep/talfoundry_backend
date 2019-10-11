@@ -6,6 +6,11 @@ class Api::V1::UsersController < Api::V1::ApiController
     render json: @users, status: :ok
   end
 
+  def freelancer_index
+    freelancer_users = User.where(role: "freelancer")
+    render json: freelancer_users, each_serializer: UserSerializer, status: :ok
+  end
+
   def user_full_name
     @user = User.find_by_email(params[:email])
     if @user
