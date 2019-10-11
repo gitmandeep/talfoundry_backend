@@ -7,7 +7,7 @@ class Job < ApplicationRecord
 	has_many :job_qualifications, :dependent => :destroy
 	accepts_nested_attributes_for :job_qualifications
 
-	# scope :newest_first, order(created_at: :desc)
+	scope: newest_first, -> { order(created_at: :desc) }
 	
   validates :job_title,:job_category, :job_description, :job_type, :job_expertise_required,  presence: true
   validates :job_visibility,:number_of_freelancer_required,:job_pay_type,:job_experience_level,:job_duration,:job_time_requirement, presence: true
