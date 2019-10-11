@@ -12,6 +12,9 @@ class ProfileSerializer < ActiveModel::Serializer
 	attributes :hourly_rate
 	attributes :availability
 	attributes :english_proficiency
+	attributes :about_me
+	attributes :development_experience
+  
   has_many :educations, serializer: EducationSerializer
 	has_many :employments, serializer: EmploymentSerializer
 	has_many :certifications, serializer: CertificationSerializer
