@@ -25,8 +25,12 @@ class ProfileSerializer < ActiveModel::Serializer
 	end
 
 	def profile_picture_base64
-		img = open(object.profile_picture.try(:url))
-		img_base64 = Base64.encode64(img.read)
+		if current_user.role != "admin"
+			img = open(object.profile_picture.try(:url))
+			img_base64 = Base64.encode64(img.read)
+		else
+			''
+		end
 	end
 
 	def skill
