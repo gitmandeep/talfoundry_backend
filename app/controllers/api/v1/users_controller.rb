@@ -7,7 +7,7 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def freelancer_index
-    freelancer_users = User.where(role: "freelancer")
+    freelancer_users = User.where({ role: "freelancer", profile_created: true })
     render json: freelancer_users, each_serializer: UserSerializer, status: :ok
   end
 
