@@ -2,7 +2,7 @@ class Api::V1::JobsController < Api::V1::ApiController
   before_action :authorize_request
 	
   def index
-    jobs = Job.where(:job_visibility => "Anyone")
+    jobs = Job.where(:job_visibility => "Anyone").newest_first
     if jobs
       render json: jobs, each_serializer: JobSerializer
     else
