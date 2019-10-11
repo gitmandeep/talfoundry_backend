@@ -10,11 +10,15 @@ class UserSerializer < ActiveModel::Serializer
 
   # has_one :profile, serializer: ProfileSerializer
 
+
   def full_name
   	object.first_name + " " + object.last_name
   end
 
   def user_picture
-  	object.profile.profile_picture.try(:url)
+    if object.profile_created
+  	 object.profile.profile_picture.try(:url)
+    end
   end
+  
 end
