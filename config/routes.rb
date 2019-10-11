@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
        
       post '/login', to: 'authentication#login'   
+      post '/admin_login', to: 'authentication#admin_login'
       post '/signup', to: 'users#create'
       get '/user_full_name', to: 'users#user_full_name', as: 'user_full_name'
       get '/confirm_email', to: 'users#confirm_email', as: 'confirm_email' 
