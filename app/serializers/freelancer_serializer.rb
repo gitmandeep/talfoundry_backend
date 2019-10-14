@@ -6,7 +6,6 @@ class FreelancerSerializer < ActiveModel::Serializer
 	attributes :profile_created
 	attributes :account_approved
 	attributes :created_at
-	attributes :freelancer_educations
 	attributes :freelancer_employments
 
 
@@ -17,12 +16,8 @@ class FreelancerSerializer < ActiveModel::Serializer
   	object.first_name + " " + object.last_name
   end
 
-  def freelancer_educations
-		object.profile.try(:educations)
-	end
-
 	def freelancer_employments
-		object.profile.try(:educations)
+		object.profile.try(:employments)
 	end
 
   def user_picture
@@ -30,5 +25,5 @@ class FreelancerSerializer < ActiveModel::Serializer
   	 object.profile.profile_picture.try(:url)
     end
   end
-  
+
 end
