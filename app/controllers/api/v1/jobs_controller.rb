@@ -11,7 +11,7 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def show
-    job = Job.find(params[:id])
+    job = Job.find_by_uuid(params[:id])
     if job
       render json: job, serializer: JobSerializer
     else
