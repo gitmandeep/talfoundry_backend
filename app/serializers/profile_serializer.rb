@@ -1,5 +1,6 @@
 class ProfileSerializer < ActiveModel::Serializer
   attributes :id
+  attributes :uuid
 	attributes :profile_picture
 	attributes :profile_picture_base64
 	attributes :current_job_title

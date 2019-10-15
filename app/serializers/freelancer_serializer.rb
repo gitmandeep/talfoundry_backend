@@ -1,5 +1,6 @@
 class FreelancerSerializer < ActiveModel::Serializer
   attributes :id
+  attributes :uuid
 	attributes :email
 	attributes :full_name
 	attributes :user_picture

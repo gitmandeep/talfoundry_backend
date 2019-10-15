@@ -1,5 +1,6 @@
 class EducationSerializer < ActiveModel::Serializer
   attributes :id
+  attributes :uuid
   attributes :school
 	attributes :from_date
 	attributes :to_date

@@ -1,5 +1,6 @@
 class EmploymentSerializer < ActiveModel::Serializer
   attributes :id
+  attributes :uuid
  	attributes :company_name
  	attributes :country
  	attributes :state
