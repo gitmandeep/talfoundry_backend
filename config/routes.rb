@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     namespace :v1 do
  
       get 'admin/approve_freelancer/:id', to: 'admin#approve_freelancer'
+      get 'admin/block_freelancer/:id', to: 'admin#block_freelancer'
       
       resources :users, except: [:create]
 
