@@ -1,5 +1,6 @@
 class JobSerializer < ActiveModel::Serializer
   attributes :id
+  attributes :uuid
   attributes :created_at
 	attributes :job_title
 	attributes :job_category
@@ -16,6 +17,7 @@ class JobSerializer < ActiveModel::Serializer
 	attributes :job_time_requirement
 	attributes :job_additional_expertise_required
 
+	has_one :user, serializer: UserSerializer
 	has_many :job_screening_questions, serializer: JobScreeningQuestionSerializer
 	has_many :job_qualifications, serializer: JobQualificationSerializer
 
