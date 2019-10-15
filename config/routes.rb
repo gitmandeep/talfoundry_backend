@@ -8,12 +8,9 @@ Rails.application.routes.draw do
  
       get 'admin/approve_freelancer/:id', to: 'admin#approve_freelancer'
       
-      resources :users, except: [:create] do
-        collection do
-          get 'freelancer_index'
-        end
-      end
+      resources :users, except: [:create]
 
+      get 'freelancer_index', to: 'freelancer#freelancer_index'
       get 'freelancer_details/:id', to: 'freelancer#freelancer_details'
 
       
