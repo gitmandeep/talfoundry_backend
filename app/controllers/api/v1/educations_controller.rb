@@ -46,7 +46,7 @@ class Api::V1::EducationsController < Api::V1::ApiController
 	end
 
 	def find_education
-		@education = Education.find_by_id(params[:id])
+		@education = Education.find_by_uuid(params[:id])
 		render_error("Not found", 404) unless @education
 	end
 

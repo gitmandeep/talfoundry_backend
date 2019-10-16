@@ -47,7 +47,7 @@ class Api::V1::EmploymentsController < Api::V1::ApiController
 	end
 
 	def find_employment
-		@employment = Employment.find_by_id(params[:id])
+		@employment = Employment.find_by_uuid(params[:id])
 		render_error("Not found", 404) unless @employment 
 	end
 

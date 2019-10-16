@@ -47,7 +47,7 @@ class Api::V1::CertificationsController < Api::V1::ApiController
 	end
 
 	def find_employment
-		@certification = Certification.find_by_id(params[:id])
+		@certification = Certification.find_by_uuid(params[:id])
 		render_error("Not found", 404) unless @certification 
 	end
 
