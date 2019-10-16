@@ -24,6 +24,7 @@ gem 'carrierwave-base64'
 gem 'fog-aws'
 gem 'rack-cors'
 gem "active_model_serializers"
+gem 'searchkick'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
