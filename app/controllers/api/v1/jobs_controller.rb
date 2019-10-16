@@ -2,7 +2,11 @@ class Api::V1::JobsController < Api::V1::ApiController
   before_action :authorize_request
 	
   def index
-    jobs = Job.order(created_at: :desc).where(:job_visibility => "Anyone")
+    if params[:search].present?
+      jobs = Job.search(params[:search])
+    else
+      jobs = Job.order(created_at: :desc).where(:job_visibility => "Anyone")
+    end
     if jobs
       render json: jobs, each_serializer: JobSerializer
     else
