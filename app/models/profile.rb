@@ -1,6 +1,6 @@
 class Profile < ApplicationRecord
-	mount_base64_uploader :profile_picture, AvatarUploader
-	mount_base64_uploader :resume, AvatarUploader
+	mount_base64_uploader :profile_picture, ProfileDocumentUploader
+	mount_base64_uploader :resume, ProfileDocumentUploader
 
 	before_create :skill_set
 
