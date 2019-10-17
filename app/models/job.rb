@@ -18,7 +18,7 @@ class Job < ApplicationRecord
     {
       job_title: job_title,
       job_description: job_description,
-      job_expertise_required: job_expertise_required
+      job_expertise_required: job_expertise_required,
       job_additional_expertise_required: job_additional_expertise_required
     }
   end
