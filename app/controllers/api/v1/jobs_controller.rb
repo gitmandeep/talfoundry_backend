@@ -1,5 +1,7 @@
 class Api::V1::JobsController < Api::V1::ApiController
   before_action :authorize_request
+  before_action :find_job, only: [:edit, :update, :destroy]
+
 	
   def index
     if params[:search].present?
@@ -45,10 +47,27 @@ class Api::V1::JobsController < Api::V1::ApiController
     end 
   end
 
+  def edit
+  end
+
+  def update
+    if @job.update(job_params)  
+      render json: @job, serializer: JobSerializer, success: true, message: "Updated", status: 200 
+    else
+      render_error(@job.errors.full_messages, 422)
+    end
+  end
 
 	private
+
+  def find_job
+    @job = Job.find_by_uuid(params[:id])
+    render_error("Not found", 404) unless @job 
+  end
 
   def job_params
     params.require(:job).permit(:job_title, {:job_category => [] } ,:job_description,:job_document,:job_type,:job_api_integration,{:job_expertise_required => []}, {:job_additional_expertise_required => []}, :job_visibility,:number_of_freelancer_required,:job_pay_type,:job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:job_question_label,:job_question], job_qualifications_attributes:  [:freelancer_type,:job_success_score,:billed_on_talfoundry,:english_level,:rising_talent,:qualification_group,:location])
   end
+
+
 end
