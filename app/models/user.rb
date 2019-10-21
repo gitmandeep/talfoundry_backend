@@ -32,7 +32,9 @@ class User < ApplicationRecord
    def search_data
     {
       first_name: first_name,
-      last_name: last_name
+      last_name: last_name,
+      user_skill: self.profile.try(:skill),
+      user_professional_title: self.profile.try(:professional_title)
     }
   end
 end
