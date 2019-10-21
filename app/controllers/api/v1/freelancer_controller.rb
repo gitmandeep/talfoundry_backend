@@ -2,7 +2,15 @@ class Api::V1::FreelancerController < Api::V1::ApiController
 	before_action :authorize_request
 
 	def freelancer_index
-    freelancer_users = User.where({ role: "freelancer", profile_created: true })
+		if @current_user.role == "admin"
+    	freelancer_users = User.admin_freelancer_index
+    elsif @current_user.role == "Project Manager"
+    	if params[:search].present?
+      	freelancer_users = User.search(params[:search], where: {role: "freelancer", account_approved: true})
+    	else
+    		freelancer_users = User.manager_freelancer_index
+    	end
+    end
     render json: freelancer_users, each_serializer: FreelancerSerializer, status: :ok
   end
 
