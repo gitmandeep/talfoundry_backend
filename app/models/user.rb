@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  searchkick
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   before_create :capitalize_names
@@ -14,6 +15,9 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :role, presence: true
   validates :email, uniqueness: true
 
+  scope :admin_freelancer_index, -> { where({ role: "freelancer", profile_created: true }) }
+  scope :manager_freelancer_index, -> { where({ role: "freelancer", account_approved: true }) }
+
 
 
   def display_full_name
@@ -25,4 +29,10 @@ class User < ApplicationRecord
     self.last_name = last_name.capitalize
   end
   
+   def search_data
+    {
+      first_name: first_name,
+      last_name: last_name
+    }
+  end
 end
