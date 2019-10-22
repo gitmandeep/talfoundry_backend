@@ -29,12 +29,12 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	end
 
 	def edit
-		profile = Profile.find_by_uuid(params[:id])
+		@profile = Profile.where(uuid: params[:id]).or(Profile.where(id: params[:id])).first
 	end
 
 
 	def update
-		@profile = Profile.find_by_uuid(params[:id])
+		@profile = Profile.where(uuid: params[:id]).or(Profile.where(id: params[:id])).first
 		if params[:profile][:skill]
 			@profile.skill = (params[:profile][:skill]).try(:join, (','))
 			@profile.save
