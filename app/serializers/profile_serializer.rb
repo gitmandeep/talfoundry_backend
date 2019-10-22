@@ -15,12 +15,17 @@ class ProfileSerializer < ActiveModel::Serializer
 	attributes :english_proficiency
 	attributes :about_me
 	attributes :development_experience
-  
-  has_many :educations, serializer: EducationSerializer
+  	attributes :name
+
+    has_many :educations, serializer: EducationSerializer
 	has_many :employments, serializer: EmploymentSerializer
 	has_many :certifications, serializer: CertificationSerializer
 
 	
+	def name
+		object.user.try(:first_name) + ' ' + object.user.try(:last_name)
+	end
+
 	def profile_picture
 		object.profile_picture.try(:url)
 	end
