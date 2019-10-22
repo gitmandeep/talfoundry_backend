@@ -1,6 +1,6 @@
 class Api::V1::JobsController < Api::V1::ApiController
   before_action :authorize_request
-  before_action :find_job, only: [:edit, :update, :destroy]
+  before_action :find_job, only: [:edit, :update, :destroy, :show]
 
 	
   def index
@@ -17,9 +17,9 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def show
-    job = Job.find_by_id(params[:id])
-    if job
-      render json: job, serializer: JobSerializer
+    # job = Job.find_by_id(params[:id])
+    if @job
+      render json: @job, serializer: JobSerializer
     else
       render json: { error: 'job not found' }, status: 404
     end
@@ -61,7 +61,7 @@ class Api::V1::JobsController < Api::V1::ApiController
 	private
 
   def find_job
-    @job = Job.find_by_uuid(params[:id])
+    @job = Job.where(uuid: params[:id]).or(Job.where(id: params[:id])).first
     render_error("Not found", 404) unless @job 
   end
 

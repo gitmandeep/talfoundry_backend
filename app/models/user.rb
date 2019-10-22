@@ -19,6 +19,17 @@ class User < ApplicationRecord
   scope :manager_freelancer_index, -> { where({ role: "freelancer", account_approved: true }) }
 
 
+  # # user types constants
+  # TYPE_ADMIN = 1
+  # TYPE_FREELANCER = 2
+  # TYPE_HIRING_MANAGER = 3
+  # # user types names
+  # USER_TYPES = {
+  #     TYPE_ADMIN => 'admin',
+  #     TYPE_FREELANCER => 'freelancer',
+  #     TYPE_HIRING_MANAGER => 'Project Manager'
+  # }.freeze
+
 
   def display_full_name
     "#{first_name} #{last_name}"
@@ -27,6 +38,18 @@ class User < ApplicationRecord
   def capitalize_names
     self.first_name = first_name.capitalize
     self.last_name = last_name.capitalize
+  end
+
+  def is_hiring_manager?
+    self.role == "Project Manager"
+  end
+
+  def is_admin?
+    self.role == "admin"
+  end
+
+  def is_freelancer?
+    self.role == "freelancer"
   end
   
    def search_data
