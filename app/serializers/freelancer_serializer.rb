@@ -9,6 +9,7 @@ class FreelancerSerializer < ActiveModel::Serializer
 	attributes :account_active
 	attributes :created_at
 	attributes :freelancer_employments
+	attributes :profile_uuid
 
 
   has_one :profile, serializer: ProfileSerializer
@@ -24,8 +25,13 @@ class FreelancerSerializer < ActiveModel::Serializer
 
   def user_picture
     if object.profile_created
-  	 object.profile.profile_picture.try(:url)
+  	 object.profile.try(:profile_picture).try(:url)
     end
+  end
+
+  def profile_uuid
+  	uuid = object.profile ? user.try(:profile).try(:uuid) : ""
+  	return uuid
   end
 
 end

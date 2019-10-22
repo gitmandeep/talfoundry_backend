@@ -26,7 +26,7 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def jobs_by_user
-    jobs = @current_user.jobs.all
+    jobs = @current_user.jobs.all.order(created_at: :desc)
     if jobs
       render json: jobs, each_serializer: JobSerializer
     else

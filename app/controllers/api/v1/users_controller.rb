@@ -2,7 +2,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 	before_action :authorize_request, except: [:create, :confirm_email, :user_full_name]
 
   def index
-    @users = User.all
+    @users = User.all.order(created_at: :desc)
     render json: @users, status: :ok
   end
 
