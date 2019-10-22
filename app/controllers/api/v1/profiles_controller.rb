@@ -6,7 +6,7 @@ class Api::V1::ProfilesController < Api::V1::ApiController
     if profile
     	render json: profile, serializer: ProfileSerializer
     else
-			render_error(profile.errors.full_messages, 422)	
+			render_error("Profile Not found..!", 422)	
 		end
 	end
 
