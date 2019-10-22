@@ -30,7 +30,7 @@ class FreelancerSerializer < ActiveModel::Serializer
   end
 
   def profile_uuid
-  	uuid = object.profile ? user.try(:profile).try(:uuid) : ""
+  	uuid = object.profile ? object.try(:profile).try(:uuid) : ""
   	return uuid
   end
 
