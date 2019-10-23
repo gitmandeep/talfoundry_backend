@@ -5,7 +5,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     user = User.find_by_email(params[:email])
     if user.confirmed_at != nil && user.account_active
       if user.valid_password?(params[:password])
-        token = JsonWebToken.encode(user_id: user.id, email: user.email, first_name: user.first_name, last_name: user.last_name, role: user.role, profile_created: user.profile_created, call_schedule: user.call_schedule, account_approved: user.account_approved profile_picture: (user.profile ? user.profile.profile_picture.try(:url) : ""), profile_uuid: (user.profile ? user.profile.uuid : ""), professional_profile_created: user.professional_profile_created )
+        token = JsonWebToken.encode(user_id: user.id, email: user.email, first_name: user.first_name, last_name: user.last_name, role: user.role, profile_created: user.profile_created, call_schedule: user.call_schedule, account_approved: user.account_approved, profile_picture: (user.profile ? user.profile.profile_picture.try(:url) : ""), profile_uuid: (user.profile ? user.profile.uuid : ""), professional_profile_created: user.professional_profile_created )
         time = Time.now + 24.hours.to_i
         # if user.role == "freelancer"
         #   unless user.profile_created
