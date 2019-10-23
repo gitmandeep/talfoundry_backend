@@ -39,6 +39,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def interview_call_schedule
     UserMailer.with(user: @current_user, slot: params[:slot]).interview_call_schedule_email.deliver_later
+    @current_user.update_attributes(:call_schedule => true )
     render json: @current_user, success: true, message: "Email sent", status: 200
   end
 

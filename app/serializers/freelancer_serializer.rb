@@ -5,6 +5,7 @@ class FreelancerSerializer < ActiveModel::Serializer
 	attributes :full_name
 	attributes :user_picture
 	attributes :profile_created
+  attributes :call_schedule
 	attributes :account_approved
 	attributes :account_active
 	attributes :created_at
