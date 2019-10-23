@@ -19,8 +19,8 @@ class Api::V1::JobsController < Api::V1::ApiController
   def show
     if @job.present?
       render json: @job, serializer: JobSerializer
-    # else
-    #   render json: { error: 'job not found' }, status: 404
+    else
+      render json: { error: 'job not found' }, status: 404
     end
   end
 
@@ -61,7 +61,7 @@ class Api::V1::JobsController < Api::V1::ApiController
 	private
 
   def find_job
-    @job = Job.find_by_uuid(params[:id])
+    @job = Job.where(uuid: params[:id]).or(Job.where(id: params[:id])).first
     render_error("Not found", 404) unless @job 
   end
 
