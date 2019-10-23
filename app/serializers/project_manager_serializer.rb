@@ -20,7 +20,9 @@ class ProjectManagerSerializer < ActiveModel::Serializer
   end
 
 	def project_manager_jobs
-		object.jobs.limit(5).offset(1)
+		unless current_user.role == "Project Manager"
+			object.jobs.limit(5).offset(1)
+		end
 	end
 
   # def user_picture

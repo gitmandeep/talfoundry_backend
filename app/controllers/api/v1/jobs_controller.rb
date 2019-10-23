@@ -17,10 +17,10 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def show
-    if @job
+    if @job.present?
       render json: @job, serializer: JobSerializer
-    else
-      render json: { error: 'job not found' }, status: 404
+    # else
+    #   render json: { error: 'job not found' }, status: 404
     end
   end
 
