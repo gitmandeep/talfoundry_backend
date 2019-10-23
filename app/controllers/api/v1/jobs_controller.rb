@@ -17,7 +17,6 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def show
-    # job = Job.find_by_id(params[:id])
     if @job
       render json: @job, serializer: JobSerializer
     else
@@ -41,6 +40,7 @@ class Api::V1::JobsController < Api::V1::ApiController
     job.job_expertise_required = (params[:job][:job_expertise_required]).try(:join, (','))
     job.job_additional_expertise_required = (params[:job][:job_additional_expertise_required]).try(:join, (','))    
     if job.save
+      job.reload
       render json: job, each_serializer: JobSerializer, success: true, message: "Job created", status: 200
     else
       render_error(job.errors.full_messages, 422)
@@ -61,7 +61,7 @@ class Api::V1::JobsController < Api::V1::ApiController
 	private
 
   def find_job
-    @job = Job.where(uuid: params[:id]).or(Job.where(id: params[:id])).first
+    @job = Job.find_by_uuid(params[:id])
     render_error("Not found", 404) unless @job 
   end
 
