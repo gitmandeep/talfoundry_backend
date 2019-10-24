@@ -15,8 +15,8 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :role, presence: true
   validates :email, uniqueness: true
 
-  scope :admin_freelancer_index, -> { where({ role: "freelancer", profile_created: true }) }
-  scope :manager_freelancer_index, -> { where({ role: "freelancer", account_approved: true }) }
+  scope :admin_freelancer_index, -> { where({ role: "freelancer", profile_created: true }).order(created_at: :desc) }
+  scope :manager_freelancer_index, -> { where({ role: "freelancer", account_approved: true }).order(:created_at) }
 
 
   # # user types constants
@@ -52,7 +52,7 @@ class User < ApplicationRecord
     self.role == "freelancer"
   end
   
-   def search_data
+  def search_data
     {
       first_name: first_name,
       last_name: last_name,
