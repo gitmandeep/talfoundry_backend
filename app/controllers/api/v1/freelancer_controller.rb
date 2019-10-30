@@ -4,10 +4,10 @@ class Api::V1::FreelancerController < Api::V1::ApiController
 	def freelancer_index
 		if @current_user.role == "admin"
     	freelancer_users = User.admin_freelancer_index
-    elsif @current_user.role == "Project Manager"
+    elsif @current_user.role == "Project Manager" || @current_user.role == "freelancer"
     	if params[:search].present?
       	freelancer_users = User.search(params[:search])
-      	freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true)}
+      	freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true && fu.id != @current_user.id )}
     	else
     		freelancer_users = User.manager_freelancer_index
     	end
