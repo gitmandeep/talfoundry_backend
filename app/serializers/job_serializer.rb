@@ -4,6 +4,7 @@ class JobSerializer < ActiveModel::Serializer
   attributes :created_at
 	attributes :job_title
 	attributes :job_category
+	attributes :job_speciality
 	attributes :job_description
 	attributes :job_document
 	attributes :job_type
@@ -30,6 +31,10 @@ class JobSerializer < ActiveModel::Serializer
 
 	def job_category
 		object.job_category.try(:split, (','))
+	end
+
+	def job_speciality
+		object.job_speciality.try(:split, (','))
 	end
 
 	def job_expertise_required
