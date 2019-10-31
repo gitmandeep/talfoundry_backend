@@ -4,7 +4,7 @@ class Profile < ApplicationRecord
 
 	before_create :skill_set
 	before_create	:category_set
-	before_create :certifications
+	before_create :certification_set
 
   belongs_to :user
 	has_many :educations, :dependent => :destroy
@@ -29,7 +29,7 @@ class Profile < ApplicationRecord
     self.category = eval(category).try(:join, (','))
   end
 
-  def certifications
+  def certification_set
     self.certification = eval(certification).try(:join, (','))
   end
 

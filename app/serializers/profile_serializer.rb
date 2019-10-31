@@ -8,7 +8,9 @@ class ProfileSerializer < ActiveModel::Serializer
 	attributes :current_location_city
 	attributes :professional_title
 	attributes :professional_overview
+	attributes :category
 	attributes :skill
+	attributes :user_certification	
 	attributes :youtube_video_link
 	attributes :hourly_rate
 	attributes :availability
@@ -17,7 +19,7 @@ class ProfileSerializer < ActiveModel::Serializer
 	attributes :development_experience
   	attributes :name
 
-    has_many :educations, serializer: EducationSerializer
+  	has_many :educations, serializer: EducationSerializer
 	has_many :employments, serializer: EmploymentSerializer
 	has_many :certifications, serializer: CertificationSerializer
 
@@ -41,6 +43,14 @@ class ProfileSerializer < ActiveModel::Serializer
 
 	def skill
 		object.skill.try(:split, (','))
+	end
+
+	def category
+		object.category.try(:split, (','))
+	end
+
+	def user_certification
+		object.certification.try(:split, (','))
 	end
 
 end
