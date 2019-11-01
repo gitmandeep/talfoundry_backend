@@ -52,7 +52,7 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	private
 
 	def profile_params
-		params.require(:profile).permit(:profile_picture , :resume , :current_location_country , :current_location_city , :citizenship_country , :citizenship_full_name , :skype_user_name , :english_proficiency , {:skill => []} , {:category => []}, {:certification => []}, :linkedin_profile , :github_profile , :personal_website , :development_experience , :current_company_name , :current_job_title , :about_me , :worked_as_freelancer , :start_date , :current_working_hours , :working_hours_talfoundry , :engagement_time)
+		params.require(:profile).permit(:profile_type, :profile_picture , :resume , :current_location_country , :current_location_city , :citizenship_country , :citizenship_full_name , :skype_user_name , :english_proficiency , {:skill => []} , {:category => []}, {:certification => []}, :linkedin_profile , :github_profile , :personal_website , :development_experience , :current_company_name , :current_job_title , :about_me , :worked_as_freelancer , :start_date ,  :working_hours_talfoundry)
 	end
 	
 	def update_profile_params
