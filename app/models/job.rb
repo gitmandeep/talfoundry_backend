@@ -3,6 +3,8 @@ class Job < ApplicationRecord
 
 	mount_base64_uploader :job_document, JobDocumentUploader
 
+  before_save :set_array_data
+
   belongs_to :user
 	has_many :job_screening_questions, :dependent => :destroy
 	accepts_nested_attributes_for :job_screening_questions
@@ -22,6 +24,13 @@ class Job < ApplicationRecord
       job_additional_expertise_required: job_additional_expertise_required,
       job_category: job_category
     }
+  end
+
+  def set_array_data
+    self.job_category = eval(job_category).try(:join, (','))
+    self.job_speciality = eval(job_speciality).try(:join, (','))
+    self.job_expertise_required = eval(job_expertise_required).try(:join, (','))
+    self.job_additional_expertise_required = eval(job_additional_expertise_required).try(:join, (','))
   end
 
 end

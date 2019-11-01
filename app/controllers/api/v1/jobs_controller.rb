@@ -36,10 +36,10 @@ class Api::V1::JobsController < Api::V1::ApiController
 
 	def create
     job = @current_user.jobs.build(job_params)
-    job.job_category = (params[:job][:job_category]).try(:join, (','))
-    job.job_speciality = (params[:job][:job_speciality]).try(:join, (','))
-    job.job_expertise_required = (params[:job][:job_expertise_required]).try(:join, (','))
-    job.job_additional_expertise_required = (params[:job][:job_additional_expertise_required]).try(:join, (','))    
+    # job.job_category = (params[:job][:job_category]).try(:join, (','))
+    # job.job_speciality = (params[:job][:job_speciality]).try(:join, (','))
+    # job.job_expertise_required = (params[:job][:job_expertise_required]).try(:join, (','))
+    # job.job_additional_expertise_required = (params[:job][:job_additional_expertise_required]).try(:join, (','))    
     if job.save
       job.reload
       render json: job, each_serializer: JobSerializer, success: true, message: "Job created", status: 200
