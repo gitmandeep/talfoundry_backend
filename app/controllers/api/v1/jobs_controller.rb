@@ -67,7 +67,7 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def job_params
-    params.require(:job).permit(:job_title, {:job_category => [] } , {:job_speciality => [] }, :job_description,:job_document,:job_type,:job_api_integration,{:job_expertise_required => []}, {:job_additional_expertise_required => []}, :job_visibility,:number_of_freelancer_required,:job_pay_type,:job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:job_question_label,:job_question], job_qualifications_attributes:  [:freelancer_type,:job_success_score,:billed_on_talfoundry,:english_level,:rising_talent,:qualification_group,:location])
+    params.require(:job).permit(:job_title, {:job_category => [] } , {:job_speciality => [] }, :job_description,:job_document,:job_type,:job_api_integration,{:job_expertise_required => []}, {:job_additional_expertise_required => []}, :job_visibility,:number_of_freelancer_required,:job_pay_type,:job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:job_question_label,:job_question], job_qualifications_attributes:  [:billed_on_talfoundry,:english_level,:location])
   end
 
 
