@@ -35,11 +35,7 @@ class Api::V1::JobsController < Api::V1::ApiController
 
 
 	def create
-    job = @current_user.jobs.build(job_params)
-    # job.job_category = (params[:job][:job_category]).try(:join, (','))
-    # job.job_speciality = (params[:job][:job_speciality]).try(:join, (','))
-    # job.job_expertise_required = (params[:job][:job_expertise_required]).try(:join, (','))
-    # job.job_additional_expertise_required = (params[:job][:job_additional_expertise_required]).try(:join, (','))    
+    job = @current_user.jobs.build(job_params)   
     if job.save
       job.reload
       render json: job, each_serializer: JobSerializer, success: true, message: "Job created", status: 200
@@ -67,7 +63,7 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def job_params
-    params.require(:job).permit(:job_title, {:job_category => [] } , {:job_speciality => [] }, :job_description,:job_document,:job_type,:job_api_integration,{:job_expertise_required => []}, {:job_additional_expertise_required => []}, :job_visibility,:number_of_freelancer_required,:job_pay_type,:job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:job_question_label,:job_question], job_qualifications_attributes:  [:billed_on_talfoundry,:english_level,:location])
+    params.require(:job).permit(:job_title, {:job_category => [] } , {:job_speciality => [] }, :job_description,:job_document,:job_type,:job_api_integration, {:job_additional_expertise_required => []}, :job_visibility,:number_of_freelancer_required,:job_pay_type,:job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:job_question_label,:job_question], job_qualifications_attributes:  [:english_level,:location])
   end
 
 
