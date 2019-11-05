@@ -30,7 +30,7 @@ class Job < ApplicationRecord
     self.job_category = eval(job_category).try(:join, (','))
     self.job_speciality = eval(job_speciality).try(:join, (','))
     self.job_expertise_required = eval(job_expertise_required).try(:join, (','))
-    self.job_additional_expertise_required = eval(job_additional_expertise_required).try(:join, (','))
+    self.job_additional_expertise_required = eval(job_additional_expertise_required).try(:join, (',')) rescue ''
   end
 
 end

@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       resources :educations 
       resources :employments
       resources :certifications
-
+      resources :job_screening_questions, only: [:destroy]
        
       post '/login', to: 'authentication#login'   
       post '/admin_login', to: 'authentication#admin_login'
