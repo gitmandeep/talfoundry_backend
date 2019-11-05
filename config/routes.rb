@@ -34,6 +34,11 @@ Rails.application.routes.draw do
       
       resources :jobs do
         get :jobs_by_user, on: :collection
+
+        member do
+          get :job_related_freelancer
+          get :invited_freelancer
+        end
       end
 
     end

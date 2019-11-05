@@ -1,4 +1,4 @@
-class Api::V1::JobsController < Api::V1::ApiController
+class Api::V1::InviteController < Api::V1::ApiController
   before_action :authorize_request
 
 	def create

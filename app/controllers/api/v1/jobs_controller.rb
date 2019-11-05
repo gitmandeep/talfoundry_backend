@@ -1,6 +1,6 @@
 class Api::V1::JobsController < Api::V1::ApiController
   before_action :authorize_request
-  before_action :find_job, only: [:edit, :update, :destroy, :show]
+  before_action :find_job, only: [:edit, :update, :destroy, :show, :job_related_freelancer, :invited_freelancer]
 
 	
   def index
@@ -53,6 +53,21 @@ class Api::V1::JobsController < Api::V1::ApiController
     else
       render_error(@job.errors.full_messages, 422)
     end
+  end
+
+  def job_related_freelancer
+    if params[:search].present?
+      freelancer_users = User.search(params[:search])
+      freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true)}
+    else
+      institutions = User.manager_freelancer_index.includes(:profile).where("category ILIKE ? or skill ILIKE ?","%#{@job.job_category}%", "%#{@job.job_speciality}%").limit(10)
+    end
+    render json: freelancer_users, each_serializer: FreelancerSerializer, status: :ok
+  end
+
+  def invited_freelancer
+    invited_freelancers = User.where(id: @job.invites.pluck(:recipient))
+    render json: invited_freelancers, each_serializer: FreelancerSerializer, status: :ok
   end
 
 	private
