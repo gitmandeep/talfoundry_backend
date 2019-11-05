@@ -14,14 +14,13 @@ class Job < ApplicationRecord
 
 	# scope: newest_first, -> { order(created_at: :desc) }
 	
-  validates :job_title,:job_category, :job_description, :job_type, :job_expertise_required,  presence: true
+  validates :job_title,:job_category, :job_description, :job_type, presence: true
   validates :job_visibility,:number_of_freelancer_required,:job_pay_type,:job_experience_level,:job_duration,:job_time_requirement, presence: true
 
   def search_data
     {
       job_title: job_title,
       job_description: job_description,
-      job_expertise_required: job_expertise_required,
       job_additional_expertise_required: job_additional_expertise_required,
       job_category: job_category
     }
