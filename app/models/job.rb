@@ -10,6 +10,7 @@ class Job < ApplicationRecord
 	accepts_nested_attributes_for :job_screening_questions
 	has_many :job_qualifications, :dependent => :destroy
 	accepts_nested_attributes_for :job_qualifications
+  has_many :invites, :dependent => :destroy
 
 	# scope: newest_first, -> { order(created_at: :desc) }
 	
