@@ -15,6 +15,7 @@ class ProfileSerializer < ActiveModel::Serializer
 	attributes :youtube_video_link
 	attributes :hourly_rate
 	attributes :availability
+	attributes :visibility
 	attributes :english_proficiency
 	attributes :about_me
 	attributes :development_experience
