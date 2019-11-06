@@ -60,6 +60,7 @@ class User < ApplicationRecord
       last_name: last_name,
       full_name: self.display_full_name,
       user_skill: self.profile.try(:skill),
+      user_category: self.profile.try(:category),
       user_professional_title: self.profile.try(:professional_title)
     }
   end
