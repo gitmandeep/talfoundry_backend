@@ -29,6 +29,7 @@ class Job < ApplicationRecord
   def set_array_data
     self.job_category = eval(job_category).try(:join, (',')) rescue ''
     self.job_speciality = eval(job_speciality).try(:join, (',')) rescue ''
+    self.job_expertise_required = eval(job_expertise_required).try(:join, (',')) rescue ''
     self.job_additional_expertise_required = eval(job_additional_expertise_required).try(:join, (',')) rescue ''
   end
 
