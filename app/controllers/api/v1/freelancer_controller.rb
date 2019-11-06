@@ -15,6 +15,11 @@ class Api::V1::FreelancerController < Api::V1::ApiController
     render json: freelancer_users, each_serializer: FreelancerSerializer, status: :ok
   end
 
+  def get_invitations
+  	invitations = @current_user.invitations
+  	render json: invitations, serializer: FreelancerInvitaionsSerializer, status: :ok
+  end
+
 	def freelancer_details
 		freelancer = User.find_by_uuid(params[:id])
 		if freelancer
