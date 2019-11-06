@@ -60,10 +60,15 @@ class Api::V1::JobsController < Api::V1::ApiController
       freelancer_users = User.search(params[:search])
       freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true)}
     else
-      freelancer_users = User.search("%#{@job.job_category}%" "%#{@job.job_speciality}%", fields: [:user_skill, :user_category])       
-        # freelancer_users = User.manager_freelancer_index.includes(:profile).where("category ILIKE ? or skill ILIKE ?","%#{@job.job_category}%", "%#{@job.job_speciality}%").limit(10)
+      freelancer_users = User.search("#{@job.job_category}", fields: [:user_skill, :user_category])       
+      freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true && !@job.invites.pluck(:recipient_id).include?(fu.id) )}      
     end
     render json: freelancer_users, each_serializer: FreelancerSerializer, status: :ok
+    # if freelancer_users.present?
+    #   render json: freelancer_users, each_serializer: FreelancerSerializer, status: :ok
+    # else
+    #   render_error("Not found", 404)
+    # end
   end
 
   def invited_freelancer
