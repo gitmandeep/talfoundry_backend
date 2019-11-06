@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
       get 'freelancer_index', to: 'freelancer#freelancer_index'
       get 'freelancer_details/:id', to: 'freelancer#freelancer_details'
+      get 'get_invitations', to: 'freelancer#get_invitations'
 
       
       resources :profiles
