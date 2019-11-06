@@ -18,9 +18,10 @@ class ProfileSerializer < ActiveModel::Serializer
 	attributes :english_proficiency
 	attributes :about_me
 	attributes :development_experience
-  	attributes :name
+  attributes :name
+  attributes :available_jobs
 
-  	has_many :educations, serializer: EducationSerializer
+  has_many :educations, serializer: EducationSerializer
 	has_many :employments, serializer: EmploymentSerializer
 	has_many :certifications, serializer: CertificationSerializer
 
@@ -52,6 +53,16 @@ class ProfileSerializer < ActiveModel::Serializer
 
 	def user_certification
 		object.certification.try(:split, (','))
+	end
+
+	def available_jobs
+		if current_user.role == "Project Manager"
+			jobs_array = []
+			jobs = current_user.jobs.select{ |job| job.invites.try(:recipient_id) != object.user.id }.pluck(:id, :job_title)
+			jobs.each {|a| jobs_array.push({id: a[0], title: a[1]})}
+      users_jobs = jobs_array.flatten			
+		end
+		return users_jobs || [] 
 	end
 
 end
