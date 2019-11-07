@@ -36,6 +36,14 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     end
   end
 
+  def current_user_details
+    if @current_user
+      render json: @current_user, serializer: UserSerializer, status: :ok
+    else
+      render_error('Invalid user', 401)
+    end
+  end
+
 end
 
 #user_list: ( users ? ActiveModel::Serializer::CollectionSerializer.new(users, each_serializer: UserSerializer) : '')
