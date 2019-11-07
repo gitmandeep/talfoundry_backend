@@ -13,9 +13,21 @@ class Api::V1::InviteController < Api::V1::ApiController
 		end
 	end
 
+	def update
+		@invitation = Invite.find(params[:id])
+		if @invitation.update(invite_params)
+			@invitation.status_updated_at = Time.now
+			@invitation.save!
+			render json: { success: true, message: "Invitation updated successfully...!", status: 200 }
+		else
+			render_error(@invitation.errors.full_messages, 422)
+		end
+	end
+
 	private
 
   def invite_params
-    params.require(:invite).permit(:job_id, :recipient_id, :message) 
+    params.require(:invite).permit(:job_id, :recipient_id, :message, :status)
   end
+
 end
