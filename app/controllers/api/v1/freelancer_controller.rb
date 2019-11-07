@@ -16,8 +16,8 @@ class Api::V1::FreelancerController < Api::V1::ApiController
   end
 
   def get_invitations
-  	invitations = @current_user.invitations
-  	render json: invitations, serializer: FreelancerInvitaionsSerializer, status: :ok
+  	invitations = @current_user.invitations.present? ? @current_user.invitations : []
+  	render json: invitations, each_serializer: FreelancerInvitationsSerializer, status: :ok
   end
 
 	def freelancer_details
@@ -28,5 +28,5 @@ class Api::V1::FreelancerController < Api::V1::ApiController
 			render_error('Invalid user', 401)
 		end
 	end
-	
+
 end
