@@ -16,8 +16,8 @@ class Api::V1::FreelancerController < Api::V1::ApiController
   end
 
   def get_invitations
-  	invitations = @current_user.invitations.present? ? @current_user.invitations : []
-  	render json: invitations, each_serializer: FreelancerInvitationsSerializer, status: :ok
+  	invitations = @current_user.invitations.open_invite.present? ? @current_user.invitations : []
+    render json: invitations, each_serializer: FreelancerInvitationsSerializer, status: :ok
   end
 
 	def freelancer_details
