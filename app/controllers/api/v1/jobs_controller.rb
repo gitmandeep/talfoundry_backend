@@ -44,7 +44,7 @@ class Api::V1::JobsController < Api::V1::ApiController
   def job_related_freelancer
     if params[:search].present?
       freelancer_users = User.search(params[:search])
-      freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true)}
+      freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true && !@job.invites.pluck(:recipient_id).include?(fu.id) && !((@job.job_category.split(',')&(fu.profile.category.split(',')))).empty? )}
     else
       freelancer_users = User.search("#{@job.job_category}" "#{@job.job_speciality}", operator: "or", fields: [:user_skill, :user_category])       
       freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true && !@job.invites.pluck(:recipient_id).include?(fu.id) )}     
