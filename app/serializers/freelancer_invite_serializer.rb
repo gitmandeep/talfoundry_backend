@@ -1,4 +1,4 @@
-class FreelancerInvitationsSerializer < ActiveModel::Serializer
+class FreelancerInviteSerializer < ActiveModel::Serializer
   attributes :id, :job_uuid, :message, :created_at, :status_updated_at, :status, :job_title, :client_name
 
   def job_title

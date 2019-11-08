@@ -8,24 +8,24 @@ class Api::V1::InviteController < Api::V1::ApiController
 		@invite.status = "Open" # set status of invitaion
 		if @invite.save
 		  #InviteMailer.job_invite(@invite).deliver
-			render json: { success: true, message: "Invitaion was send successfully..!", status: 200 }
+			render json: { success: true, message: "Invitaion sent successfully..!", status: 200 }
 		else
 			render_error("Not found", 401)
 		end
 	end
 
 	def update
-		if @invitation.update(invite_params)
-			@invitation.status_updated_at = Time.now
-			@invitation.save!
-			render json: { success: true, message: "Invitation updated successfully...!", status: 200 }
+		if @invite.update(invite_params)
+			@invite.status_updated_at = Time.now
+			@invite.save!
+			render json: { success: true, message: "Invite updated successfully...!", status: 200 }
 		else
-			render_error(@invitation.errors.full_messages, 422)
+			render_error(@invite.errors.full_messages, 422)
 		end
 	end
 
 	def show
-		@invitation.present? ? (render json: @invitation, serializer: InviteSerializer) : (render json: { error: 'Invite not found' }, status: 404)
+		@invite.present? ? (render json: @invite, serializer: InviteSerializer, include: 'job.**') : (render json: { error: 'Invite not found' }, status: 404)
 	end
 
 	private
@@ -35,7 +35,7 @@ class Api::V1::InviteController < Api::V1::ApiController
   end
 
   def find_invite
-  	@invitation = Invite.find(params[:id])
+  	@invite = Invite.find(params[:id])
   end
 
 end

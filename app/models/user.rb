@@ -10,7 +10,7 @@ class User < ApplicationRecord
 
   has_one :profile, :dependent => :destroy
   has_many :jobs, :dependent => :destroy
-  has_many :invitations, :class_name => "Invite", :foreign_key => 'recipient_id', :dependent => :destroy
+  has_many :invites, :class_name => "Invite", :foreign_key => 'recipient_id', :dependent => :destroy
   has_many :sent_invites, :class_name => "Invite", :foreign_key => 'sender_id', :dependent => :destroy
 
 
