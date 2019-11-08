@@ -1,5 +1,6 @@
 class Api::V1::InviteController < Api::V1::ApiController
   before_action :authorize_request
+  before_action :find_invite, only: [:update, :show]
 
 	def create
 		@invite = Invite.new(invite_params) # Make a new Invite
@@ -14,7 +15,6 @@ class Api::V1::InviteController < Api::V1::ApiController
 	end
 
 	def update
-		@invitation = Invite.find(params[:id])
 		if @invitation.update(invite_params)
 			@invitation.status_updated_at = Time.now
 			@invitation.save!
@@ -24,10 +24,18 @@ class Api::V1::InviteController < Api::V1::ApiController
 		end
 	end
 
+	def show
+		@invitation.present? ? (render json: @invitation, serializer: InviteSerializer) : (render json: { error: 'Invite not found' }, status: 404)
+	end
+
 	private
 
   def invite_params
     params.require(:invite).permit(:job_id, :recipient_id, :message, :status)
+  end
+
+  def find_invite
+  	@invitation = Invite.find(params[:id])
   end
 
 end

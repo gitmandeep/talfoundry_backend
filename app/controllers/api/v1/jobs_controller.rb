@@ -2,26 +2,13 @@ class Api::V1::JobsController < Api::V1::ApiController
   before_action :authorize_request
   before_action :find_job, only: [:edit, :update, :destroy, :show, :job_related_freelancer, :invited_freelancer]
 
-	
   def index
-    if params[:search].present?
-      jobs = Job.search(params[:search])
-    else
-      jobs = Job.order(created_at: :desc).where(:job_visibility => "Anyone")
-    end
-    if jobs
-      render json: jobs, each_serializer: JobSerializer
-    else
-      render json: { error: 'jobs not found' }, status: 404
-    end
+    jobs = params[:search].present? ? jobs = Job.search(params[:search]) : jobs = Job.order(created_at: :desc).where(:job_visibility => "Anyone")
+    jobs.present? ? (render json: jobs, each_serializer: JobSerializer) : (render json: { error: 'jobs not found' }, status: 404)
   end
 
   def show
-    if @job.present?
-      render json: @job, serializer: JobSerializer
-    else
-      render json: { error: 'job not found' }, status: 404
-    end
+    @job.present? ? (render json: @job, serializer: JobSerializer) : (render json: { error: 'job not found' }, status: 404)
   end
 
   def jobs_by_user
@@ -32,7 +19,6 @@ class Api::V1::JobsController < Api::V1::ApiController
       render json: { error: 'jobs not found' }, status: 404
     end
   end
-
 
 	def create
     job = @current_user.jobs.build(job_params)   
@@ -83,12 +69,10 @@ class Api::V1::JobsController < Api::V1::ApiController
 
   def find_job
     @job = Job.where(uuid: params[:id]).or(Job.where(id: params[:id])).first
-    render_error("Not found", 404) unless @job 
+    render_error("Not found", 404) unless @job
   end
 
   def job_params
     params.require(:job).permit(:job_title, {:job_category => [] } , {:job_speciality => [] }, :job_description,:job_document,:job_type,:job_api_integration, {:job_expertise_required => []}, {:job_additional_expertise_required => []} , :job_visibility,:number_of_freelancer_required,:job_pay_type,:job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:job_question_label,:job_question], job_qualifications_attributes:  [:english_level,:location])
   end
-
-
 end

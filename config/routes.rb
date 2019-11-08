@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       post '/reset_password', to: 'password#reset_password'
       post '/send_invitation', to: 'invite#create'
 
-      resources :invite, only: [:update]
+      resources :invite, only: [:update, :show]
       
       resources :jobs do
         get :jobs_by_user, on: :collection

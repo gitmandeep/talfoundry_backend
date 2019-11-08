@@ -4,11 +4,9 @@ class Invite < ApplicationRecord
 	belongs_to :job
 
 	# STATUS: ["Accepted", "Open", "Decline"]
+	scope :open_invitations, -> { where({ status: "Open"}) }
 
 	def self.get_recipients
 		self.pluck(:recipient)
 	end
-
-  scope :open_invite, -> { where({ status: "Open"}) }
-
 end

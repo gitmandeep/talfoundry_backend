@@ -1,29 +1,9 @@
 class JobSerializer < ActiveModel::Serializer
-  attributes :id
-  attributes :uuid
-  attributes :created_at
-	attributes :job_title
-	attributes :job_category
-	attributes :job_speciality
-	attributes :job_description
-	attributes :job_document
-	attributes :job_type
-	attributes :job_api_integration
-	attributes :job_expertise_required
-	attributes :job_visibility
-	attributes :number_of_freelancer_required
-	attributes :job_pay_type
-	attributes :job_experience_level
-	attributes :job_duration
-	attributes :job_time_requirement
-	attributes :job_additional_expertise_required
-
+	attributes :id, :uuid, :created_at, :job_title, :job_category, :job_speciality, :job_description, :job_document, :job_type, :job_api_integration, :job_expertise_required, :job_visibility, :number_of_freelancer_required, :job_pay_type, :job_experience_level, :job_duration, :job_time_requirement, :job_additional_expertise_required
 	#has_one :user, serializer: UserSerializer
 	has_one :user, serializer: ProjectManagerSerializer
 	has_many :job_screening_questions, serializer: JobScreeningQuestionSerializer
 	has_many :job_qualifications, serializer: JobQualificationSerializer
-
-
 
 	def job_document
 		object.job_document.try(:url)
@@ -46,9 +26,3 @@ class JobSerializer < ActiveModel::Serializer
 	end
 
 end
-
-
-
-
-
-
