@@ -45,6 +45,8 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :notifications, only: [:index, :create, :update]
+
     end
   end
 

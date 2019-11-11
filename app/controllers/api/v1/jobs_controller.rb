@@ -27,7 +27,7 @@ class Api::V1::JobsController < Api::V1::ApiController
       render json: job, each_serializer: JobSerializer, success: true, message: "Job created", status: 200
     else
       render_error(job.errors.full_messages, 422)
-    end 
+    end
   end
 
   def edit
