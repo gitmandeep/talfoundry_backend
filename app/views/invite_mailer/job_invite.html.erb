@@ -1,0 +1,132 @@
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tbody>
+    <tr>
+      <td align="center">
+        <table class="col-600" width="950" border="0" align="center" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td align="center" valign="top" background="https://designmodo.com/demo/emailtemplate/images/header-background.jpg" bgcolor="#66809b" style="background-size:cover; background-position:top;height:300px">
+                <table class="col-600" width="950" height="450" border="0" align="center" cellpadding="0"
+                  cellspacing="0">
+                  <tbody>
+                    <tr>
+                      <td height="40"></td>
+                    </tr>
+
+                    <tr>
+                      <td align="center" style="line-height: 0px;">
+                       <img src="<%= "#{ENV["IMAGE_BASE_URL"]}/logo_1.png" %>" /> 	 
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center"
+                        style="font-family: 'Poppins', sans-serif; font-size:37px; color:#ffffff; line-height:24px; font-weight: bold; letter-spacing: 7px;">
+                        Job Invitation <!-- <span
+                          style="font-family: 'Poppins', sans-serif; font-size:37px; color:#ffffff; line-height:39px; font-weight: 300; letter-spacing: 7px;">  Information</span> -->
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center"
+                        style="font-family: 'Poppins', sans-serif; font-size:16px; color:#ffffff; line-height:30px; font-weight: 700;">
+                        Hello, <%= @invite.recipient.first_name%>!<br>
+                        <%= @invite.sender.first_name %>! like to invite you to take a look at the job posted him.<br> Please submit a proposal if you're available and interested.<br> 
+                        Thanks
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td height="50"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <table class="col-600" width="950" height="150" border="0" align="center" cellpadding="0" cellspacing="0"
+          style="margin-left:20px; margin-right:20px; border-left: 1px solid #dbd9d9; border-right: 1px solid #dbd9d9;">
+          <tbody>
+            <tr>
+              <td height="35"></td>
+            </tr>
+            <tr>
+              <td align="center"
+                style="font-family: 'Poppins', sans-serif; font-size:22px; font-weight: bold; color:#2a3a4b;">
+                Job Title: <%= @invite.job.job_title %></td>
+            </tr>
+            <tr>
+              <td height="10"></td>
+            </tr>
+            <tr height="70">
+              <td align="center" style="font-size:18px; font-weight: bold;">
+                Job Category: <%= @invite.job.job_category %>     
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td align="center">
+        <table class="col-600" width="950" border="0" align="center" cellpadding="0" cellspacing="0"
+          style="margin-left:20px; margin-right:20px;">
+          <tbody>
+            <tr>
+              <td align="center">
+                <table align="center" width="100%" border="0" cellspacing="0" cellpadding="0"
+                  style=" border-left: 1px solid #dbd9d9; border-right: 1px solid #dbd9d9;">
+                  <tbody>
+                    <tr>
+                      <td align="center" bgcolor="#9c9c9c" height="185">
+                        <table class="col-600" width="950" border="0" align="center" cellpadding="0" cellspacing="0">
+                          <tbody>
+                            <tr>
+                              <td height="25"></td>
+                            </tr>
+                            <tr>
+                              <td align="center"
+                                style="font-family: 'Poppins',  sans-serif; font-size:26px; font-weight: 500; color:#fff;">
+                                Stay in touch</td>
+                            </tr>
+                            <tr>
+                              <td height="25"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <table align="center" width="35%" border="0" cellspacing="0" cellpadding="0">
+                          <tbody>
+                            <tr>
+                              <td align="center" width="30%" style="vertical-align: top;">
+                                <a href="#" target="_blank"> <img width="30" src="https://designmodo.com/demo/emailtemplate/images/icon-fb.png">
+                                </a>
+                              </td>
+
+                              <td align="center" class="margin" width="30%" style="vertical-align: top;">
+                                <a href="#" target="_blank"> <img width="30" src="https://designmodo.com/demo/emailtemplate/images/icon-twitter.png">
+                                </a>
+                              </td>
+
+                              <td align="center" width="30%" style="vertical-align: top;">
+                                <a href="#" target="_blank"> <img width="30" src="https://designmodo.com/demo/emailtemplate/images/icon-googleplus.png">
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>

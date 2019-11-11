@@ -7,7 +7,7 @@ class Api::V1::InviteController < Api::V1::ApiController
 		@invite.sender_id = current_user.id # set the sender to the current user
 		@invite.status = "Open" # set status of invitaion
 		if @invite.save
-		  #InviteMailer.job_invite(@invite).deliver
+		  InviteMailer.with(invite: @invite).job_invite.deliver
 		  notify_user(@current_user.id, @invite.recipient_id, "Job invitation", "New invitation for a job")
 			render json: { success: true, message: "Invitaion sent successfully..!", status: 200 }
 		else
