@@ -1,3 +1,3 @@
 class JobApplicationAnswerSerializer < ActiveModel::Serializer
-	attributes :id, :uuid, :question_id, :answer
+	attributes :id, :uuid, :job_application_id, :question_id, :answer
 end

@@ -4,6 +4,7 @@ class JobSerializer < ActiveModel::Serializer
 	has_one :user, serializer: ProjectManagerSerializer
 	has_many :job_screening_questions, serializer: JobScreeningQuestionSerializer
 	has_many :job_qualifications, serializer: JobQualificationSerializer
+	has_many :job_applications, serializer: JobApplicationSerializer
 
 	def job_document
 		object.job_document.try(:url)
