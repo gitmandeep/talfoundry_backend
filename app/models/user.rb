@@ -14,6 +14,8 @@ class User < ApplicationRecord
   has_many :sent_invites, :class_name => "Invite", :foreign_key => 'sender_id', :dependent => :destroy
   has_many :notifications, :class_name => "Notification", :foreign_key => 'recipient_id', :dependent => :destroy
   has_many :sent_notifications, :class_name => "Notification", :foreign_key => 'sender_id', :dependent => :destroy
+  has_many :job_applications
+
 
   validates :first_name, :last_name, :role, presence: true
   validates :email, uniqueness: true
