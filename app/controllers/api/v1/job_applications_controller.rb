@@ -1,6 +1,6 @@
 class Api::V1::JobApplicationsController < Api::V1::ApiController
   before_action :authorize_request
-  before_action :find_job_application, only: [:show]
+  before_action :find_job_application, only: [:show, :view_job_proposal]
 
 	def create
     job_application = @current_user.job_applications.build(job_application_params)   
@@ -15,6 +15,11 @@ class Api::V1::JobApplicationsController < Api::V1::ApiController
   def show
     job_application = @job_application.present? ? @job_application : []
     render json: job_application, serializer: JobApplicationSerializer, include: 'job.**', status: :ok
+  end
+
+  def view_job_proposal
+    job_application = @job_application.present? ? @job_application : []
+    render json: job_application, serializer: JobProposalSerializer, include: 'user.profile', status: :ok
   end
 
 	private

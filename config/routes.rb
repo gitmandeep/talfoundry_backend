@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       resources :certifications
       resources :job_screening_questions, only: [:destroy]
       resources :job_applications, only: [:create, :show]
+      get 'view_job_proposal', to: 'job_applications#view_job_proposal'
 
       post '/login', to: 'authentication#login'   
       post '/admin_login', to: 'authentication#admin_login'
