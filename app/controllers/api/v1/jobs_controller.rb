@@ -1,6 +1,6 @@
 class Api::V1::JobsController < Api::V1::ApiController
   before_action :authorize_request
-  before_action :find_job, only: [:edit, :update, :destroy, :show, :job_related_freelancer, :invited_freelancer]
+  before_action :find_job, only: [:edit, :update, :destroy, :show, :job_related_freelancer, :invited_freelancer, :get_job_proposals]
 
   def index
     jobs = params[:search].present? ? jobs = Job.search(params[:search]) : jobs = Job.order(created_at: :desc).where(:job_visibility => "Anyone")
@@ -63,6 +63,11 @@ class Api::V1::JobsController < Api::V1::ApiController
     else
       render_error("Not found", 404)
     end  
+  end
+
+  def get_job_proposals
+    job_proposals = @job.job_applications.present? ? @job.job_applications : []
+    render json: job_proposals, each_serializer: JobProposalSerializer, include: ['user.profile'], status: :ok
   end
 
 	private
