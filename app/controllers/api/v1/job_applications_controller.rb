@@ -14,6 +14,6 @@ class Api::V1::JobApplicationsController < Api::V1::ApiController
 	private
 
   def job_application_params
-    params.require(:job_application).permit(:job_id, :cover_letter, :document, :price, job_application_answers_attributes: [:question_id, :answer])
+    params.require(:job_application).permit(:job_id, :cover_letter, :document, :price, job_application_answers_attributes: [:question_id, :answer, :question_label])
   end
 end
