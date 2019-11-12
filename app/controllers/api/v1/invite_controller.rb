@@ -8,7 +8,7 @@ class Api::V1::InviteController < Api::V1::ApiController
 		@invite.status = "Open" # set status of invitaion
 		if @invite.save
 		  InviteMailer.with(invite: @invite).job_invite.deliver
-		  notify_user(@current_user.id, @invite.recipient_id, "Job invitation", "New invitation for a job")
+		  notify_user(@current_user.id, @invite.recipient_id, "Job invitation", "You have received an invitation to interview for the job \"#{@invite.job.try(:job_title)}\" ")
 			render json: { success: true, message: "Invitaion sent successfully..!", status: 200 }
 		else
 			render_error("Not found", 401)
@@ -19,7 +19,7 @@ class Api::V1::InviteController < Api::V1::ApiController
 		if @invite.update(invite_params)
 			@invite.status_updated_at = Time.now
 			@invite.save!
-			notify_user(@invite.recipient_id, @invite.sender_id, "Invitation update", "Your invitation updated by freelancer")
+			notify_user(@invite.recipient_id, @invite.sender_id, "Invitation update", "Your proposal to the job \"#{@invite.job.try(:job_title)}\" was #{@invite.status.downcase} ")
 			render json: { success: true, message: "Invite updated successfully...!", status: 200 }
 		else
 			render_error(@invite.errors.full_messages, 422)
