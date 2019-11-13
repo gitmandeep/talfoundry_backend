@@ -1,5 +1,5 @@
 class Api::V1::InviteController < Api::V1::ApiController
-	include Concerns::Notify
+	include Api::V1::Concerns::Notify
   before_action :authorize_request
   before_action :find_invite, only: [:update, :show]
 

@@ -1,5 +1,5 @@
 class ProjectManagerSerializer < ActiveModel::Serializer
-	attributes :id, :uuid, :email, :full_name, :account_active, :project_manager_jobs
+	attributes :id, :uuid, :email, :country, :full_name, :account_active, :project_manager_jobs
 	#attributes :user_picture
 	#attributes :profile_created
 	#attributes :account_approved

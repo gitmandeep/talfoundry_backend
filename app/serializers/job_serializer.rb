@@ -1,5 +1,5 @@
 class JobSerializer < ActiveModel::Serializer
-	attributes :id, :uuid, :created_at, :job_title, :job_category, :job_speciality, :job_description, :job_document, :job_type, :job_api_integration, :job_expertise_required, :job_visibility, :number_of_freelancer_required, :job_pay_type, :job_pay_value, :job_experience_level, :job_duration, :job_time_requirement, :job_additional_expertise_required
+	attributes :id, :uuid, :created_at, :job_title, :job_category, :job_speciality, :job_description, :job_document, :job_type, :job_api_integration, :job_expertise_required, :job_visibility, :number_of_freelancer_required, :job_pay_type, :job_pay_value, :job_experience_level, :job_duration, :job_time_requirement, :job_additional_expertise_required, :proposal_count
 	attributes :job_application_id
 	#has_one :user, serializer: UserSerializer
 	has_one :user, serializer: ProjectManagerSerializer
@@ -28,6 +28,10 @@ class JobSerializer < ActiveModel::Serializer
 
 	def job_application_id
 		@instance_options[:job_application_id].present? ? (return @instance_options[:job_application_id]) : (return nil)
+	end
+
+	def proposal_count
+		object.job_applications.try(:count)
 	end
 
 end

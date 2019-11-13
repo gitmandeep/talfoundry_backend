@@ -69,7 +69,7 @@ class Api::V1::JobsController < Api::V1::ApiController
 
   def get_job_proposals
     job_proposals = @job.job_applications.present? ? @job.job_applications : []
-    render json: job_proposals, each_serializer: JobProposalSerializer, job_proposal_count: job_proposals.try(:count), include: ['user.profile'], status: :ok
+    render json: job_proposals, each_serializer: JobProposalSerializer, include: ['user.profile'], status: :ok
   end
 
 	private
