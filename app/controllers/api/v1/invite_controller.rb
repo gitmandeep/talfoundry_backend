@@ -1,4 +1,5 @@
 class Api::V1::InviteController < Api::V1::ApiController
+	include Concerns::Notify
   before_action :authorize_request
   before_action :find_invite, only: [:update, :show]
 
@@ -38,15 +39,6 @@ class Api::V1::InviteController < Api::V1::ApiController
 
   def find_invite
   	@invite = Invite.find(params[:id])
-  end
-
-  def notify_user(sender_id,recipient_id, type, message)
-  	notification = Notification.new
-  	notification.sender_id = sender_id
-  	notification.recipient_id = recipient_id
-  	notification.message = message
-  	notification.message_type = type
-  	notification.save!
   end
 
 end

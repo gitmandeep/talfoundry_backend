@@ -3,7 +3,12 @@ class Api::V1::NotificationsController < Api::V1::ApiController
 
   def index
   	notifications = @current_user.notifications.present? ? @current_user.notifications : []
-  	render json: notifications, each_serializer: NotificationSerializer, status: :ok
+  	render json: notifications, each_serializer: NotificationSerializer, count: notifications.try(:unread).try(:count), status: :ok
+  end
+
+  def update
+  	@current_user.notifications.unread.update_all(read_at: Time.now)
+  	render json: {succes: true, status: 200}
   end
 
 end
