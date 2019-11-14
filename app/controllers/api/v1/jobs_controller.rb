@@ -15,7 +15,7 @@ class Api::V1::JobsController < Api::V1::ApiController
         create_search_history(search_keyword)
       end
     end
-    jobs.present? ? (render json: jobs, each_serializer: JobSerializer) : (render json: { error: 'jobs not found' }, status: 404)
+    jobs.present? ? (render json: jobs, each_serializer: JobSerializer) : (render json: [], status: 200)
   end
 
   def show
