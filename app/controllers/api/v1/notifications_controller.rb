@@ -2,7 +2,7 @@ class Api::V1::NotificationsController < Api::V1::ApiController
   before_action :authorize_request
 
   def index
-  	notifications = @current_user.notifications.present? ? @current_user.notifications : []
+  	notifications = @current_user.notifications.present? ? @current_user.notifications.order(created_at: :desc) : []
   	render json: notifications, each_serializer: NotificationSerializer, count: notifications.try(:unread).try(:count), status: :ok
   end
 

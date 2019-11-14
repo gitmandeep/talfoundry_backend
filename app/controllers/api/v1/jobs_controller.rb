@@ -3,7 +3,12 @@ class Api::V1::JobsController < Api::V1::ApiController
   before_action :find_job, only: [:edit, :update, :destroy, :show, :job_related_freelancer, :invited_freelancer, :get_job_proposals]
 
   def index
-    jobs = params[:search].present? ? jobs = Job.search(params[:search]) : jobs = Job.order(created_at: :desc).where(:job_visibility => "Anyone")
+    if params[:search_by_category] || params[:search_by_recommended]
+      search_by = params[:search_by_category].present? ? params[:search_by_category] : @current_user.try(:profile).try(:category)
+      jobs = Job.search(search_by, operator: "or", fields: [:job_category])
+    else
+      jobs = params[:search].present? ? Job.search(params[:search]) : Job.order(created_at: :desc).where(:job_visibility => "Anyone")
+    end
     jobs.present? ? (render json: jobs, each_serializer: JobSerializer) : (render json: { error: 'jobs not found' }, status: 404)
   end
 

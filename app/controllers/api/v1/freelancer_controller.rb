@@ -16,12 +16,12 @@ class Api::V1::FreelancerController < Api::V1::ApiController
   end
 
   def get_invites
-    invites = @current_user.invites.open_invites.present? ? @current_user.invites.open_invites : []
+    invites = @current_user.invites.open_invites.present? ? @current_user.invites.open_invites.order(created_at: :desc) : []
     render json: invites, each_serializer: FreelancerInviteSerializer, status: :ok
   end
 
   def get_submitted_proposals
-    submitted_proposals = @current_user.job_applications.present? ? @current_user.job_applications : []
+    submitted_proposals = @current_user.job_applications.present? ? @current_user.job_applications.order(created_at: :desc) : []
     render json: submitted_proposals, each_serializer: SubmittedProposalSerializer, status: :ok
   end
 
