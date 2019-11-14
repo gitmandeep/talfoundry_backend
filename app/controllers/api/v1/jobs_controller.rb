@@ -9,6 +9,12 @@ class Api::V1::JobsController < Api::V1::ApiController
     else
       jobs = params[:search].present? ? Job.search(params[:search]) : Job.order(created_at: :desc).where(:job_visibility => "Anyone")
     end
+    if params[:search_by_category] || params[:search]
+      search_keyword = params[:search_by_category] || params[:search]
+      if @current_user.search_histories.where(keyword: search_keyword).order(created_at: :desc).limit(5).uniq.blank?
+        create_search_history(search_keyword)
+      end
+    end
     jobs.present? ? (render json: jobs, each_serializer: JobSerializer) : (render json: { error: 'jobs not found' }, status: 404)
   end
 
@@ -86,5 +92,10 @@ class Api::V1::JobsController < Api::V1::ApiController
 
   def job_params
     params.require(:job).permit(:job_title, {:job_category => [] } , {:job_speciality => [] }, :job_description,:job_document,:job_type,:job_api_integration, {:job_expertise_required => []}, {:job_additional_expertise_required => []} , :job_visibility,:number_of_freelancer_required,:job_pay_type, :job_pay_value, :job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:job_question_label,:job_question], job_qualifications_attributes:  [:english_level,:location])
+  end
+
+  def create_search_history(search_keyword)
+    search_history = @current_user.search_histories.build(keyword: search_keyword)
+    search_history.save!
   end
 end

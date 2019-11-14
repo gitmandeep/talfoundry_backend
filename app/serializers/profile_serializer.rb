@@ -22,6 +22,7 @@ class ProfileSerializer < ActiveModel::Serializer
 	attributes :development_experience
   attributes :name
   attributes :available_jobs
+  attributes :search_keywords
 
   has_many :educations, serializer: EducationSerializer
 	has_many :employments, serializer: EmploymentSerializer
@@ -32,6 +33,11 @@ class ProfileSerializer < ActiveModel::Serializer
 		object.user.id
 	end
 
+	def search_keywords
+		if object.user.search_histories
+			object.user.search_histories.order(created_at: :desc).limit(5).map(&:keyword).uniq
+		end
+	end
 	
 	def name
 		object.user.try(:first_name) + ' ' + object.user.try(:last_name)
