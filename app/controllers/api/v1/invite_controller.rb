@@ -9,7 +9,8 @@ class Api::V1::InviteController < Api::V1::ApiController
 		@invite.status = "Open" # set status of invitaion
 		if @invite.save
 		  InviteMailer.with(invite: @invite).job_invite.deliver
-		  notify_user(@current_user.id, @invite.recipient_id, "Job invitation", "You have received an invitation to interview for the job \"#{@invite.job.try(:job_title)}\" ")
+		  @invite.reload
+		  notify_user(@current_user.id, @invite.recipient_id, @invite.uuid, "Job invitation", "You have received an invitation to interview for the job \"#{@invite.job.try(:job_title)}\" ")
 			render json: { success: true, message: "Invitaion sent successfully..!", status: 200 }
 		else
 			render_error("Not found", 401)
