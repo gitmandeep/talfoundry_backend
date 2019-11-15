@@ -1,5 +1,5 @@
 class Api::V1::AuthenticationController < Api::V1::ApiController
-	before_action :authorize_request, except: [:login, :admin_login]
+  before_action :authorize_request, except: [:login, :admin_login]
 
   def login
     user = User.find_by_email(params[:email])
@@ -9,7 +9,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
         time = Time.now + 24.hours.to_i
         # if user.role == "freelancer"
         #   unless user.profile_created
-        #     users = User.where(profile_created: true).limit(5)          
+        #     users = User.where(profile_created: true).limit(5)
         #   end
         # end
         render json: { token: token, exp: time.strftime("%m-%d-%Y %H:%M"),email: user.email, user: user, profile_uuid: (user.profile ? user.profile.uuid : ""), profile_picture: (user.profile ? user.profile.profile_picture.try(:url) : ""), call_schedule: user.call_schedule, account_approved: user.account_approved, professional_profile_created: user.professional_profile_created, user_job: user.jobs.present? }, status: :ok
@@ -37,15 +37,9 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   end
 
   def current_user_details
-    if @current_user
-      render json: @current_user, serializer: UserSerializer, status: :ok
-    else
-      render_error('Invalid user', 401)
-    end
+    @current_user ? (render json: @current_user, serializer: UserSerializer, status: :ok) : render_error('Invalid user', 401)
   end
 
 end
 
 #user_list: ( users ? ActiveModel::Serializer::CollectionSerializer.new(users, each_serializer: UserSerializer) : '')
-
- 

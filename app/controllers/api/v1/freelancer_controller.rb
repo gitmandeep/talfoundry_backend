@@ -2,11 +2,16 @@ class Api::V1::FreelancerController < Api::V1::ApiController
   before_action :authorize_request
 
   def freelancer_index
-    if @current_user.role == "admin"
+    if @current_user.is_admin?
       freelancer_users = User.admin_freelancer_index
-    elsif @current_user.role == "Project Manager" || @current_user.role == "freelancer"
+    elsif @current_user.is_hiring_manager? || @current_user.is_freelancer?
       if params[:search].present?
         freelancer_users = User.search(params[:search])
+      elsif params[:search_by_category].present?
+        freelancer_users = User.search(params[:search_by_category], fields: [:user_category])
+      end
+
+      if freelancer_users
         freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true && fu.id != @current_user.id )}
       else
         freelancer_users = User.manager_freelancer_index

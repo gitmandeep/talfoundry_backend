@@ -1,25 +1,9 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id
-  attributes :uuid
-	attributes :email
-  attributes :first_name
-  attributes :last_name
-  attributes :role
-  attributes :profile_created
-  attributes :call_schedule
-  attributes :account_approved
-  attributes :professional_profile_created
-  attributes :user_profile
-	attributes :full_name
-  attributes :country
-	attributes :created_at
-
-
+  attributes :id, :uuid, :email, :first_name, :last_name, :role, :profile_created, :call_schedule, :account_approved, :professional_profile_created, :user_profile, :full_name, :country, :country_id, :created_at
   #has_one :profile, serializer: ProfileSerializer
 
-
   def full_name
-  	object.first_name + " " + object.last_name
+    object.first_name + " " + object.last_name
   end
 
   def user_profile
