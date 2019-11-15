@@ -1,4 +1,5 @@
 class Api::V1::JobsController < Api::V1::ApiController
+  include Api::V1::Concerns::Search
   before_action :authorize_request
   before_action :find_job, only: [:edit, :update, :destroy, :show, :job_related_freelancer, :invited_freelancer, :get_job_proposals]
 
@@ -10,9 +11,8 @@ class Api::V1::JobsController < Api::V1::ApiController
       jobs = params[:search].present? ? Job.search(params[:search]) : Job.order(created_at: :desc).where(:job_visibility => "Anyone")
     end
     if params[:search]
-      search_keyword = params[:search]
-      if @current_user.search_histories.where(keyword: search_keyword).order(created_at: :desc).limit(5).uniq.blank?
-        create_search_history(search_keyword)
+      if @current_user.search_histories.where("keyword ~* ?", params[:search]).order(created_at: :desc).limit(5).uniq.blank?
+        create_search_history(params[:search])
       end
     end
     jobs.present? ? (render json: jobs, each_serializer: JobSerializer) : (render json: [], status: 200)
@@ -92,10 +92,5 @@ class Api::V1::JobsController < Api::V1::ApiController
 
   def job_params
     params.require(:job).permit(:job_title, {:job_category => [] } , {:job_speciality => [] }, :job_description,:job_document,:job_type,:job_api_integration, {:job_expertise_required => []}, {:job_additional_expertise_required => []} , :job_visibility,:number_of_freelancer_required,:job_pay_type, :job_pay_value, :job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:job_question_label,:job_question], job_qualifications_attributes:  [:english_level,:location])
-  end
-
-  def create_search_history(search_keyword)
-    search_history = @current_user.search_histories.build(keyword: search_keyword)
-    search_history.save!
   end
 end

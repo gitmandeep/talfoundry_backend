@@ -1,4 +1,5 @@
 class Api::V1::FreelancerController < Api::V1::ApiController
+  include Api::V1::Concerns::Search
   before_action :authorize_request
 
   def freelancer_index
@@ -17,6 +18,13 @@ class Api::V1::FreelancerController < Api::V1::ApiController
         freelancer_users = User.manager_freelancer_index
       end
     end
+
+    if @current_user.is_hiring_manager? && params[:search].present?
+      if @current_user.search_histories.where("keyword ~* ?", params[:search]).order(created_at: :desc).limit(5).uniq.blank?
+        create_search_history(params[:search])
+      end
+    end
+
     render json: freelancer_users, each_serializer: FreelancerSerializer, status: :ok
   end
 
