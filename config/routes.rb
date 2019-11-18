@@ -18,7 +18,8 @@ Rails.application.routes.draw do
       get 'get_favorited_jobs', to: 'users#favorited_jobs'
       get 'get_favorited_freelancers', to: "users#favorited_freelancers"
 
-      resources :favorites, only: [:create, :destroy]
+      resources :favorites, only: [:create]
+      get 'remove_favorited', to: "favorites#remove_favorited"
       resources :profiles
       resources :educations 
       resources :employments

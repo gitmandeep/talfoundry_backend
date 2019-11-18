@@ -10,9 +10,12 @@ class Api::V1::FavoritesController < Api::V1::ApiController
     end
   end
   
-  def destroy
-    Favorite.where(favorited: @favorited, user_id: @current_user.id).first.destroy
-    render json: {succes: true, status: 200}
+  def remove_favorited
+    if Favorite.where(favorited: @favorited, user_id: @current_user.id).first.destroy
+    	render json: {succes: true, status: 200}
+    else
+      render_error("Something went wrong....!", 404)
+    end
   end
   
   private
