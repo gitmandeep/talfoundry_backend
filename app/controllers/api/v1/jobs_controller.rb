@@ -15,7 +15,8 @@ class Api::V1::JobsController < Api::V1::ApiController
         create_search_history(params[:search])
       end
     end
-    jobs.present? ? (render json: jobs, each_serializer: JobSerializer) : (render json: [], status: 200)
+    favorited_jobs = @current_user.favorite_jobs.pluck(:id) rescue []
+    jobs.present? ? (render json: jobs, each_serializer: JobSerializer, favorited_jobs: favorited_jobs) : (render json: [], status: 200)
   end
 
   def show
