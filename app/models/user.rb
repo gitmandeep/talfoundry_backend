@@ -23,6 +23,8 @@ class User < ApplicationRecord
   scope :admin_freelancer_index, -> { where({ role: "freelancer", profile_created: true }).order(created_at: :desc) }
   scope :manager_freelancer_index, -> { where({ role: "freelancer", account_approved: true }).order(:created_at) }
 
+  has_many :favorites_freelancers, through: :favorites, source: :favorited, source_type: 'User'
+  has_many :favorite_jobs, through: :favorites, source: :favorited, source_type: 'Job'
 
   # # user types constants
   # TYPE_ADMIN = 1

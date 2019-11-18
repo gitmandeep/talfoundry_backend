@@ -15,7 +15,8 @@ Rails.application.routes.draw do
       get 'freelancer_details/:id', to: 'freelancer#freelancer_details'
       get 'get_invites', to: 'freelancer#get_invites'
       get 'get_submitted_proposals', to: 'freelancer#get_submitted_proposals'
-      
+
+      resources :favorites, only: [:create, :destroy]
       resources :profiles
       resources :educations 
       resources :employments
