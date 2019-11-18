@@ -20,9 +20,10 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def show
+    favorited_jobs = @current_user.favorite_jobs.pluck(:id) rescue []
     job_application = JobApplication.where(job_id: @job.id, user_id: @current_user.id)
     job_application_id = job_application.present? ? job_application.first.uuid : nil
-    @job.present? ? (render json: @job, serializer: JobSerializer, job_application_id: job_application_id) : (render json: { error: 'job not found' }, status: 404)
+    @job.present? ? (render json: @job, serializer: JobSerializer, favorited_jobs: favorited_jobs, job_application_id: job_application_id) : (render json: { error: 'job not found' }, status: 404)
   end
 
   def jobs_by_user

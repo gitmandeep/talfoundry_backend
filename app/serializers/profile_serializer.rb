@@ -23,6 +23,7 @@ class ProfileSerializer < ActiveModel::Serializer
   attributes :name
   attributes :available_jobs
   attributes :search_keywords
+  attributes :favorited_freelancer
 
   has_many :educations, serializer: EducationSerializer
 	has_many :employments, serializer: EmploymentSerializer
@@ -77,5 +78,13 @@ class ProfileSerializer < ActiveModel::Serializer
 		end
 		return users_jobs || [] 
 	end
+
+  def favorited_freelancer
+    if @instance_options[:favorited_freelancers].present?
+      return @instance_options[:favorited_freelancers].include? object.user.id
+    else
+      return false 
+    end
+  end
 
 end

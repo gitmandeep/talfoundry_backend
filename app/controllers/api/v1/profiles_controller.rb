@@ -4,7 +4,8 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	def show
 		profile = Profile.where(uuid: params[:id]).or(Profile.where(id: params[:id])).first  #@current_user.profile Profile.find(params[:id])
     if profile
-    	render json: profile, serializer: ProfileSerializer
+    	favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
+    	render json: profile, serializer: ProfileSerializer, favorited_freelancers: favorited_freelancers
     else
 			render_error("Profile Not found..!", 422)	
 		end
