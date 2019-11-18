@@ -45,20 +45,12 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def favorited_freelancers
     freelancers = @current_user.favorites_freelancers
-    if freelancers.present?
-      render json: freelancers, each_serializer: FreelancerSerializer, favorited_freelancers: freelancers.pluck(:id), status: :ok
-    else
-      render_error("Not found", 404)
-    end
+    render json: freelancers, each_serializer: FreelancerSerializer, favorited_freelancers: freelancers.pluck(:id), status: :ok
   end
 
   def favorited_jobs
     jobs = @current_user.favorite_jobs
-    if jobs.present?
-      render json: jobs, each_serializer: JobSerializer, favorited_jobs: jobs.pluck(:id), status: :ok
-    else
-      render_error("Not found", 404)
-    end
+    render json: jobs, each_serializer: JobSerializer, favorited_jobs: jobs.pluck(:id), status: :ok
   end
 
 
