@@ -24,8 +24,8 @@ class Api::V1::FreelancerController < Api::V1::ApiController
         create_search_history(params[:search])
       end
     end
-
-    render json: freelancer_users, each_serializer: FreelancerSerializer, status: :ok
+    favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
+    render json: freelancer_users, each_serializer: FreelancerSerializer, favorited_freelancers: favorited_freelancers, status: :ok
   end
 
   def get_invites
@@ -40,8 +40,9 @@ class Api::V1::FreelancerController < Api::V1::ApiController
 
   def freelancer_details
     freelancer = User.find_by_uuid(params[:id])
+    favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
     if freelancer
-      render json: freelancer, serializer: FreelancerSerializer, status: :ok
+      render json: freelancer, serializer: FreelancerSerializer, favorited_freelancers: favorited_freelancers, status: :ok
     else
       render_error('Invalid user', 401)
     end

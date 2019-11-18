@@ -64,7 +64,8 @@ class Api::V1::JobsController < Api::V1::ApiController
       freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true && !@job.invites.pluck(:recipient_id).include?(fu.id) )}     
     end
     if freelancer_users.present?
-      render json: freelancer_users, each_serializer: FreelancerSerializer, status: :ok
+      favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
+      render json: freelancer_users, each_serializer: FreelancerSerializer, favorited_freelancers: favorited_freelancers, status: :ok
     else
       render_error("Not found", 404)
     end
@@ -73,7 +74,8 @@ class Api::V1::JobsController < Api::V1::ApiController
   def invited_freelancer
     invited_freelancers = User.where(id: @job.invites.pluck(:recipient_id))
     if invited_freelancers.present?
-      render json: invited_freelancers, each_serializer: FreelancerSerializer, status: :ok
+      favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
+      render json: invited_freelancers, each_serializer: FreelancerSerializer, favorited_freelancers: favorited_freelancers, status: :ok
     else
       render_error("Not found", 404)
     end  
