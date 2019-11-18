@@ -43,6 +43,24 @@ class Api::V1::UsersController < Api::V1::ApiController
     render json: @current_user, success: true, message: "Email sent", status: 200
   end
 
+  def favorited_freelancers
+    freelancers = @current_user.favorites_freelancers
+    if freelancers.present?
+      render json: freelancers, each_serializer: FreelancerSerializer, status: :ok
+    else
+      render_error("Not found", 404)
+    end
+  end
+
+  def favorited_jobs
+    jobs = @current_user.favorite_jobs
+    if jobs.present?
+      render json: jobs, each_serializer: JobSerializer, status: :ok
+    else
+      render_error("Not found", 404)
+    end
+  end
+
 
   private
 
