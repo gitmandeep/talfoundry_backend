@@ -6,6 +6,10 @@ class Contract < ApplicationRecord
   mount_base64_uploader :attachment, ContractUploader
   before_save :set_contract_id
 
+
+	scope :pending_offer, -> { where({ status: "Pending"}) }
+
+
   
 
   def set_contract_id
