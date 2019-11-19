@@ -16,6 +16,8 @@ class User < ApplicationRecord
   has_many :sent_notifications, :class_name => "Notification", :foreign_key => 'sender_id', :dependent => :destroy
   has_many :job_applications, :dependent => :destroy
   has_many :search_histories, :dependent => :destroy
+  has_many :received_contracts, :class_name => "Contract", :foreign_key => 'freelancer_id', :dependent => :destroy
+  has_many :contracts, :class_name => "Contract", :foreign_key => 'hired_by_id', :dependent => :destroy
 
   validates :first_name, :last_name, :role, presence: true
   validates :email, uniqueness: true

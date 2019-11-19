@@ -13,9 +13,8 @@ class Job < ApplicationRecord
   has_many :invites, :dependent => :destroy
   has_many :job_applications, :dependent => :destroy
   has_many :job_application_answers, :dependent => :destroy
-
-	# scope: newest_first, -> { order(created_at: :desc) }
-	
+  has_many :contracts, :dependent => :destroy
+  	
   validates :job_title,:job_category, :job_description, :job_type, presence: true
   validates :job_visibility,:number_of_freelancer_required,:job_pay_type,:job_experience_level,:job_duration,:job_time_requirement, presence: true
 
