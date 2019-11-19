@@ -33,6 +33,11 @@ class Api::V1::FreelancerController < Api::V1::ApiController
     render json: invites, each_serializer: FreelancerInviteSerializer, status: :ok
   end
 
+  def get_invites
+    invites = @current_user.invites.open_invites.present? ? @current_user.invites.open_invites.order(created_at: :desc) : []
+    render json: invites, each_serializer: FreelancerInviteSerializer, status: :ok
+  end
+
   def get_submitted_proposals
     submitted_proposals = @current_user.job_applications.present? ? @current_user.job_applications.order(created_at: :desc) : []
     render json: submitted_proposals, each_serializer: SubmittedProposalSerializer, status: :ok
@@ -50,9 +55,9 @@ class Api::V1::FreelancerController < Api::V1::ApiController
 
   def hire_freelancer_details
     freelancer = User.find_by_uuid(params[:id])
-    job_uuid = params[:job_uuid]
+    job_id = Job.find_by_uuid(params[:job_uuid]).try(:id)
     if freelancer
-      render json: freelancer, serializer: HireFreelancerSerializer, job_uuid: job_uuid, status: :ok
+      render json: freelancer, serializer: HireFreelancerSerializer, job_id: job_id, status: :ok
     else
       render_error('Invalid user', 401)
     end

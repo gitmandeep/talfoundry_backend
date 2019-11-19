@@ -4,7 +4,7 @@ class HireFreelancerSerializer < ActiveModel::Serializer
   attributes :full_name
   attributes :user_picture
   attributes :user_rate
-  attributes :job_uuid
+  attributes :job_id
   # has_one :profile, serializer: ProfileSerializer
 
   def full_name
@@ -22,5 +22,9 @@ class HireFreelancerSerializer < ActiveModel::Serializer
     if object.professional_profile_created
       object.profile.try(:hourly_rate)
     end
+  end
+
+  def job_id
+    @instance_options[:job_id]
   end
 end
