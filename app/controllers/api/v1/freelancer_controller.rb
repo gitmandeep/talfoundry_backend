@@ -34,8 +34,8 @@ class Api::V1::FreelancerController < Api::V1::ApiController
   end
 
   def get_offers
-    offers = @current_user.received_contracts.pending_offer.present? ? @current_user.invites.pending_offer.order(created_at: :desc) : []
-    render json: offers, each_serializer: FreelancerHireSerializer, status: :ok
+    offers = @current_user.received_contracts.pending_offer.present? ? @current_user.received_contracts.pending_offer.order(created_at: :desc) : []
+    render json: offers, each_serializer: FreelancerOfferSerializer, status: :ok
   end
 
   def get_submitted_proposals
