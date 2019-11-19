@@ -72,8 +72,8 @@ class ProfileSerializer < ActiveModel::Serializer
 	def available_jobs
 		if current_user.role == "Project Manager"
 			jobs_array = []
-			jobs = current_user.jobs.select{ |job| job.invites.present? ? job.invites.all.map(&:recipient_id).exclude?(object.user.id) : job }.pluck(:id, :job_title)      
-			jobs.each {|a| jobs_array.push({id: a[0], title: a[1]})}
+			jobs = current_user.jobs.select{ |job| job.invites.present? ? job.invites.all.map(&:recipient_id).exclude?(object.user.id) : job }.pluck(:id, :job_title, :uuid)      
+			jobs.each {|a| jobs_array.push({id: a[0], title: a[1], uuid: a[2]})}
       users_jobs = jobs_array.flatten
 		end
 		return users_jobs || [] 
