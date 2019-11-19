@@ -48,4 +48,13 @@ class Api::V1::FreelancerController < Api::V1::ApiController
     end
   end
 
+  def hire_freelancer_details
+    freelancer = User.find_by_uuid(params[:id])
+    job_uuid = params[:job_uuid]
+    if freelancer
+      render json: freelancer, serializer: HireFreelancerSerializer, job_uuid: job_uuid, status: :ok
+    else
+      render_error('Invalid user', 401)
+    end
+  end
 end
