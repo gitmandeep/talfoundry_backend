@@ -17,7 +17,8 @@ class ContractSerializer < ActiveModel::Serializer
 	attributes :freelancer_id
 	attributes :created_at
 
-	has_one :job, serializer: JobSerializer
+	has_one :hired_by, serializer: ProjectManagerSerializer
+	#has_one :job, serializer: JobSerializer
 
 	def attachment
 		object.attachment.try(:url)
