@@ -2,6 +2,7 @@ class ProfileSerializer < ActiveModel::Serializer
   attributes :id
   attributes :uuid
   attributes :user_id
+  attributes :user_uuid
   attributes :profile_type
 	attributes :profile_picture
 	#attributes :profile_picture_base64
@@ -32,6 +33,10 @@ class ProfileSerializer < ActiveModel::Serializer
 
 	def user_id
 		object.user.id
+	end
+
+	def user_uuid
+		object.user.uuid
 	end
 
 	def search_keywords

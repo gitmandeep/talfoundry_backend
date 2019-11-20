@@ -1,5 +1,6 @@
 class FreelancerOfferSerializer < ActiveModel::Serializer
   attributes :id
+  attributes :uuid
   attributes :job_uuid
   attributes :created_at
   attributes :status
