@@ -15,6 +15,7 @@ class ContractSerializer < ActiveModel::Serializer
 	attributes :fixed_price_amount
 	attributes :hired_by_id
 	attributes :freelancer_id
+	attributes :created_at
 
 	has_one :job, serializer: JobSerializer
 
