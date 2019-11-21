@@ -1,12 +1,12 @@
 class Api::V1::ContractController < Api::V1::ApiController
   include Api::V1::Concerns::Notify
   before_action :authorize_request
-  before_action :set_contract, only: [:show]
+  before_action :set_contract, only: [:show, :update]
   
   def create
     @contract = Contract.new(contract_params)
     if @contract.save
-      notify_user(@current_user.id, @contract.freelancer_id, @contract.uuid, "Job offer", "You have received an offer for the job \"#{@contract.job.try(:job_title)}\" ")
+      notify_user(@current_user.id, @contract.freelancer_id, @contract.uuid, "Job offer", "You have received an offer for the job \"#{@contract.title}\" ")
       render json: {succes: true, status: 200}
     else
       render_error("Something went wrong....!", 404)
@@ -19,6 +19,17 @@ class Api::V1::ContractController < Api::V1::ApiController
     else
       render json: { error: 'job not found' }, status: 404
     end 
+  end
+
+  def update
+    if @contract.update(contract_params)
+      @contract.status_updated_at = Time.now
+      @contract.save!
+      notify_user(@contract.freelancer_id, @contract.hired_by_id, "Offer update", "Your offer \"#{@contract.title}\" was #{@contract.status.downcase} ")
+      render json: { success: true, message: "Offer updated successfully...!", status: 200 }
+    else
+      render_error(@contract.errors.full_messages, 422)
+    end
   end
   
   private
