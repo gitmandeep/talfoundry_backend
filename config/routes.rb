@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get 'hire_freelancer_details/:id', to: 'freelancer#hire_freelancer_details'
       get 'get_invites', to: 'freelancer#get_invites'
       get 'get_offers', to: 'freelancer#get_offers'
+      get 'get_active_offers', to: 'freelancer#get_active_offers'
       get 'get_submitted_proposals', to: 'freelancer#get_submitted_proposals'
       get 'get_favorited_jobs', to: 'users#favorited_jobs'
       get 'get_favorited_freelancers', to: "users#favorited_freelancers"
@@ -55,7 +56,7 @@ Rails.application.routes.draw do
       end
 
       resources :notifications, only: [:index, :create, :update]
-      resources :contract, only: [:index, :show, :create]
+      resources :contract, only: [:index, :show, :create, :update]
 
     end
   end
