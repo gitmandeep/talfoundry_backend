@@ -38,7 +38,7 @@ class Api::V1::FreelancerController < Api::V1::ApiController
     render json: offers, each_serializer: FreelancerOfferSerializer, status: :ok
   end
 
-  def get_active_offers
+  def active_contracts
     offers = @current_user.received_contracts.active_offer.present? ? @current_user.received_contracts.active_offer.order(created_at: :desc) : []
     render json: offers, each_serializer: FreelancerOfferSerializer, status: :ok
   end
