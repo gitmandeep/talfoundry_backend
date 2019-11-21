@@ -31,6 +31,11 @@ class Api::V1::ContractController < Api::V1::ApiController
       render_error(@contract.errors.full_messages, 422)
     end
   end
+
+  def manager_active_contracts
+    offers = @current_user.contracts.active_offer.present? ? @current_user.contracts.active_offer.order(created_at: :desc) : []
+    render json: offers, each_serializer: FreelancerOfferSerializer, status: :ok
+  end
   
   private
 

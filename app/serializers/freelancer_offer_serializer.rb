@@ -12,6 +12,11 @@ class FreelancerOfferSerializer < ActiveModel::Serializer
   attributes :contract_uniq_id
   attributes :job_title
   attributes :client_name
+  attributes :freelacer_name
+  attributes :freelacer_country
+  attributes :freelacer_picture
+
+
   def job_title
   	object.try(:job).try(:job_title)
   end
@@ -19,6 +24,19 @@ class FreelancerOfferSerializer < ActiveModel::Serializer
   def client_name
   	object.try(:hired_by).try(:display_full_name)
   end
+
+  def freelacer_name
+    object.try(:freelancer).try(:display_full_name)
+  end
+
+  def freelacer_picture
+    object.try(:freelancer).try(:profile) ? object.freelancer.profile.profile_picture.try(:url) : "" 
+  end
+
+  def freelacer_country
+    object.try(:freelancer).try(:profile) ? object.freelancer.profile.current_location_country : "" 
+  end
+
 
   def job_uuid
     object.job.uuid

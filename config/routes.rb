@@ -20,6 +20,9 @@ Rails.application.routes.draw do
       get 'get_submitted_proposals', to: 'freelancer#get_submitted_proposals'
       get 'get_favorited_jobs', to: 'users#favorited_jobs'
       get 'get_favorited_freelancers', to: "users#favorited_freelancers"
+      get 'manager_active_contracts', to: "contract#manager_active_contracts"
+
+
 
       resources :favorites, only: [:create]
       get 'remove_favorited', to: "favorites#remove_favorited"
@@ -57,6 +60,7 @@ Rails.application.routes.draw do
 
       resources :notifications, only: [:index, :create, :update]
       resources :contract, only: [:index, :show, :create, :update]
+
 
     end
   end
