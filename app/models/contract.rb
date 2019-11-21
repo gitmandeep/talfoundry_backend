@@ -4,11 +4,11 @@ class Contract < ApplicationRecord
   belongs_to :hired_by, :class_name => 'User'
 
   mount_base64_uploader :attachment, ContractUploader
-  before_save :set_contract_id
+  before_create :set_contract_id
 
 
 	scope :pending_offer, -> { where({ status: "Pending"}) }
-  scope :active_offer, -> { where({ status: "accepted"}) }
+  scope :active_offer, -> { where({ status: "Accepted"}) }
 
 
   
