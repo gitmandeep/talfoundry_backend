@@ -17,12 +17,22 @@ class ContractSerializer < ActiveModel::Serializer
 	attributes :freelancer_id
 	attributes :created_at
   attributes :status_updated_at
-	
+  attributes :job_title
+  attributes :job_category
+
 
 	has_one :hired_by, serializer: ProjectManagerSerializer
 	#has_one :job, serializer: JobSerializer
 
 	def attachment
 		object.attachment.try(:url)
+	end
+
+	def job_title
+		object.job.try(:job_title)
+	end
+
+	def job_category
+		object.job.try(:job_category)
 	end
 end
