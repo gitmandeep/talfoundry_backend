@@ -4,12 +4,14 @@ class FreelancerOfferSerializer < ActiveModel::Serializer
   attributes :title
   attributes :job_uuid
   attributes :created_at
+  attributes :time_period_limit
   attributes :status
   attributes :status_updated_at
+  attributes :hourly_rate
+  attributes :fixed_price_amount
   attributes :contract_uniq_id
   attributes :job_title
   attributes :client_name
-
   def job_title
   	object.try(:job).try(:job_title)
   end
