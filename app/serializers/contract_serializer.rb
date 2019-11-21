@@ -19,6 +19,8 @@ class ContractSerializer < ActiveModel::Serializer
   attributes :status_updated_at
   attributes :job_title
   attributes :job_category
+  attributes :freelacer_name
+  attributes :freelacer_picture
 
 
 	has_one :hired_by, serializer: ProjectManagerSerializer
@@ -35,4 +37,13 @@ class ContractSerializer < ActiveModel::Serializer
 	def job_category
 		object.job.try(:job_category)
 	end
+
+	def freelacer_name
+    object.try(:freelancer).try(:display_full_name)
+  end
+
+  def freelacer_picture
+    object.try(:freelancer).try(:profile) ? object.freelancer.profile.profile_picture.try(:url) : "" 
+  end
+
 end
