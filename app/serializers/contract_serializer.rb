@@ -24,7 +24,7 @@ class ContractSerializer < ActiveModel::Serializer
   attributes :job_description
   attributes :freelacer_name
   attributes :freelacer_picture
-
+  attributes :proposal_id
 
 	has_one :hired_by, serializer: ProjectManagerSerializer
 	has_many :milestones, serializer: MilestoneSerializer
@@ -58,5 +58,19 @@ class ContractSerializer < ActiveModel::Serializer
   def freelacer_picture
     object.try(:freelancer).try(:profile) ? object.freelancer.profile.profile_picture.try(:url) : "" 
   end
+
+  def proposal_id
+    proposals = object.freelancer.try(:job_applications)
+    if proposals.present?
+    	proposals.each do |proposal|
+    		if proposal.job_id == object.job_id
+    			@proposal_uuid = proposal.uuid
+				end    		
+    	end
+    end 
+    return @proposal_uuid || ''
+  end
+
+
 
 end
