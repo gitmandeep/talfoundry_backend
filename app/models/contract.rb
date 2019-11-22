@@ -2,6 +2,7 @@ class Contract < ApplicationRecord
   belongs_to :job
   belongs_to :freelancer, :class_name => 'User'
   belongs_to :hired_by, :class_name => 'User'
+  has_many   :milestones
 
   mount_base64_uploader :attachment, ContractUploader
   before_create :set_contract_id
