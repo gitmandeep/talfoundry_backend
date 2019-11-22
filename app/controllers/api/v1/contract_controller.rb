@@ -40,7 +40,7 @@ class Api::V1::ContractController < Api::V1::ApiController
   private
 
   def contract_params
-    params.require(:contract).permit(:job_id, :title, :payment_mode,  :hourly_rate, :time_period, :time_period_limit, :start_date, :weekly_payment, :description, :attachment, :fixed_price_mode, :fixed_price_amount, :hired_by_id, :freelancer_id, :status)
+    params.require(:contract).permit(:job_id, :title, :payment_mode,  :hourly_rate, :time_period, :time_period_limit, :start_date, :weekly_payment, :description, :attachment, :fixed_price_mode, :fixed_price_amount, :hired_by_id, :freelancer_id, :status, milestones_attributes:  [:description, :due_date, :deposite_amount])
   end
 
   def set_contract
