@@ -18,6 +18,7 @@ class ContractSerializer < ActiveModel::Serializer
 	attributes :freelancer_id
 	attributes :created_at
   attributes :status_updated_at
+  attributes :job_uuid
   attributes :job_title
   attributes :job_category
   attributes :job_description
@@ -32,6 +33,10 @@ class ContractSerializer < ActiveModel::Serializer
 
 	def attachment
 		object.attachment.try(:url)
+	end
+
+	def job_uuid
+		object.job.try(:uuid)
 	end
 
 	def job_title
