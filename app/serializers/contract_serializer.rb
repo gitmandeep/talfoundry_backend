@@ -24,6 +24,8 @@ class ContractSerializer < ActiveModel::Serializer
 
 
 	has_one :hired_by, serializer: ProjectManagerSerializer
+	has_many :milestones, serializer: MilestoneSerializer
+
 	#has_one :job, serializer: JobSerializer
 
 	def attachment
