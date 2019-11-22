@@ -25,6 +25,9 @@ class ProfileSerializer < ActiveModel::Serializer
   attributes :available_jobs
   attributes :search_keywords
   attributes :favorited_freelancer
+  attributes :invites_count
+  attributes :contracts_count
+
 
   has_many :educations, serializer: EducationSerializer
 	has_many :employments, serializer: EmploymentSerializer
@@ -90,6 +93,18 @@ class ProfileSerializer < ActiveModel::Serializer
     else
       return false 
     end
+  end
+
+  def invites_count
+  	invites = object.user.invites
+  	invites_count = invites.present? ? invites.open_invites.try(:count) : ''
+  	return invites_count
+  end
+
+  def contracts_count
+  	received_contracts = object.user.received_contracts
+  	contracts_count = received_contracts.present? ? received_contracts.pending_offer.try(:count) : ''
+  	return contracts_count 
   end
 
 end

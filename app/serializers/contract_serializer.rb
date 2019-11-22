@@ -2,6 +2,7 @@ class ContractSerializer < ActiveModel::Serializer
   attributes :id
   attributes :uuid
 	attributes :title
+  attributes :contract_uniq_id
 	attributes :payment_mode
 	attributes :hourly_rate
 	attributes :time_period
@@ -19,6 +20,7 @@ class ContractSerializer < ActiveModel::Serializer
   attributes :status_updated_at
   attributes :job_title
   attributes :job_category
+  attributes :job_description
   attributes :freelacer_name
   attributes :freelacer_picture
 
@@ -38,6 +40,10 @@ class ContractSerializer < ActiveModel::Serializer
 
 	def job_category
 		object.job.try(:job_category)
+	end
+
+	def job_description
+		object.job.try(:job_description)
 	end
 
 	def freelacer_name
