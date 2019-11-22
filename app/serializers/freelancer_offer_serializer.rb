@@ -7,6 +7,7 @@ class FreelancerOfferSerializer < ActiveModel::Serializer
   attributes :time_period_limit
   attributes :status
   attributes :status_updated_at
+  attributes :payment_mode
   attributes :hourly_rate
   attributes :fixed_price_amount
   attributes :contract_uniq_id
