@@ -5,19 +5,20 @@ class Api::V1::ConversationsController < Api::V1::ApiController
   end
 
   def create
-    conversation = Conversation.new(conversation_params)
-    if conversation.save
+    @conversation = Conversation.get(current_user.id, params[:user_id])
+  
+    if @conversation.present
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
-        ConversationSerializer.new(conversation)
+        ConversationSerializer.new(@conversation)
       ).serializable_hash
       ActionCable.server.broadcast 'conversations_channel', serialized_data
       head :ok
     end
   end
   
-  private
+  # private
   
-  def conversation_params
-    params.require(:conversation).permit(:title)
-  end
+  # def conversation_params
+  #   params.require(:conversation).permit(:title)
+  # end
 end
