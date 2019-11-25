@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :received_contracts, :class_name => "Contract", :foreign_key => 'freelancer_id', :dependent => :destroy
   has_many :contracts, :class_name => "Contract", :foreign_key => 'hired_by_id', :dependent => :destroy
   has_many :messages
+  has_many :conversations, foreign_key: :sender_id
 
 
   validates :first_name, :last_name, :role, presence: true
