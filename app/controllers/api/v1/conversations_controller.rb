@@ -1,7 +1,9 @@
 class Api::V1::ConversationsController < Api::V1::ApiController
 	 def index
-    conversations = Conversation.all
-    render json: conversations
+    conversations = current_user.conversations
+    #conversations = Conversation.where(sender_id: current_user.id).or(Conversation.where(recipient_id: current_user.id))
+
+    render json: conversations, each_serializer: ConversationSerializer
   end
 
   def create
