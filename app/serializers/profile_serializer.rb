@@ -23,6 +23,7 @@ class ProfileSerializer < ActiveModel::Serializer
 	attributes :development_experience
   attributes :name
   attributes :available_jobs
+  attributes :available_jobs_for_contract
   attributes :search_keywords
   attributes :favorited_freelancer
   attributes :invites_count
@@ -79,12 +80,22 @@ class ProfileSerializer < ActiveModel::Serializer
 
 	def available_jobs
 		if current_user.role == "Project Manager"
-			jobs_array = []
+			jobs_array = []			
 			jobs = current_user.jobs.select{ |job| job.invites.present? ? job.invites.all.map(&:recipient_id).exclude?(object.user.id) : job }.pluck(:id, :job_title, :uuid)      
 			jobs.each {|a| jobs_array.push({id: a[0], title: a[1], uuid: a[2]})}
       users_jobs = jobs_array.flatten
 		end
 		return users_jobs || [] 
+	end
+
+	def available_jobs_for_contract
+		if current_user.role == "Project Manager"
+			jobs_array = []	
+			jobs = current_user.jobs.select{ |job| job.contracts.present? ? job.contracts.all.map(&:freelancer_id).exclude?(object.user.id) : job }.pluck(:id, :job_title, :uuid)      
+			jobs.each {|a| jobs_array.push({id: a[0], title: a[1], uuid: a[2]})}
+      available_jobs_for_contract = jobs_array.flatten
+		end
+		return available_jobs_for_contract || [] 
 	end
 
   def favorited_freelancer
