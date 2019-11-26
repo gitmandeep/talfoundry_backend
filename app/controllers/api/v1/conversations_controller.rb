@@ -7,8 +7,6 @@ class Api::V1::ConversationsController < Api::V1::ApiController
 
   def create
     conversation = Conversation.new(conversation_params)
-    conversation.sender_id = User.first.id
-    conversation.recipient_id = User.last.id
 
     if conversation.save
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
@@ -32,6 +30,6 @@ class Api::V1::ConversationsController < Api::V1::ApiController
   # private
   
   def conversation_params
-    params.require(:conversation).permit(:title)
+    params.require(:conversation).permit(:title, :sender_id, :recipient_id)
   end
 end
