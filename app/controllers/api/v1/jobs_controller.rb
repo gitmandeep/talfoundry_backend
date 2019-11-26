@@ -91,6 +91,7 @@ class Api::V1::JobsController < Api::V1::ApiController
 
   def find_job
     @job = Job.where(uuid: params[:id]).first
+    @job = Job.where(id: params[:id]).first if @job.blank?
     render_error("Not found", 404) unless @job
   end
 
