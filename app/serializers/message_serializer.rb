@@ -1,7 +1,7 @@
 class MessageSerializer < ActiveModel::Serializer
-  attributes :id
-  attributes :user_id
-  attributes :conversation_id
-  attributes :text
-  attributes :created_at
+  attribute :id
+  attribute :user_id
+  attribute :conversation_id
+  attribute :text
+  attribute :created_at
 end
