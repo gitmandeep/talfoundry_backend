@@ -1,6 +1,7 @@
 class ConversationSerializer < ActiveModel::Serializer
   attributes :id, :title
   attribute :sender
+  attribute :receiver
   has_many :messages
 
   def sender
@@ -8,6 +9,6 @@ class ConversationSerializer < ActiveModel::Serializer
   end
 
   def receiver
-	@object.recipient
+	  @object.recipient
   end
 end
