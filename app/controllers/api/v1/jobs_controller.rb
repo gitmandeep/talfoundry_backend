@@ -90,7 +90,7 @@ class Api::V1::JobsController < Api::V1::ApiController
 	private
 
   def find_job
-    @job = Job.where(uuid: params[:id]).or(Job.where(id: params[:id])).first
+    @job = Job.where(uuid: params[:id]).first
     render_error("Not found", 404) unless @job
   end
 
