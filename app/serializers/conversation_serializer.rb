@@ -1,7 +1,7 @@
 class ConversationSerializer < ActiveModel::Serializer
-  attributes :id
-  attributes :uuid
-  attributes :title 
+  attribute :id
+  attribute :uuid
+  attribute :title 
   attribute :created_at
   attribute :sender
   attribute :sender_picture
