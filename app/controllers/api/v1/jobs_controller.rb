@@ -1,7 +1,7 @@
 class Api::V1::JobsController < Api::V1::ApiController
   include Api::V1::Concerns::Search
   before_action :authorize_request
-  before_action :find_job, only: [:edit, :update, :destroy, :show, :job_related_freelancer, :invited_freelancer, :get_job_proposals]
+  before_action :find_job, only: [:edit, :update, :destroy, :show, :job_related_freelancer, :invited_freelancer, :get_job_proposals, :hired_freelancer]
 
   def index
     if params[:search_by_category] || params[:search_by_recommended]
