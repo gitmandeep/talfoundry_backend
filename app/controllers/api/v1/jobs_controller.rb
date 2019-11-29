@@ -59,10 +59,10 @@ class Api::V1::JobsController < Api::V1::ApiController
   def job_related_freelancer
     if params[:search].present?
       freelancer_users = User.search(params[:search])
-      freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true && !@job.invites.pluck(:recipient_id).include?(fu.id) && !@job.contracts.pluck(:freelancer_id).include?(fu.id) && !((@job.job_category.split(',')&(fu.profile.category.split(',')))).empty? )}
+      freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true && fu.professional_profile_created == true && !@job.invites.pluck(:recipient_id).include?(fu.id) && !@job.contracts.pluck(:freelancer_id).include?(fu.id) && !((@job.job_category.split(',')&(fu.profile.category.split(',')))).empty? )}
     else
       freelancer_users = User.search("#{@job.job_category}" "#{@job.job_speciality}", operator: "or", fields: [:user_skill, :user_category])       
-      freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true && !@job.invites.pluck(:recipient_id).include?(fu.id) && !@job.contracts.pluck(:freelancer_id).include?(fu.id) )}     
+      freelancer_users = freelancer_users.results.select{|fu| (fu.role == "freelancer" && fu.account_approved == true && fu.professional_profile_created == true && !@job.invites.pluck(:recipient_id).include?(fu.id) && !@job.contracts.pluck(:freelancer_id).include?(fu.id) )}     
     end
     if freelancer_users.present?
       favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
@@ -107,6 +107,6 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def job_params
-    params.require(:job).permit(:job_title, {:job_category => [] } , {:job_speciality => [] }, :job_description,:job_document,:job_type,:job_api_integration, {:job_expertise_required => []}, {:job_additional_expertise_required => []} , :job_visibility,:number_of_freelancer_required,:job_pay_type, :job_pay_value, :job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:job_question_label,:job_question], job_qualifications_attributes:  [:english_level,:location, :qualification_group])
+    params.require(:job).permit(:job_title, {:job_category => [] } , {:job_speciality => [] }, :job_description,:job_document,:job_type,:job_api_integration, {:job_expertise_required => []}, {:job_additional_expertise_required => []} , :job_visibility,:number_of_freelancer_required,:job_pay_type, :job_pay_value, :job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:job_question_label,:job_question], job_qualifications_attributes:  [:english_level, :location, :qualification_group])
   end
 end
