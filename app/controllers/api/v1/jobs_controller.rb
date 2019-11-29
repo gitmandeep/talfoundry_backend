@@ -82,6 +82,16 @@ class Api::V1::JobsController < Api::V1::ApiController
     end  
   end
 
+  def hired_freelancer
+    hired_freelancers = User.where(id: @job.contracts.pluck(:freelancer_id))
+    if hired_freelancers.present?
+      #favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
+      render json: hired_freelancers, each_serializer: FreelancerSerializer, status: :ok
+    else
+      render_error("Not found", 404)
+    end  
+  end
+
   def get_job_proposals
     job_proposals = @job.job_applications.present? ? @job.job_applications : []
     render json: job_proposals, each_serializer: JobProposalSerializer, include: ['user.profile'], status: :ok

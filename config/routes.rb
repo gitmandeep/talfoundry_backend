@@ -59,6 +59,7 @@ Rails.application.routes.draw do
           get :job_related_freelancer
           get :invited_freelancer
           get :get_job_proposals
+          get :hired_freelancer
         end
       end
 
