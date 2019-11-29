@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
 
 
-      resources :favorites, only: [:create]
+      resources :favorites, only: [:create, :index]
       get 'remove_favorited', to: "favorites#remove_favorited"
       resources :profiles
       resources :educations 

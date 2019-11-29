@@ -2,6 +2,16 @@ class Api::V1::FavoritesController < Api::V1::ApiController
   before_action :authorize_request
   before_action :set_favorited
   
+  def index
+    favorited_freelancers = @current_user.favorites_freelancers
+    if favorited_freelancers
+      render json: favorited_freelancers, each_serializer: FreelancerSerializer, status: :ok
+    else
+      render_error("Not Found", 404)
+    end
+  end
+
+
   def create
     if Favorite.create(favorited: @favorited, user: @current_user)
       render json: {succes: true, status: 200}
