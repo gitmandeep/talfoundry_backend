@@ -99,8 +99,13 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def get_job_active_contract
-    job_contracts = @job.contracts.present? ? @job.contracts.active_contract : []
-    render json: job_contracts, each_serializer: ContractSerializer, include: ['user.profile'], status: :ok
+    active_job_contract_freelancers = @job.contracts.present? ? @job.contracts.active_contract.pluck(:freelancer_id) : []
+    freelancers = User.where(id: active_job_contract_freelancers)
+    if freelancers.present?
+      render json: freelancers, each_serializer: FreelancerSerializer, status: :ok
+    else
+      []
+    end
   end
 
 	private
@@ -112,6 +117,6 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def job_params
-    params.require(:job).permit(:job_title, {:job_category => [] } , {:job_speciality => [] }, :job_description,:job_document,:job_type,:job_api_integration, {:job_expertise_required => []}, {:job_additional_expertise_required => []} , :job_visibility,:number_of_freelancer_required,:job_pay_type, :job_pay_value, :job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:id, :job_question_label,:job_question], job_qualifications_attributes:  [:id, :english_level, :location, :qualification_group])
+    params.require(:job).permit(:job_title, :job_category , :job_speciality, :job_description,:job_document,:job_type,:job_api_integration,:job_expertise_required,:job_additional_expertise_required , :job_visibility,:number_of_freelancer_required,:job_pay_type, :job_pay_value, :job_experience_level,:job_duration,:job_time_requirement,job_screening_questions_attributes: [:id, :job_question_label,:job_question], job_qualifications_attributes:  [:id, :english_level, :location, :qualification_group])
   end
 end
