@@ -1,7 +1,7 @@
 class Api::V1::JobsController < Api::V1::ApiController
   include Api::V1::Concerns::Search
   before_action :authorize_request
-  before_action :find_job, only: [:edit, :update, :destroy, :show, :job_related_freelancer, :invited_freelancer, :get_job_proposals, :hired_freelancer]
+  before_action :find_job, only: [:edit, :update, :destroy, :show, :job_related_freelancer, :invited_freelancer, :get_job_proposals, :hired_freelancer, :get_job_active_contract]
 
   def index
     if params[:search_by_category] || params[:search_by_recommended]
@@ -96,6 +96,11 @@ class Api::V1::JobsController < Api::V1::ApiController
   def get_job_proposals
     job_proposals = @job.job_applications.present? ? @job.job_applications : []
     render json: job_proposals, each_serializer: JobProposalSerializer, include: ['user.profile'], status: :ok
+  end
+
+  def get_job_active_contract
+    job_contracts = @job.contracts.present? ? @job.contracts.active_contract : []
+    render json: job_contracts, each_serializer: ContractSerializer, include: ['user.profile'], status: :ok
   end
 
 	private

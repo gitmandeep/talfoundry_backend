@@ -27,6 +27,8 @@ class ContractSerializer < ActiveModel::Serializer
   attributes :proposal_id
 
 	has_one :hired_by, serializer: ProjectManagerSerializer
+	has_one :freelancer, serializer: FreelancerSerializer
+
 	has_many :milestones, serializer: MilestoneSerializer
 
 	#has_one :job, serializer: JobSerializer
