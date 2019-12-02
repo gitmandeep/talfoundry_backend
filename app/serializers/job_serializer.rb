@@ -31,11 +31,11 @@ class JobSerializer < ActiveModel::Serializer
 	end
 
 	def proposal_count
-		object.job_applications.try(:count)
+		object.job_applications.try(:count) 
 	end
 
 	def active_contract_count
-		object.contracts.present? ? object.contracts.active_contract.try(:count) : ' ' 
+		object.contracts.present? ? object.contracts.active_contract.try(:count) : 0
 	end
 
 	def favorited_job
