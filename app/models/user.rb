@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   searchkick
+  mount_base64_uploader :image, UserImageUploader
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   before_create :capitalize_names
