@@ -99,7 +99,7 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def get_job_active_contract
-    job_contracts = @job.contracts.present? ? @job.contracts.active_offer : []
+    job_contracts = @job.contracts.present? ? @job.contracts.active_contract : []
     render json: job_contracts, each_serializer: ContractSerializer, include: ['user.profile'], status: :ok
   end
 

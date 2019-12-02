@@ -11,7 +11,7 @@ class Contract < ApplicationRecord
 
 
 	scope :pending_offer, -> { where({ status: "Pending"}) }
-  scope :active_offer, -> { where({ status: "Accepted"}) }
+  scope :active_contract, -> { where({ status: "Accepted"}) }
 
 
   
