@@ -30,8 +30,12 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def update
     @user = User.where(uuid: params[:id]).or(User.where(id: params[:id])).first
+    if @user.role == "Project Manager"
+      @user.skip_confirmation!
+      @user.confirmed_at = Time.now
+    end 
     if @user.update(update_user_params) 
-      render json: @user, serializer: ProjectManager, success: true, message: "Details updated", status: 200 
+      render json: @user, serializer: ProjectManagerSerializer, success: true, message: "Details updated", status: 200 
     else
       render_error(@user.errors.full_messages, 422)
     end
@@ -70,7 +74,7 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def update_user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :country, :country_id, :company_name, :phone_number, company_attributes: [:name, :image, :owner, :phone, :vat_id, :time_zone, :address])
+    params.require(:user).permit(:first_name, :last_name, :email, :country, :country_id, :company_name, :phone_number, :image, company_attributes: [:name, :image, :owner, :phone, :vat_id, :time_zone, :address])
   end
 
 end

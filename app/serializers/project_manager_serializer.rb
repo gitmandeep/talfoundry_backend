@@ -1,10 +1,10 @@
 class ProjectManagerSerializer < ActiveModel::Serializer
-	attributes :id, :uuid, :email, :country, :full_name, :account_active, :project_manager_jobs, :created_at, :number_of_jobs_posted
+	attributes :id, :uuid, :email, :country, :full_name, :image, :account_active, :project_manager_jobs, :created_at, :number_of_jobs_posted
 	#attributes :user_picture
 	#attributes :profile_created
 	#attributes :account_approved
 	#attributes :created_at
-	has_one :profile, serializer: ProfileSerializer
+	#has_one :profile, serializer: ProfileSerializer
 
 	def full_name
 		object.first_name + " " + object.last_name
@@ -18,7 +18,7 @@ class ProjectManagerSerializer < ActiveModel::Serializer
 
 	def number_of_jobs_posted
 		unless current_user.role == "Project Manager"
-			object.jobs.count
+			object.jobs.try(:count)
 		end
 	end
 
