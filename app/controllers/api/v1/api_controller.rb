@@ -14,7 +14,7 @@ class Api::V1::ApiController < ApplicationController
   end
 
   def render_error(message, status_code = 404)
-    render json: { success: false, message: message, status: status_code }
+    render json: { success: false, message: message}, status: status_code
   end
 
 end
