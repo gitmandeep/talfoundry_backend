@@ -28,6 +28,15 @@ class Api::V1::UsersController < Api::V1::ApiController
     end
   end
 
+  def update
+    @user = User.where(uuid: params[:id]).or(User.where(id: params[:id])).first
+    if @user.update(update_user_params) 
+      render json: @user, serializer: ProjectManager, success: true, message: "Details updated", status: 200 
+    else
+      render_error(@user.errors.full_messages, 422)
+    end
+  end
+
   def confirm_email
     @user = User.confirm_by_token(params[:confirmation_token])
     if @user.errors.present?
@@ -58,6 +67,10 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def user_params
     params.permit(:first_name, :last_name, :email, :password, :password_confirmation, :country, :country_id, :role, :company_name, :phone_number)
+  end
+
+  def update_user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :country, :country_id, :company_name, :phone_number, company_attributes: [:name, :image, :owner, :phone, :vat_id, :time_zone, :address])
   end
 
 end

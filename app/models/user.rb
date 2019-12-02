@@ -21,7 +21,7 @@ class User < ApplicationRecord
   has_many :messages
   has_many :conversations, foreign_key: :sender_id
   has_one  :company, :dependent => :destroy
-
+  accepts_nested_attributes_for :company
 
   validates :first_name, :last_name, :role, presence: true
   validates :email, uniqueness: true
