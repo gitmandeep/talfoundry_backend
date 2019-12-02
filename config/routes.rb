@@ -48,6 +48,7 @@ Rails.application.routes.draw do
       
       post '/forgot_password', to: 'password#forgot_password'
       post '/reset_password', to: 'password#reset_password'
+      patch 'update_password/:id', to: 'password#update_password'
       post '/send_invitation', to: 'invite#create'
 
       resources :invite, only: [:update, :show]

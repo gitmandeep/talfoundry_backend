@@ -3,6 +3,7 @@ class User < ApplicationRecord
   mount_base64_uploader :image, UserImageUploader
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  attr_accessor :current_password
   before_create :capitalize_names
 
   devise :database_authenticatable, :registerable,
