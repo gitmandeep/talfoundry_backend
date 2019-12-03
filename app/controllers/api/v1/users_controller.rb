@@ -30,14 +30,19 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def update
     @user = User.where(uuid: params[:id]).or(User.where(id: params[:id])).first
-    if @user.role == "Project Manager"
-      @user.skip_confirmation!
-      @user.confirmed_at = Time.now
-    end 
-    if @user.update(update_user_params) 
+    if @user.update(update_user_params.merge(confirmed_at: Time.now)) 
       render json: @user, serializer: ProjectManagerSerializer, success: true, message: "Details updated", status: 200 
     else
       render_error(@user.errors.full_messages, 422)
+    end
+  end
+
+  def user_details
+    @user = User.where(uuid: params[:id]).or(User.where(id: params[:id])).first
+    if @user 
+      render json: @user, serializer: ProjectManagerSerializer, success: true, status: 200 
+    else
+      render_error(@user.errors.full_messages, 401)
     end
   end
 

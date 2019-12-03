@@ -13,7 +13,11 @@ Rails.application.routes.draw do
       get 'admin/approve_freelancer/:id', to: 'admin#approve_freelancer'
       get 'admin/block_freelancer/:id', to: 'admin#block_freelancer'
       
-      resources :users, except: [:create]
+      resources :users, except: [:create] do
+        member do
+          get :user_details
+        end
+      end
 
       get 'freelancer_index', to: 'freelancer#freelancer_index'
       get 'freelancer_details/:id', to: 'freelancer#freelancer_details'
