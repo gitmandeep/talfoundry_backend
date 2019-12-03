@@ -47,8 +47,9 @@ Rails.application.routes.draw do
       get '/current_user_details', to: 'authentication#current_user_details'
       post '/signup', to: 'users#create'
       get '/user_full_name', to: 'users#user_full_name', as: 'user_full_name'
-      get '/confirm_email', to: 'users#confirm_email', as: 'confirm_email' 
-      post '/interview_call_schedule', to: 'users#interview_call_schedule', as: 'interview_call_schedule' 
+      get '/confirm_email', to: 'users#confirm_email', as: 'confirm_email'
+      get '/resend_confirmation_email', to: 'users#resend_confirmation_email', as: 'resend_confirmation_email'
+      post '/interview_call_schedule', to: 'users#interview_call_schedule', as: 'interview_call_schedule'
       
       post '/forgot_password', to: 'password#forgot_password'
       post '/reset_password', to: 'password#reset_password'

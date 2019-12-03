@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::V1::ApiController
-	before_action :authorize_request, except: [:create, :confirm_email, :user_full_name]
+	before_action :authorize_request, except: [:create, :confirm_email, :user_full_name, :resend_confirmation_email]
 
   def index
     @users = User.all.order(created_at: :desc)
@@ -20,7 +20,7 @@ class Api::V1::UsersController < Api::V1::ApiController
     if @user.role == "Project Manager"
       @user.skip_confirmation!
       @user.confirmed_at = Time.now
-    end  
+    end
     if @user.save
       render json: @user, status: :created
     else
@@ -30,7 +30,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def update
     @user = User.where(uuid: params[:id]).or(User.where(id: params[:id])).first
-    if @user.update(update_user_params.merge(confirmed_at: Time.now)) 
+    if @user.update(update_user_params.merge(confirmed_at: Time.now))
       render json: @user, serializer: ProjectManagerSerializer, success: true, message: "Details updated", status: 200 
     else
       render_error(@user.errors.full_messages, 422)
@@ -52,6 +52,16 @@ class Api::V1::UsersController < Api::V1::ApiController
       render_error(@user.errors.full_messages, 401)
     else
       render json: @user, success: true, message: "Email confirmed", status: 200  
+    end
+  end
+
+  def resend_confirmation_email
+    @user = User.find(params[:id])
+    if !@user.confirmed_at
+      @user.send_confirmation_instructions
+      render json: @user, success: true, message: "Confirmation email resent", status: 200
+    else
+      render json: @user, success: false, message: "Confirmation email not sent", status: 401
     end
   end
 
