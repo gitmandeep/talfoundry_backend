@@ -1,16 +1,5 @@
 class CompanySerializer < ActiveModel::Serializer
-  attributes :id
-  attributes :uuid
- 	attributes :name
- 	attributes :image_url
- 	attributes :image_base64
- 	attributes :owner
- 	attributes :phone
- 	attributes :vat_id
- 	attributes :role
- 	attributes :time_zone
- 	attributes :address
-
+  attributes :id, :name, :image_url, :image_base64, :owner, :phone, :vat_id, :time_zone, :address
 
 	def image_url
 		object.image.try(:url)
