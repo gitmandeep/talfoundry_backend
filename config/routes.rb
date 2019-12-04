@@ -70,7 +70,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :notifications, only: [:index, :create, :update]
+      resources :notifications, only: [:index, :create, :update, :destroy]
       resources :contract, only: [:index, :show, :create, :update]
 
 
