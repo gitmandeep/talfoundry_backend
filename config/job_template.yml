@@ -1,32 +1,294 @@
 template:
   Salesforce Developer:
-    title: "Job for Salesforce Developer"
-    description: "Salesforce developers analyze company processes, developing CRM workflows and custom solutions for specific business needs. Salesforce developers work collaboratively with others on the team to create custom, scalable processes for the company. This job is usually full-time and within IT departments, although some Salesforce developers work from home. Salesforce developers work in a variety of industries, designing and developing business workflows and translating requirements into system solutions. Salesforce developers are creative, technically minded, and self-motivated."
+    title: "Salesforce Development"
+    description: "What we're looking for:
+    An experienced full stack developer to help kick-start/build on {description of website or platform}. We need someone to work on {specific project requirements}. The project is based on {software platforms, frameworks, languages, databases used by your company}.
+
+    We need the following deliverables:
+
+    - Deliverable #1 by {date}
+
+    - Deliverable #2 by {date}
+    
+    - ...
+
+    To complete all the deliverables, the right developer will have experience in the following:
+    - Experience translating designer mock-ups and wireframes into front-end code
+    - {Software platforms, frameworks, languages, databases, unit tests, version control, APIs}
+
+    In your proposal, please share a brief summary of your experience and tell us about a recent full stack web development project you worked on."
+
   Salesforce Administrator:
-    title: "Salesforce adminsistrators are responsible for tasks ranging from helping users develop reports and reset passwords to maintaining data quality, adding fields, and running backups, among many others. Those ad-hoc tasks do not a job description (or MBO checklist) make, so here's a look at what admin tasks need to be done – and when."
-    description: "Test Description 2"
+    title: "Salesforce Data Input Administrator"
+    description: "We're looking for a hard-working, experienced Salesforce expert to assist in the initial setup and data input of our sales system! 
+
+    Working alongside our project leads, you should be able to take a set of requirements and build out Salesforce to optimize the Marketing and Sales processes of our customers. You should be highly skilled in optimizing systems for customer’s processes, integrating technologies, and automating manual tasks.
+
+    You’ll be responsible for administering Salesforce, updating and creating workflows, process builder, validation rules, fields, objects, data cleanup, etc.
+
+    As our Salesforce Administrator, your major focus will be working on both short-term goals (including updating fields, page layouts, data management, etc.) and long-term goals (like updating the Salesforce infrastructure, and improving Lightning experience).
+
+    Customer-centric attitudes and focus are a must!
+
+    Examples of projects include:
+
+    -First-time Salesforce instance with migration from other CRMs.
+
+    -Review of the current process and identifying gaps in the technology stack.
+
+    -Build workflows, reports, and dashboards to optimize or automate processes.
+
+    -Data migration and cleansing to ensure data integrity within the software.
+
+    -Setup system integrations to other sales and project management tools.
+
+    -Develop reporting analyzing the results of sales and marketing activities.
+
+    Requirements:
+
+    -2+ years experience in sales or marketing operations
+
+    -Strong experience in Salesforce
+
+    -Intermediate experience in supporting tools such as Salesloft, Outreach, Marketo, Pardot, and/or HubSpot Marketing
+
+    -Proven ability to work with internal teams and collaborate on projects
+
+    -Strong ability to research system requirements and determine the steps necessary for proper configuration
+
+    -Experience in working with customers or training end-users is a plus
+
+    We appreciate all applicants for the position, however, only applicants meeting the requirements will be considered. "
+
   Salesforce Architect:
-    title: "Job for Salesforce Architect"
-    description: "To augment our salesforce.com consulting practice, Creative is currently seeking to hire a Salesforce Solution Architect to support our projects in Washington, DC. The Architect must design, develop, and articulate solutions based on a customer's strategic business and technical requirements. The candidate will work with a variety of people (program managers, technical peers and business partners) to ensure that maximum value is delivered to clients. The candidate must demonstrate progressive leadership in the full life cycle of the software development environment. "
+    title: "Need a 'Senior Salesforce Architect + Developer' to work for a 6 month sprint based project"
+    description: "Looking for a highly experienced mulesoft architect cum developer who can design as well as develop integrations as part of our salesforce project.
+
+    - Need to be pro-active & take up responsibility for the entire integration stream of the project, i.e starting with architecture & ending with documentation.
+
+    - Need to be available regularly between 7:00 PM IST to 1:00 AM IST.  (core timings)
+
+    - Can do the work in other timings as well. But, 100% availability is mandatory during the core timings.
+
+    - Expected to attend daily calls without fail (both pre-scheduled & adhoc)
+
+    - Should be able & willing to communicate with on-site clients, other architects & collect the essential business requirements.
+
+    - 6 month project. Per month payment would be 1350$. "
+
   Salesforce Consultant:
-    title: "Job for Salesforce Consultant"
-    description: "A salesforce consultants are the prime resources in an organization as they add value to business by generating revenue and bring value to the clients. They can develop appropriate solutions and analyse how changes impact business for better or worse. A good consultant is one who appreciates the platform and knows how to leverage the different tools offered by salesforce to solve critical business problems."
+    title: "Salesforce Consultant"
+    description: "Configure Labs is looking for an experienced Salesforce consultant working on a contract basis.
+
+    We are an Australian-based digital marketing agency specialising in custom web & CRM design for small-medium businesses across Australia. We are now looking for an additional Salesforce Consultant to join our team.
+
+    Please note that this will be on a contract basis with future work guaranteed based on performance. We would pay on a fixed-price agreement with fluctuations based on the size of the project.
+
+    Key Responsibilities:
+
+    - Deliver ongoing Salesforce enhancements
+
+    - Salesforce administration and support
+
+    - Identify and implement Salesforce workflow improvements
+
+    - Ensure data issues are identified and root cause addressed
+
+    - Liaise with tech team to implement projects from start to finish in timely manner
+
+    Must have:
+    - Relevant Salesforce development experience (Administration, Sales Cloud, Service Cloud)
+
+    - Current Salesforce Administration, Sales Cloud & Service Cloud certifications required
+
+    - Exposure to Salesforce Lightning preferred
+
+    - Experience with web services and API’s, enough to troubleshoot problems and provide support for integrated systems
+
+    If you are interested in this role, please attach a copy of your cover letter & CV below, and our team will be in touch with you shortly. "
 
   AWS Solutions Architect:
-    title: "Job for AWS Solutions Architect"
-    description: "The AWS Certified Solution Architect is the trained professional who does the evaluation of the requirements of the organization or the businesses and makes architectural recommendations for implementation and deployment of the application on AWS. This is one of the most sought after certifications around the world in the field of cloud computing, having this certification makes obtaining AWS Certified Solutions Architect jobs much easier."
+    title: "AWS Architect / Cloud Engineer"
+    description:  " - Experience working with hyperscale cloud providers (AWS, Azure, GCP., etc.)
+      - Understands the LAMP (Linux, Apache, MySQL and PHP/Python/Perl) stack from OS/Webserver/Database and application along with AWS/Network/WAF/CDN
+
+      - Experience using/implementing CI/CD frameworks.
+
+      - Application deployment (Git, Jenkins, Composer, etc.).
+
+      - Infrastructure provisioning tools (Chef/Puppet, Ansible, Terraform, etc.).
+
+      -  Extensive infrastructure automation via shell scripting (Python, BASH, etc.).
+
+      - Extensive experience with Monitoring / Logging / Alerting systems.
+
+      - Experience using Problem and Incident Manager Solutions.
+
+      - Experience using KEKB (Known - Error Knowledge Base)
+
+      - Intellectual curiosity to pursue the unknown and to continuously learn.
+
+      - Ability to work in a fast-paced dynamic environment.
+
+      - Good communication skills and a desire to work in a team-based environment.
+
+      - Must be able to speak and write in English.
+
+      - String understanding of ITIL to establish and drive mature operations processes
+
+      - Familiarity with the Service Now application for ticker management.
+
+      - Linux administration skills, experience with container-Centro OS a plus.
+
+      - Proficient at creating Docker container configurations, experience with Alpine a plus.
+
+      - Experience with container orchestration tools such as Kubernetes, DC/OS, or Mesos.
+
+      - Experience with automation tools such as Ansible or Terraform
+
+      - Experience using GitLab CI/CD or Jenkins (2.0 preferred)
+
+      - Understanding of micro-services architecture (Java/JVM preferred)
+
+      - Experience with tools such as ELM, Splunk, New Relic, etc.
+
+      - Experience configuring and maintaining databases such as PostgreSQL, Cassandra, Mongo, Couchbase, Redis.
+
+      - Version control and source code management.
+
+      - Excellent Hands-On experience developing Infrastructure as Code, provisioning services
+
+      - Broad in-depth understanding for onboarding applications onto IaaS, PaaS and SaaS native services, deployment automation, scripting, containers and Cloud Governance
+
+      - Strong understanding for utilizing native cloud technologies for user management, security, costing and tools
+
+      - Hands on Architecting and designing solutions using i.e LucidChart
+
+      - Good understanding of scripting languages i.e JSON, YMAL, JAVA, PYTHON, "
+
   AWS SysOps Administrator:
-    title: "Job for AWS SysOps Administractor"
-    description: "A System Operator is a person who works on the computer server and runs it. The responsibilities of a system operator are to run and operate the server. An administrator, on the other hand, manages user access and security. The System Operator manages routine operations. The system operator and administrator are the same people in smaller companies."
+    title: "AWS SysOps Engineer Required for Ongoing Client Support"
+    description: "Our dedicated web root server on Hetzner with
+    
+    - Nginx
+
+    - Gitlab
+
+    - MariaDb/MySQL
+
+    - Codeigniter App.
+    ...
+    should be migrated to AWS and checked for optimization.
+    Our Sysop will support.
+    Migration should be completed till 14th of October.
+
+    Plus an Email Server should be configured in order to send/receive emails and manage user under the domain name. "
+
   Senior AWS Cloud Architect:
-    title: "Job for Senior AWS Cloud Architect"
-    description: "The Senior Cloud Architect is responsible for leading the creation of a technology framework and providing technical leadership in support of HUIT’s initiatives in cloud computing and automation, with a focus on the design of systems and services that run on cloud platforms. The Senior Cloud Architect reports into the Engineering and Architecture organization, but would be embedded into the Cloud-DevOps effort to provide architectural leadership and best practices. Additionally, the Senior Cloud Architect will be responsible for ensuring that critical applications are designed and optimized for high availability and disaster recovery."
+    title: "Solutions Architect (Software) for Financial Service Sector"
+    description: "Looking for Solution Architect (Software) for financial Services Sector.
+
+    Solution architect will participate in the development and maintenance of business and system architecture and conduct business information flow studies. Provides integrated systems planning and recommends new or different technologies that will enhance current systems and support overall corporate and business goals. Conducts system architecture studies of new and existing IT systems to permit development of integrated systems that operate at low cost levels.
+
+    Key Job Functions and Duties :
+
+    - Build in-depth knowledge of business processes and application priorities and use knowledge of technology, products, processes and consultative sales skills
+
+    - Leverages industry and technical background to create high level solutions which utilize existing assets while delivering long term value
+
+    - Develop preliminary project, services and support plan.
+
+    - Development and maintaining relationships with key technical and commercial stakeholders within the customer organization
+
+    - Analysis of IT infrastructure requirements and designing of appropriate infrastructure solutions.
+
+    - Provision of end to end architectural work on customer IT environment.
+
+    - Custom solution creation to ensure the delivery of high quality services and solutions.
+
+    General skills:
+    - Excellent communication skills
+
+    - Deep analytical skills
+
+    - Knowledge of Robotic Process Automation, particularly UiPath is desirable
+    
+    - Stakeholder management skills
+
+    - Design Authority experience of B2B and B2C application development
+    
+    - Ability to work in a fast paced agile environment
+    
+    - Good Functional knowledge on Banking concepts
+    
+    - Desired Experience & Qualities
+    
+    - Broad and Deep technical background with at least eight years work experience in a senior role
+    
+    - IT architecture, infrastructure, and cloud development knowledge
+    
+    - Engineering and software architecture design experience
+    
+    - Ability to conduct technical design reviews to ensure that the implementation is aligned with the business and solution expectations.
+    
+    - Business Process Automation design and development
+    
+    - Agile and Scrum expertise
+    
+    - Qualifications and Accreditations:
+    
+    - AWS Certified Solution Architect
+    
+    - Dell EMC Proven Professional Cloud architect training and certification
+    
+    - Professional Cloud Solutions Architect Certification
+    
+    - Red Hat Certified Architect
+    
+    - The Open Group TOGAF 9 Certification
+    
+    - UiPath RPA Developer Advanced Certification
+    
+    - Outsystems and Appian design and development certification
+    
+    - Agile and Scrum Master certification
+    
+    - Reporting structure:
+    
+    - The Solution Architect reports to the BPA customer lead
+
+    We look forward to seeing you! "
 
   Oracle Cloud HCM Consultant:
-    title: "Job for Oracle Cloud HCM Consultant"
-    description: "The Oracle Cloud HCM Consultant will be responsible for ensuring the successful implementation of the Client's Human Capital Management solution. The HCM Consultant will provide product and implementation expertise. The Consultant will work with the client to understand their business requirements and help configure and test the solution. The Consultant will take direction and provide status to the Project Manager assigned to their project."
+    title: "Need Cloud Consultants: HCM, MM, SD, FI, BPC, ABAP, any others"
+    description: "About us:
+
+    We are a boutique consulting firm specializing in implementing full talent management and HCM platform - SAP SuccessFactors for mid-enterprise clients in the USA.
+
+    We're currently on the lookout for a world-class copywriter to help us write for our blogs. The copy will highlight current pain points for HR and talent management professionals and how transformation can be enabled with a technology like SAP SuccesssFactors.
+
+    Deliverables:
+      
+      - Copy for BLOG
+      
+      - Copy suggestions to conceptualize marketing campaigns
+      
+      - One potential round of rewrites based on client feedback
+
+    This project requires:
+      
+      - Copywriting expertise related to our requirements
+      
+      - Background with Human Resources or Talent Management.
+      
+      - Creativity and ability to conceptualize
+      
+      - Familiarity with IT Consulting Services and B2B buyers persona
+
+    In your proposal, please share a brief summary of your experience and tell us about your most successful copywriting project to date. "
+
   Oracle Cloud Solution Architect:
-    title: "Job for Oracle Cloud Solution Architect"
+    title: "Cloud Solution Architect"
     description: "Job Responsibilities:
 
       · Responsible for assisting in the establishment of an IT Architecture practice, and the adoption of an architecture and standards methodology.
@@ -40,12 +302,17 @@ template:
       · Champions a structured approach to business application solutions.
 
       · Directly assists in the development of a solutions architecture program including departmental roadmaps and project portfolios for IT systems architecture."
+
   Oracle ERP Cloud Consultant:
-    title: "Job for Oracle ERP Cloud Consultant"
-    description: "Oracle professionals design, implement and deploy Oracle solutions to achieve defined business goals. Maintain skills in Oracle applications process design and configuration; Oracle application design, development, integration, testing and deployment; and Oracle application technical architecture. A professional at this position level has the following responsibilities:
-      Identifies, assesses and solves complex business problems for area of responsibility, where analysis of situations or data requires an in-depth evaluation of variable factors.
-      Closely follows the strategic direction set by senior management when establishing near term goals."
+    title: "Oracle Financials Cloud Functional Consultant"
+    description: "Provide advice and solution design on an ongoing basis as it relates to Financials Cloud.  Modules include: GL, AP, FA, AR and possibly tax. 
+      
+      Oracle professionals design, implement and deploy Oracle solutions to achieve defined business goals. Maintain skills in Oracle applications process design and configuration; Oracle application design, development, integration, testing and deployment; and Oracle application technical architecture. A professional at this position level has the following responsibilities:
+      
+      - Identifies, assesses and solves complex business problems for area of responsibility, where analysis of situations or data requires an in-depth evaluation of variable factors.
+      
+      - Closely follows the strategic direction set by senior management when establishing near term goals."
 
   Oracle Netsuite Consultant:
-    title: "Job for Oracle Netsuite Consultant"
+    title: "Oracle | NetSuite ERP Consulting & SuiteScript Development"
     description: "An experienced consulting professional who has an understanding of solutions, industry best practices, multiple business processes or technology designs within a product/technology family. Operates independently to provide quality work products to an engagement. Performs varied and complex duties and tasks that need independent judgment, in order to implement Oracle products and technology to meet customer needs. Applies Oracle methodology, company procedures, and leading practices."
