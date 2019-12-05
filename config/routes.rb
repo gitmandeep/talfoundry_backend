@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       get 'get_favorited_jobs', to: 'users#favorited_jobs'
       get 'get_favorited_freelancers', to: "users#favorited_freelancers"
       get 'manager_active_contracts', to: "contract#manager_active_contracts"
-
+      get 'get_template_details', to: "jobs#get_template_details"
 
 
       resources :favorites, only: [:create, :index]

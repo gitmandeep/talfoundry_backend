@@ -1,0 +1,51 @@
+template:
+  Salesforce Developer:
+    title: "Job for Salesforce Developer"
+    description: "Salesforce developers analyze company processes, developing CRM workflows and custom solutions for specific business needs. Salesforce developers work collaboratively with others on the team to create custom, scalable processes for the company. This job is usually full-time and within IT departments, although some Salesforce developers work from home. Salesforce developers work in a variety of industries, designing and developing business workflows and translating requirements into system solutions. Salesforce developers are creative, technically minded, and self-motivated."
+  Salesforce Administrator:
+    title: "Salesforce adminsistrators are responsible for tasks ranging from helping users develop reports and reset passwords to maintaining data quality, adding fields, and running backups, among many others. Those ad-hoc tasks do not a job description (or MBO checklist) make, so here's a look at what admin tasks need to be done – and when."
+    description: "Test Description 2"
+  Salesforce Architect:
+    title: "Job for Salesforce Architect"
+    description: "To augment our salesforce.com consulting practice, Creative is currently seeking to hire a Salesforce Solution Architect to support our projects in Washington, DC. The Architect must design, develop, and articulate solutions based on a customer's strategic business and technical requirements. The candidate will work with a variety of people (program managers, technical peers and business partners) to ensure that maximum value is delivered to clients. The candidate must demonstrate progressive leadership in the full life cycle of the software development environment. "
+  Salesforce Consultant:
+    title: "Job for Salesforce Consultant"
+    description: "A salesforce consultants are the prime resources in an organization as they add value to business by generating revenue and bring value to the clients. They can develop appropriate solutions and analyse how changes impact business for better or worse. A good consultant is one who appreciates the platform and knows how to leverage the different tools offered by salesforce to solve critical business problems."
+
+  AWS Solutions Architect:
+    title: "Job for AWS Solutions Architect"
+    description: "The AWS Certified Solution Architect is the trained professional who does the evaluation of the requirements of the organization or the businesses and makes architectural recommendations for implementation and deployment of the application on AWS. This is one of the most sought after certifications around the world in the field of cloud computing, having this certification makes obtaining AWS Certified Solutions Architect jobs much easier."
+  AWS SysOps Administrator:
+    title: "Job for AWS SysOps Administractor"
+    description: "A System Operator is a person who works on the computer server and runs it. The responsibilities of a system operator are to run and operate the server. An administrator, on the other hand, manages user access and security. The System Operator manages routine operations. The system operator and administrator are the same people in smaller companies."
+  Senior AWS Cloud Architect:
+    title: "Job for Senior AWS Cloud Architect"
+    description: "The Senior Cloud Architect is responsible for leading the creation of a technology framework and providing technical leadership in support of HUIT’s initiatives in cloud computing and automation, with a focus on the design of systems and services that run on cloud platforms. The Senior Cloud Architect reports into the Engineering and Architecture organization, but would be embedded into the Cloud-DevOps effort to provide architectural leadership and best practices. Additionally, the Senior Cloud Architect will be responsible for ensuring that critical applications are designed and optimized for high availability and disaster recovery."
+
+  Oracle Cloud HCM Consultant:
+    title: "Job for Oracle Cloud HCM Consultant"
+    description: "The Oracle Cloud HCM Consultant will be responsible for ensuring the successful implementation of the Client's Human Capital Management solution. The HCM Consultant will provide product and implementation expertise. The Consultant will work with the client to understand their business requirements and help configure and test the solution. The Consultant will take direction and provide status to the Project Manager assigned to their project."
+  Oracle Cloud Solution Architect:
+    title: "Job for Oracle Cloud Solution Architect"
+    description: "Job Responsibilities:
+
+      · Responsible for assisting in the establishment of an IT Architecture practice, and the adoption of an architecture and standards methodology.
+
+      · Manages activities that take place during solution ideation, solution design, and solution implementation.
+
+      · Reviews business context for solutions to company challenges as well as defining the vision and requirements for the solution, recommending potential options, (which may include RFIs, RFPs or prototype development), selecting the most optimal option, and the development of a roadmap for the selected solution.
+
+      · Communicates the architecture to the stakeholders and collaborates and coordinates with existing domain architects in the formalization and adoption of IT standards and procedures.
+
+      · Champions a structured approach to business application solutions.
+
+      · Directly assists in the development of a solutions architecture program including departmental roadmaps and project portfolios for IT systems architecture."
+  Oracle ERP Cloud Consultant:
+    title: "Job for Oracle ERP Cloud Consultant"
+    description: "Oracle professionals design, implement and deploy Oracle solutions to achieve defined business goals. Maintain skills in Oracle applications process design and configuration; Oracle application design, development, integration, testing and deployment; and Oracle application technical architecture. A professional at this position level has the following responsibilities:
+      Identifies, assesses and solves complex business problems for area of responsibility, where analysis of situations or data requires an in-depth evaluation of variable factors.
+      Closely follows the strategic direction set by senior management when establishing near term goals."
+
+  Oracle Netsuite Consultant:
+    title: "Job for Oracle Netsuite Consultant"
+    description: "An experienced consulting professional who has an understanding of solutions, industry best practices, multiple business processes or technology designs within a product/technology family. Operates independently to provide quality work products to an engagement. Performs varied and complex duties and tasks that need independent judgment, in order to implement Oracle products and technology to meet customer needs. Applies Oracle methodology, company procedures, and leading practices."

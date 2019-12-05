@@ -26,6 +26,16 @@ class Api::V1::JobsController < Api::V1::ApiController
     @job.present? ? (render json: @job, serializer: JobSerializer, favorited_jobs: favorited_jobs, job_application_id: job_application_id) : (render json: { error: 'job not found' }, status: 404)
   end
 
+  def get_template_details
+    job_template = YAML.load_file("#{Rails.root.to_s}/config/job_template.yml")
+    template_details = job_template['template'][params['template_name']]
+    if template_details
+      render json: { success: true, template_details: template_details}, status: :ok
+    else
+      render json: { success: false, error: 'template not found'}, status: 404
+    end
+  end
+
   def jobs_by_user
     jobs = @current_user.jobs.all.order(created_at: :desc)
     if jobs
