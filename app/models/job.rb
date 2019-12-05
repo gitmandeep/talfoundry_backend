@@ -12,7 +12,6 @@ class Job < ApplicationRecord
 	accepts_nested_attributes_for :job_qualifications
   has_many :invites, :dependent => :destroy
   has_many :job_applications, :dependent => :destroy
-  has_many :job_application_answers, :dependent => :destroy
   has_many :contracts, :dependent => :destroy
   	
   validates :job_title,:job_category, :job_description, :job_type, presence: true

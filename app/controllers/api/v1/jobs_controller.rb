@@ -118,6 +118,12 @@ class Api::V1::JobsController < Api::V1::ApiController
     end
   end
 
+  def destroy
+    if @job.destroy
+      render json: {success: true, message: "Job post removed", status: 200} 
+    end
+  end
+
 	private
 
   def find_job
