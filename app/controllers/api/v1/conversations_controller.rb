@@ -8,25 +8,28 @@ class Api::V1::ConversationsController < Api::V1::ApiController
   end
 
   def create
-    conversation = Conversation.new(conversation_params)
+    # conversation = Conversation.get(current_user.id, params[:user_id])
+    # if conversation
+    #   conversation = Conversation.new(conversation_params)
 
-    if conversation.save
+    #   if conversation.save
+    #     serialized_data = ActiveModelSerializers::Adapter::Json.new(
+    #       ConversationSerializer.new(conversation)
+    #     ).serializable_hash
+    #     ActionCable.server.broadcast 'conversations_channel', serialized_data
+    #     head :ok
+    #   end
+    # end
+
+    @conversation = Conversation.get(current_user.id, params[:user_id])
+  
+    if @conversation.present?
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
-        ConversationSerializer.new(conversation)
+        ConversationSerializer.new(@conversation)
       ).serializable_hash
       ActionCable.server.broadcast 'conversations_channel', serialized_data
       head :ok
     end
-
-    # @conversation = Conversation.get(current_user.id, params[:user_id])
-  
-    # if @conversation.present
-    #   serialized_data = ActiveModelSerializers::Adapter::Json.new(
-    #     ConversationSerializer.new(@conversation)
-    #   ).serializable_hash
-    #   ActionCable.server.broadcast 'conversations_channel', serialized_data
-    #   head :ok
-    # end
   end
   
   # private
