@@ -21,8 +21,7 @@ class Api::V1::ConversationsController < Api::V1::ApiController
     #   end
     # end
 
-    @conversation = Conversation.get(current_user.id, params[:user_id])
-  
+    @conversation = Conversation.get(current_user.id, params[:conversation][:recipient_id] )
     if @conversation.present?
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
         ConversationSerializer.new(@conversation)
