@@ -30,6 +30,14 @@ class Api::V1::ConversationsController < Api::V1::ApiController
       head :ok
     end
   end
+
+  def update
+    conversation = Conversation.find(params[:id])
+    if conversation.present?
+      conversation.try(:messages).unread.update_all(read_at: Time.now)
+      render json: {succes: true, status: 200}
+    end
+  end
   
   # private
   

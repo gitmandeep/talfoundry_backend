@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
 
-      resources :conversations, only: [:index, :create]
+      resources :conversations, only: [:index, :create, :update]
       resources :messages, only: [:create]
       mount ActionCable.server => '/cable'
  

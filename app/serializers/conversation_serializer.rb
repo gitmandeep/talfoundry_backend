@@ -7,7 +7,7 @@ class ConversationSerializer < ActiveModel::Serializer
   #attribute :sender_picture
   attribute :receiver
   #attribute :receiver_picture
-
+  attribute :unread_message_count
   has_many :messages
 
   def sender
@@ -20,6 +20,10 @@ class ConversationSerializer < ActiveModel::Serializer
     @receiver = @object.recipient
     @receiver.user_name = @receiver.profile ? @receiver.profile.try(:profile_picture).try(:url)  : ''
     return @receiver
+  end
+
+  def unread_message_count
+    object.try(:messages).unread.count
   end
 
   # def sender_picture

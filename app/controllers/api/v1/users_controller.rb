@@ -90,6 +90,6 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def update_user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :country, :country_id, :company_name, :phone_number, :image, company_attributes: [:id, :name, :image, :owner, :phone, :vat_id, :time_zone, :address])
+    params.require(:user).permit(:first_name, :last_name, :user_name, :email, :country, :country_id, :company_name, :phone_number, :image, company_attributes: [:id, :name, :image, :owner, :phone, :vat_id, :time_zone, :address])
   end
 end

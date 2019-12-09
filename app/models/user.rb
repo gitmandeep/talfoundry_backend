@@ -4,7 +4,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   attr_accessor :current_password
-  before_create :capitalize_names
+
+  before_create :capitalize_names, :create_username
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
@@ -27,6 +28,7 @@ class User < ApplicationRecord
 
   validates :first_name, :last_name, :role, presence: true
   validates :email, uniqueness: true
+  validates :user_name, uniqueness: true
 
   scope :admin_freelancer_index, -> { where({ role: "freelancer", profile_created: true }).order(created_at: :desc) }
   scope :manager_freelancer_index, -> { where({ role: "freelancer", account_approved: true }).order(:created_at) }
@@ -77,5 +79,9 @@ class User < ApplicationRecord
       user_category: self.profile.try(:category),
       user_professional_title: self.profile.try(:professional_title)
     }
+  end
+
+  def create_username
+    self.user_name = self.last_name.downcase+'_'+ self.first_name.downcase+'_'+ SecureRandom.hex(5)
   end
 end

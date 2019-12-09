@@ -10,7 +10,7 @@ class Api::V1::JobsController < Api::V1::ApiController
     else
       jobs = params[:search].present? ? Job.search(params[:search]) : Job.order(created_at: :desc).where(:job_visibility => "Anyone")
     end
-    if params[:search]
+    if params[:search].present?
       if @current_user.search_histories.where("keyword ~* ?", params[:search]).order(created_at: :desc).limit(5).uniq.blank?
         create_search_history(params[:search])
       end
