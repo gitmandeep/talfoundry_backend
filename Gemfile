@@ -25,6 +25,8 @@ gem 'fog-aws'
 gem 'rack-cors'
 gem "active_model_serializers"
 gem 'searchkick'
+gem 'kaminari'
+gem 'api-pagination'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
