@@ -16,7 +16,7 @@ class Api::V1::JobsController < Api::V1::ApiController
       end
     end
     favorited_jobs = @current_user.favorite_jobs.pluck(:id) rescue []
-    jobs.present? ? (paginate  json: jobs, each_serializer: JobSerializer, favorited_jobs: favorited_jobs, per_page: 3) : (render json: [], status: 200)
+    jobs.present? ? (paginate  json: jobs, each_serializer: JobSerializer, favorited_jobs: favorited_jobs, per_page: 10) : (render json: [], status: 200)
   end
 
   def show
