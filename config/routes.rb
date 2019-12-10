@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
   get 'home/index'
+
+  mount ActionCable.server => '/cable'
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, defaults: { format: 'json' } do
@@ -8,7 +10,6 @@ Rails.application.routes.draw do
 
       resources :conversations, only: [:index, :create, :update]
       resources :messages, only: [:create]
-      mount ActionCable.server => '/cable'
  
       get 'admin/approve_freelancer/:id', to: 'admin#approve_freelancer'
       get 'admin/block_freelancer/:id', to: 'admin#block_freelancer'
