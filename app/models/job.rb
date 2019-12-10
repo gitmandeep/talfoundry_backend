@@ -17,6 +17,8 @@ class Job < ApplicationRecord
   validates :job_title,:job_category, :job_description, :job_type, presence: true
   validates :job_visibility,:number_of_freelancer_required,:job_pay_type,:job_experience_level,:job_duration,:job_time_requirement, presence: true
 
+  scope :recent, -> {where(["job_visibility = ? and created_at >= ?", "Anyone", 30.day.ago]).order(created_at: :desc)}
+
   def search_data
     {
       job_title: job_title,
