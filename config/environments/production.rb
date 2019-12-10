@@ -13,7 +13,7 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.action_cable.url = "wss://18.188.205.31:4000/cable"
+  config.action_cable.url = "ws://18.188.205.31:4000/cable"
   config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
