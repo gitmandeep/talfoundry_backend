@@ -67,4 +67,19 @@ class Api::V1::FreelancerController < Api::V1::ApiController
       render_error('Invalid user', 401)
     end
   end
+
+  def filter_freelancers
+    sorted_freelancers = []
+    search_fields = params[:search].present? ? (params[:search].split(',').join(' ')) : ""
+    if @current_user.is_hiring_manager?
+      filtered_freelancers = User.search search_fields, operator: "or", fields: [:user_category, :current_country, :current_city]
+      if params[:sort_by]
+        sorted_freelancers = User.where("created_at > ?", 1.month.ago)
+      end
+      freelancers = filtered_freelancers.results.push(sorted_freelancers)
+      render json: freelancers.flatten!, each_serializer: FreelancerSerializer, status: :ok
+    else
+      render_error('Invalid user', 401)
+    end
+  end
 end

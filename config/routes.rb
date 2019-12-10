@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       end
 
       get 'freelancer_index', to: 'freelancer#freelancer_index'
+      get 'filter_freelancers', to: 'freelancer#filter_freelancers'
       get 'freelancer_details/:id', to: 'freelancer#freelancer_details'
       get 'hire_freelancer_details/:id', to: 'freelancer#hire_freelancer_details'
       get 'get_invites', to: 'freelancer#get_invites'

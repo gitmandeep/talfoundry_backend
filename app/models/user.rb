@@ -77,7 +77,9 @@ class User < ApplicationRecord
       full_name: self.display_full_name,
       user_skill: self.profile.try(:skill),
       user_category: self.profile.try(:category),
-      user_professional_title: self.profile.try(:professional_title)
+      user_professional_title: self.profile.try(:professional_title),
+      current_country: self.profile.try(:current_location_country),
+      current_city: self.profile.try(:current_location_city)
     }
   end
 

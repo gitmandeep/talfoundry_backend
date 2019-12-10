@@ -17,13 +17,15 @@ class ConversationSerializer < ActiveModel::Serializer
   end
 
   def receiver
-    @receiver = @object.recipient
-    @receiver.user_name = @receiver.profile ? @receiver.profile.try(:profile_picture).try(:url)  : ''
-    return @receiver
+    @receiver = User.where(id: @object.recipient).first
+    if @receiver
+      @receiver.user_name = @receiver.profile ? @receiver.profile.try(:profile_picture).try(:url)  : ''
+      return @receiver
+    end
   end
 
   def unread_message_count
-    object.try(:messages).unread.count
+    object.try(:messages).where("user_id != #{@object.sender.id}").unread.count
   end
 
   # def sender_picture
