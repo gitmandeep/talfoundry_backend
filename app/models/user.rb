@@ -84,6 +84,15 @@ class User < ApplicationRecord
   end
 
   def create_username
-    self.user_name = self.last_name.downcase+'_'+ self.first_name.downcase+'_'+ SecureRandom.hex(5)
+    self.user_name = "#{self.first_name.downcase}_#{SecureRandom.random_number(1000)}"
+    check_username(self.user_name)
   end
+
+  def check_username(user_name)
+    users = User.find_by(user_name: user_name)
+    if users.present?
+      create_username
+    end
+  end
+
 end
