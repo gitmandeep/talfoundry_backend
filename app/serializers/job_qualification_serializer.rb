@@ -8,4 +8,5 @@ class JobQualificationSerializer < ActiveModel::Serializer
   attributes :rising_talent
   attributes :qualification_group
   attributes :location
+  attributes :certificate_category
 end

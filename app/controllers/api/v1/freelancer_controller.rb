@@ -73,10 +73,11 @@ class Api::V1::FreelancerController < Api::V1::ApiController
     search_fields = params[:search].present? ? (params[:search].split(',').join(' ')) : ""
     if @current_user.is_hiring_manager?
       filtered_freelancers = User.search search_fields, operator: "or", fields: [:user_category, :current_country, :current_city]
+      filtered_freelancers = filtered_freelancers.select{|fu| (fu.account_approved == true )}
       if params[:sort_by]
-        sorted_freelancers = User.where("created_at > ?", 1.month.ago)
+        sorted_freelancers = User.where("created_at > ? and account_approved = ?", 1.month.ago, true)
       end
-      freelancers = filtered_freelancers.results.push(sorted_freelancers)
+      freelancers = (filtered_freelancers.push(sorted_freelancers))
       render json: freelancers.flatten!, each_serializer: FreelancerSerializer, status: :ok
     else
       render_error('Invalid user', 401)
