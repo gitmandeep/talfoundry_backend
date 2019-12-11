@@ -69,16 +69,21 @@ class Api::V1::FreelancerController < Api::V1::ApiController
   end
 
   def filter_freelancers
-    sorted_freelancers = []
-    search_fields = params[:search].present? ? (params[:search].split(',').join(' ')) : ""
     if @current_user.is_hiring_manager?
-      filtered_freelancers = User.search search_fields, operator: "or", fields: [:user_category, :current_country, :current_city]
+      sorted_freelancers = []
+      search_fields = params[:search].present? ? (params[:search].split(',').join(' ')) : ""
+      filtered_freelancers = User.search search_fields, operator: "or", fields: [:current_city, :user_category, :experience_level, :current_country]
       filtered_freelancers = filtered_freelancers.select{|fu| (fu.account_approved == true )}
       if params[:sort_by]
-        sorted_freelancers = User.where("created_at > ? and account_approved = ?", 1.month.ago, true)
+        if filtered_freelancers.present?
+          freelancers_to_sort_by = User.where(id: filtered_freelancers.map(&:id))
+          sorted_freelancers = freelancers_to_sort_by.send(params[:sort_by].downcase).approved
+        else
+          sorted_freelancers = User.send(params[:sort_by].downcase).approved
+        end
       end
-      freelancers = (filtered_freelancers.push(sorted_freelancers))
-      render json: freelancers.flatten!, each_serializer: FreelancerSerializer, status: :ok
+      freelancers = (filtered_freelancers.push(sorted_freelancers)).flatten.uniq.sort_by {|s| s.created_at}.reverse
+      render json: freelancers, each_serializer: FreelancerSerializer, status: :ok
     else
       render_error('Invalid user', 401)
     end
