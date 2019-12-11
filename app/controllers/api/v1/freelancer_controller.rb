@@ -74,7 +74,7 @@ class Api::V1::FreelancerController < Api::V1::ApiController
       search_fields = params[:search].present? ? (params[:search].split(',').join(' ')) : ""
       filtered_freelancers = User.search search_fields, operator: "or", fields: [:current_city, :user_category, :experience_level, :current_country]
       filtered_freelancers = filtered_freelancers.select{|fu| (fu.account_approved == true )}
-      if params[:sort_by]
+      if params[:sort_by].present? && params[:sort_by] != "undefined"
         if filtered_freelancers.present?
           freelancers_to_sort_by = User.where(id: filtered_freelancers.map(&:id))
           sorted_freelancers = freelancers_to_sort_by.send(params[:sort_by].downcase).approved
