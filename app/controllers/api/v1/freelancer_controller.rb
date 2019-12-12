@@ -70,11 +70,13 @@ class Api::V1::FreelancerController < Api::V1::ApiController
 
   def filter_freelancers
     if @current_user.is_hiring_manager?
+      search_by, where_data = create_search_fields if params[:search].present?
       sorted_freelancers = []
-      search_fields = params[:search].present? ? (params[:search].split(',').join(' ')) : ""
-      filtered_freelancers = User.search search_fields, operator: "or", fields: [:current_city, :user_category, :experience_level, :current_country]
+
+      filtered_freelancers = User.search(search_by, where: where_data, fields: [:user_category])
       filtered_freelancers = filtered_freelancers.select{|fu| (fu.account_approved == true )}
-      if params[:sort_by].present? && params[:sort_by] != "undefined"
+
+      if params[:sort_by].present?
         if filtered_freelancers.present?
           freelancers_to_sort_by = User.where(id: filtered_freelancers.map(&:id))
           sorted_freelancers = freelancers_to_sort_by.send(params[:sort_by].downcase).approved
@@ -87,5 +89,32 @@ class Api::V1::FreelancerController < Api::V1::ApiController
     else
       render_error('Invalid user', 401)
     end
+  end
+
+  private
+  def create_search_fields
+    filters = JSON.parse(params[:search])
+    filters = filters.symbolize_keys
+    if filters[:location].present?
+      if Profile.where(current_location_country: filters[:location]).present?
+        filters[:current_country] = filters[:location]
+        filters.delete(:location)
+      elsif Profile.where(current_location_city: filters[:location]).present?
+        filters[:current_city] = filters[:location]
+        filters.delete(:location)
+      end
+    end
+
+    if filters[:category].present?
+      search_by = filters[:category]
+      filters.delete(:category)
+    end
+    
+    where_data = filters
+
+    if search_by.blank?
+      search_by = where_data.present? ? "*" : ""
+    end
+    return search_by, where_data
   end
 end

@@ -82,7 +82,10 @@ class User < ApplicationRecord
       user_professional_title: self.profile.try(:professional_title),
       current_country: self.profile.try(:current_location_country),
       current_city: self.profile.try(:current_location_city),
-      experience_level: self.profile.try(:experience_level)
+      experience_level: self.profile.try(:experience_level),
+      english_proficiency: self.profile.try(:english_proficiency),
+      availability: self.profile.try(:availability),
+      project_preference: self.profile.try(:project_preference)
     }
   end
 
