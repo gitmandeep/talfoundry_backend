@@ -6,9 +6,9 @@ class Api::V1::JobsController < Api::V1::ApiController
   def index
     if params[:search_by_category] || params[:search_by_recommended]
       search_by = params[:search_by_category].present? ? params[:search_by_category] : @current_user.try(:profile).try(:category)
-      jobs = Job.search(search_by, operator: "or", fields: [:job_category])
+      jobs = Job.search(search_by, operator: "or", fields: [:job_category]).results
     else
-      jobs = params[:search].present? ? Job.search(params[:search]) : Job.recent
+      jobs = params[:search].present? ? Job.search(params[:search]).results : Job.recent
     end
     if params[:search].present?
       if @current_user.search_histories.where("keyword ~* ?", params[:search]).order(created_at: :desc).limit(5).uniq.blank?
