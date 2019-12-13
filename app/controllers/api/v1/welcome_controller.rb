@@ -45,6 +45,7 @@ class Api::V1::WelcomeController < Api::V1::ApiController
   private
   def create_search_fields
     filters = JSON.parse(params[:search_freelancers] || params[:search_jobs]).symbolize_keys
+    filters = filters.reject { |key,value| value.empty? }
     
     if params[:search_freelancers].present? && filters[:location].present?
       if Profile.where(current_location_country: filters[:location]).present?
