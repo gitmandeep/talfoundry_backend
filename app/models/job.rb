@@ -18,13 +18,21 @@ class Job < ApplicationRecord
   validates :job_visibility,:number_of_freelancer_required,:job_pay_type,:job_experience_level,:job_duration,:job_time_requirement, presence: true
 
   scope :recent, -> {where(["job_visibility = ? and created_at >= ?", "Anyone", 30.day.ago]).order(created_at: :desc)}
+  scope :newest, lambda {where("created_at > ?", 10.days.ago)}
+  scope :public_data, -> {where(job_visibility: "Anyone")}
 
   def search_data
     {
       job_title: job_title,
       job_description: job_description,
       job_additional_expertise_required: job_additional_expertise_required,
-      job_category: job_category
+      job_category: job_category,
+      job_pay_type: job_pay_type,
+      job_experience_level: job_experience_level,
+      location: self.job_qualifications.first.try(:location),
+      job_duration: job_duration,
+      job_time_requirement: job_time_requirement,
+      job_visibility: job_visibility
     }
   end
 

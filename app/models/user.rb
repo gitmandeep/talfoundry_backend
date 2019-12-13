@@ -33,7 +33,7 @@ class User < ApplicationRecord
   scope :admin_freelancer_index, -> { where({ role: "freelancer", profile_created: true }).order(created_at: :desc) }
   scope :manager_freelancer_index, -> { where({ role: "freelancer", account_approved: true }).order(:created_at) }
   scope :newest, lambda {where("created_at > ?", 1.month.ago)}
-  scope :approved, -> {where(account_approved: true)}
+  scope :public_data, -> {where(account_approved: true)}
 
   has_many :favorites
   has_many :favorites_freelancers, through: :favorites, source: :favorited, source_type: 'User'
@@ -85,7 +85,8 @@ class User < ApplicationRecord
       experience_level: self.profile.try(:experience_level),
       english_proficiency: self.profile.try(:english_proficiency),
       availability: self.profile.try(:availability),
-      project_preference: self.profile.try(:project_preference)
+      project_preference: self.profile.try(:project_preference),
+      account_approved: account_approved
     }
   end
 

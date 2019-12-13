@@ -1,6 +1,3 @@
 class CertificationSerializer < ActiveModel::Serializer
-  attributes :id
-  attributes :uuid
-  attributes :certification_name
-  attributes :certification_link
+	attributes :id, :uuid, :certification_name, :certification_link
 end

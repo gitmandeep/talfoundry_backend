@@ -35,7 +35,7 @@ class ProfileSerializer < ActiveModel::Serializer
   end
 
   def available_jobs
-  	if current_user.role == "Project Manager"
+  	if current_user && current_user.is_hiring_manager?
   		jobs_array = []
   		jobs = current_user.jobs.select{ |job| job.invites.present? ? job.invites.all.map(&:recipient_id).exclude?(object.user.id) : job }.pluck(:id, :job_title, :uuid)
   		jobs.each {|a| jobs_array.push({id: a[0], title: a[1], uuid: a[2]})}
@@ -45,7 +45,7 @@ class ProfileSerializer < ActiveModel::Serializer
   end
 
   def available_jobs_for_contract
-  	if current_user.role == "Project Manager"
+  	if current_user && current_user.is_hiring_manager?
   		jobs_array = []
   		jobs = current_user.jobs.select{ |job| job.contracts.present? ? job.contracts.all.map(&:freelancer_id).exclude?(object.user.id) : job }.pluck(:id, :job_title, :uuid)
   		jobs.each {|a| jobs_array.push({id: a[0], title: a[1], uuid: a[2]})}

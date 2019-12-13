@@ -8,14 +8,18 @@ class ProjectManagerSerializer < ActiveModel::Serializer
 	end
 
 	def project_manager_jobs
-		unless current_user.is_hiring_manager?
-			object.jobs.limit(5).offset(1)
+		if current_user
+			unless current_user.is_hiring_manager?
+				object.jobs.limit(5).offset(1)
+			end
 		end
 	end
 
 	def number_of_jobs_posted
-		unless current_user.is_hiring_manager?
-			object.jobs.try(:count)
+		if current_user
+			unless current_user.is_hiring_manager?
+				object.jobs.try(:count)
+			end
 		end
 	end
 
