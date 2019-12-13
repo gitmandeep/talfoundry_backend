@@ -1,5 +1,5 @@
 class ProfileSerializer < ActiveModel::Serializer
-  attributes :id, :uuid, :user_id, :user_uuid, :profile_type, :profile_picture, :current_job_title, :current_location_country, :current_location_city, :professional_title, :professional_overview, :category, :skill, :user_certification, :youtube_video_link, :hourly_rate, :availability, :visibility, :english_proficiency, :about_me, :development_experience, :experience_level, :search_engine_privacy, :project_preference, :earnings_privacy, :name, :available_jobs, :available_jobs_for_contract, :search_keywords, :favorited_freelancer, :invites_count, :contracts_count, :invite_id, :contract_id
+  attributes :id, :uuid, :user_id, :user_uuid, :profile_type, :profile_picture, :current_job_title, :current_location_country, :current_location_city, :professional_title, :professional_overview, :category, :skill, :user_certification, :youtube_video_link, :hourly_rate, :availability, :visibility, :english_proficiency, :about_me, :development_experience, :experience_level, :search_engine_privacy, :project_preference, :earnings_privacy, :name, :available_jobs, :available_jobs_for_contract, :search_keywords, :favorited_freelancer, :invites_count, :contracts_count, :invite_id, :contract_id, :is_public
   #attributes :profile_picture_base64
 
   has_many :educations, serializer: EducationSerializer
@@ -96,5 +96,9 @@ class ProfileSerializer < ActiveModel::Serializer
 	# 		''
 	# 	end
 	# end
+
+  def is_public
+    @current_user.present? ? false : true
+  end
 
 end
