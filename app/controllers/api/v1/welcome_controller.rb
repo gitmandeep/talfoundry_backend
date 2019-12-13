@@ -32,8 +32,8 @@ class Api::V1::WelcomeController < Api::V1::ApiController
   end
 
   def show
-    model = params[:freelancer].present? ? User : Job
-    serializer = params[:freelancer].present? ? FreelancerSerializer : JobSerializer
+    model = params[:freelancer].present? ? Profile : Job
+    serializer = params[:freelancer].present? ? ProfileSerializer : JobSerializer
     show_data =  model.find_by_uuid(params[:id])
     if show_data
       render json: show_data, serializer: serializer, status: :ok
@@ -41,7 +41,7 @@ class Api::V1::WelcomeController < Api::V1::ApiController
       render_error('Not found', 401)
     end
   end
-  
+
   private
   def create_search_fields
     filters = JSON.parse(params[:search_freelancers] || params[:search_jobs]).symbolize_keys
