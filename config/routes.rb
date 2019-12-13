@@ -58,7 +58,8 @@ Rails.application.routes.draw do
       post '/send_invitation', to: 'invite#create'
 
       resources :invite, only: [:update, :show]
-      resources :welcome, only: [:index]
+      resources :welcome, only: [:index, :show]
+
       resources :jobs do
         get :jobs_by_user, on: :collection
 
