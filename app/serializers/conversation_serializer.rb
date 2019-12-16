@@ -25,7 +25,7 @@ class ConversationSerializer < ActiveModel::Serializer
   end
 
   def unread_message_count
-    object.try(:messages).where("user_id != #{@object.sender.id}").unread.count
+    object.try(:messages).where("user_id != #{@instance_options[:current_user].try(:id)}").unread.count
   end
 
   # def sender_picture
