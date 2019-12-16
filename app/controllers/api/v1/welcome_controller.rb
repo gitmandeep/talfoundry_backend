@@ -1,33 +1,42 @@
 class Api::V1::WelcomeController < Api::V1::ApiController
-	def index
+  def index
     if params[:search_freelancers].present? || params[:search_jobs].present?
-      search_by, where_data = create_search_fields
+      search_by, where_data, filters = create_search_fields
       sorted_data = []
 
       model = params[:search_freelancers].present? ? User : Job
       search_fields = params[:search_freelancers].present? ? [:user_category] : [:job_category]
       serializer = params[:search_freelancers].present? ? FreelancerSerializer : JobSerializer
 
-      filtered_data = model.search(search_by, where: where_data, fields: search_fields).to_a
+      filtered_data = model.search(search_by, where: where_data, fields: search_fields)
+      if params[:search_freelancers].present?
+        filtered_data = filtered_data.select{|data| (data.account_approved == true)}
+      else
+        filtered_data = filtered_data.select{|data| (data.job_visibility == "Anyone")}
+      end
 
       if params[:sort_by].present?
-        if filtered_data.present?
+        if filters.present?
           data_to_sort_by = model.where(id: filtered_data.map(&:id))
           sorted_data = data_to_sort_by.send(params[:sort_by].downcase).public_data
         else
           sorted_data = model.send(params[:sort_by].downcase).public_data
         end
+        filtered_records = sorted_data.uniq.sort_by {|s| s.created_at}.reverse
+      else
+        filtered_records = filtered_data.uniq.sort_by {|s| s.created_at}.reverse
       end
-      filtered_records = (filtered_data.push(sorted_data)).flatten.uniq.sort_by {|s| s.created_at}.reverse
+      #filtered_records = (filtered_data.push(sorted_data)).flatten.uniq.sort_by {|s| s.created_at}.reverse
     elsif params[:find_freelancers].present?
       filtered_records = User.manager_freelancer_index
     elsif params[:find_jobs]
       filtered_records = Job.recent
     end
+
     if params[:search_freelancers].present? || params[:find_freelancers].present?
-    	render json: filtered_records, each_serializer: FreelancerSerializer, include: 'profile', status: :ok
+      render json: filtered_records, each_serializer: FreelancerSerializer, include: 'profile', status: :ok
     elsif params[:search_jobs].present? || params[:find_jobs].present?
-    	render json: filtered_records, each_serializer: JobSerializer, include: 'job.**', status: :ok
+      render json: filtered_records, each_serializer: JobSerializer, include: 'job.**', status: :ok
     end
   end
 
@@ -61,16 +70,10 @@ class Api::V1::WelcomeController < Api::V1::ApiController
       search_by = filters[:category]
       filters.delete(:category)
     end
-
-    if params[:search_freelancers].present?
-      filters[:account_approved] = true
-    else
-      filters[:job_visibility] = "Anyone"
-    end
     
     where_data = filters
 
     search_by = where_data.present? ? "*" : "" if search_by.blank?
-    return search_by, where_data
+    return search_by, where_data, filters
   end
 end

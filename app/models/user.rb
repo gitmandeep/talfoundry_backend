@@ -85,8 +85,7 @@ class User < ApplicationRecord
       experience_level: self.profile.try(:experience_level),
       english_proficiency: self.profile.try(:english_proficiency),
       availability: self.profile.try(:availability),
-      project_preference: self.profile.try(:project_preference),
-      account_approved: account_approved
+      project_preference: self.profile.try(:project_preference)
     }
   end
 

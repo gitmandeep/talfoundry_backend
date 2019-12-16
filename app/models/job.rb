@@ -31,8 +31,7 @@ class Job < ApplicationRecord
       job_experience_level: job_experience_level,
       location: self.job_qualifications.first.try(:location),
       job_duration: job_duration,
-      job_time_requirement: job_time_requirement,
-      job_visibility: job_visibility
+      job_time_requirement: job_time_requirement
     }
   end
 
