@@ -8,8 +8,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
 
-      resources :conversations, only: [:index, :create, :update]
-      resources :messages, only: [:create]
+      
  
       get 'admin/approve_freelancer/:id', to: 'admin#approve_freelancer'
       get 'admin/block_freelancer/:id', to: 'admin#block_freelancer'
@@ -74,6 +73,17 @@ Rails.application.routes.draw do
 
       resources :notifications, only: [:index, :create, :update, :destroy]
       resources :contract, only: [:index, :show, :create, :update]
+
+      resources :conversations, only: [:index, :create, :update] do
+        get :search_conversation, on: :collection
+      end
+      
+      resources :messages, only: [:create]
+
+
+      #get '/search_conversation', to: 'conversations#search_conversation', as: 'search_conversation'
+
+
 
 
     end
