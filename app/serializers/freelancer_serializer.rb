@@ -5,11 +5,11 @@ class FreelancerSerializer < ActiveModel::Serializer
   def full_name
     full_name = object.first_name + " " + object.last_name
     if object.profile.try(:search_engine_privacy).present?
-      dispaly_name = object.profile.try(:search_engine_privacy) == "" ? full_name : object.first_name + " " + object.last_name.chr
+      display_name = object.profile.try(:search_engine_privacy) == "Show my full name" ? full_name : object.first_name + " " + object.last_name.chr
     else
-      dispaly_name = full_name
+      display_name = full_name
     end
-     return dispaly_name 
+     return display_name 
   end
 
   def freelancer_employments

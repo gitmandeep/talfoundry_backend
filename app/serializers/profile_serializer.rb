@@ -33,11 +33,11 @@ class ProfileSerializer < ActiveModel::Serializer
   def name
   	full_name = object.user.try(:first_name) + ' ' + object.user.try(:last_name)
     if object.try(:search_engine_privacy).present?
-      dispaly_name = object.try(:search_engine_privacy) == "Show my full name" ? full_name : object.user.try(:first_name) + ' ' + object.user.try(:last_name).chr
+      display_name = object.try(:search_engine_privacy) == "Show my full name" ? full_name : object.user.try(:first_name) + ' ' + object.user.try(:last_name).chr
     else
-      dispaly_name = full_name
+      display_name = full_name
     end
-    return dispaly_name
+    return display_name
   end
 
   def available_jobs
