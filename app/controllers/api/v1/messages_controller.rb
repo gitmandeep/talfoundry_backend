@@ -3,6 +3,7 @@ class Api::V1::MessagesController < Api::V1::ApiController
     message = Message.new(message_params)
     conversation = Conversation.find(message_params[:conversation_id])
     if message.save
+      message.conversation.update(updated_at: Time.now)
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
         MessageSerializer.new(message)
       ).serializable_hash
