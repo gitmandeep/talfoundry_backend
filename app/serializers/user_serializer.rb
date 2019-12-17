@@ -3,7 +3,13 @@ class UserSerializer < ActiveModel::Serializer
   #has_one :profile, serializer: ProfileSerializer
 
   def full_name
-    object.first_name + " " + object.last_name
+    full_name = object.first_name + " " + object.last_name
+    if object.profile.try(:search_engine_privacy).present?
+      dispaly_name = object.profile.try(:search_engine_privacy) == "" ? full_name : object.first_name + " " + object.last_name.chr
+    else
+      dispaly_name = full_name
+    end
+     return dispaly_name 
   end
 
   def user_profile
@@ -19,4 +25,5 @@ class UserSerializer < ActiveModel::Serializer
   def image_url
     object.image.try(:url)
   end
+
 end
