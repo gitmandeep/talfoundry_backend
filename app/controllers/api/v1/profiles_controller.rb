@@ -53,7 +53,7 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	private
 
 	def profile_params
-		params.require(:profile).permit(:profile_type, :profile_picture , :resume , :current_location_country , :current_location_city , :citizenship_country , :citizenship_full_name , :skype_user_name , :english_proficiency , {:skill => []} , {:category => []}, {:certification => []}, :linkedin_profile , :development_experience , :current_company_name , :current_job_title , :about_me , :worked_as_freelancer , :start_date ,  :working_hours_talfoundry)
+		params.require(:profile).permit(:profile_type, :profile_picture , :resume , :current_location_country , :current_location_city , :citizenship_country , :citizenship_full_name , :skype_user_name , :english_proficiency , {:skill => []} , {:category => []}, {:certification => []}, :linkedin_profile , :development_experience , :current_company_name , :current_job_title , :about_me , :worked_as_freelancer , :start_date ,  :working_hours_talfoundry, :search_engine_privacy)
 	end
 
 	def update_profile_params
@@ -64,4 +64,5 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	def find_job
 		@job = Job.find_by_uuid(params[:job_uuid]).try(:id)
 	end
+
 end
