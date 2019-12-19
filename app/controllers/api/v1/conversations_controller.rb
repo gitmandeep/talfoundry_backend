@@ -48,6 +48,11 @@ class Api::V1::ConversationsController < Api::V1::ApiController
     end
       @conversations.present? ? (render json: @conversations, each_serializer: ConversationSerializer) : []
   end
+
+  def get_conversation
+    conversation = Conversation.between(current_user.id, params[:id]).first
+    conversation.present? ? (render json: conversation, serializer: ConversationSerializer) : []
+  end
   
   private
   

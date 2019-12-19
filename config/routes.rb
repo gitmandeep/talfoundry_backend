@@ -75,16 +75,14 @@ Rails.application.routes.draw do
       resources :contract, only: [:index, :show, :create, :update]
 
       resources :conversations, only: [:index, :create, :update] do
-        get :search_conversation, on: :collection
+    
+        collection do 
+          get :search_conversation
+          get :get_conversation
+        end
       end
       
       resources :messages, only: [:create]
-
-
-      #get '/search_conversation', to: 'conversations#search_conversation', as: 'search_conversation'
-
-
-
 
     end
   end
