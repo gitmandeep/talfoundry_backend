@@ -5,7 +5,7 @@ class Api::V1::WelcomeController < Api::V1::ApiController
       filters = filters.reject { |key,value| value.empty? }
     end
     if filters.present? || params[:sort_by].present?
-      search_by, where_data = create_search_fields(filters)
+      search_by, where_data, filters = create_search_fields(filters)
       sorted_data = []
 
       model = params[:search_freelancers].present? ? User : Job
@@ -20,7 +20,7 @@ class Api::V1::WelcomeController < Api::V1::ApiController
       end
 
       if params[:sort_by].present?
-        if filtered_data.present?
+        if filters.present?
           data_to_sort_by = model.where(id: filtered_data.map(&:id))
           sorted_data = data_to_sort_by.send(params[:sort_by].downcase).public_data
         else
@@ -87,6 +87,6 @@ class Api::V1::WelcomeController < Api::V1::ApiController
     where_data = filters
 
     search_by = where_data.present? ? "*" : "" if search_by.blank?
-    return search_by, where_data
+    return search_by, where_data, filters
   end
 end
