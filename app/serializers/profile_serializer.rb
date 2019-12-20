@@ -31,7 +31,7 @@ class ProfileSerializer < ActiveModel::Serializer
   end
 
   def is_certified
-    object.certifications.present?
+    object.certification.present?
   end
 
   def name
