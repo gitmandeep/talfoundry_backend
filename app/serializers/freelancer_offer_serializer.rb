@@ -17,6 +17,8 @@ class FreelancerOfferSerializer < ActiveModel::Serializer
   attributes :freelacer_country
   attributes :freelacer_picture
 
+  has_many :milestones, serializer: MessageSerializer
+
 
   def job_title
   	object.try(:job).try(:job_title)
