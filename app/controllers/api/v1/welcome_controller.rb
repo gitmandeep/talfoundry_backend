@@ -1,11 +1,11 @@
 class Api::V1::WelcomeController < Api::V1::ApiController
   def index
     if params[:search_freelancers].present? || params[:search_jobs].present?
-      filters = JSON.parse(params[:search_freelancers] || params[:search_jobs]).symbolize_keys
-      filters = filters.reject { |key,value| value.empty? }
+      original_filters = JSON.parse(params[:search_freelancers] || params[:search_jobs]).symbolize_keys
+      original_filters = original_filters.reject { |key,value| value.empty? }
     end
-    if filters.present? || params[:sort_by].present?
-      search_by, where_data, filters = create_search_fields(filters)
+    if original_filters.present? || params[:sort_by].present?
+      search_by, where_data, certificate_data = create_search_fields(original_filters)
       sorted_data = []
 
       model = params[:search_freelancers].present? ? User : Job
@@ -20,7 +20,7 @@ class Api::V1::WelcomeController < Api::V1::ApiController
       end
 
       if params[:sort_by].present?
-        if filters.present?
+        if where_data.present?
           data_to_sort_by = model.where(id: filtered_data.map(&:id))
           sorted_data = data_to_sort_by.send(params[:sort_by].downcase).public_data
         else
@@ -45,6 +45,13 @@ class Api::V1::WelcomeController < Api::V1::ApiController
       end
     end
 
+    if params[:search_freelancers].present? && certificate_data.present?
+      if where_data.blank?
+        filtered_records = User.manager_freelancer_index
+      end
+      filtered_records = filtered_records.select{|s| s.profile.certification.include?(certificate_data)}
+    end
+
     if params[:search_freelancers].present? || params[:find_freelancers].present?
       render json: filtered_records, each_serializer: FreelancerSerializer, include: 'profile', status: :ok
     elsif params[:search_jobs].present? || params[:find_jobs].present?
@@ -64,7 +71,8 @@ class Api::V1::WelcomeController < Api::V1::ApiController
   end
 
   private
-  def create_search_fields(filters)    
+  def create_search_fields(filters)
+    certificate_data = filters[:certification]
     if params[:search_freelancers].present? && filters[:location].present?
       if Profile.where(current_location_country: filters[:location]).present?
         filters[:current_country] = filters[:location]
@@ -80,13 +88,13 @@ class Api::V1::WelcomeController < Api::V1::ApiController
       filters.delete(:category)
     end
 
-    if filters[:client_history].present?
-      filters.delete(:client_history)
+    if filters[:certification].present?
+      filters.delete(:certification)
     end
-    
+
     where_data = filters
 
     search_by = where_data.present? ? "*" : "" if search_by.blank?
-    return search_by, where_data, filters
+    return search_by, where_data, certificate_data
   end
 end
