@@ -49,7 +49,7 @@ class Api::V1::WelcomeController < Api::V1::ApiController
       if where_data.blank?
         filtered_records = User.manager_freelancer_index
       end
-      filtered_records = filtered_records.select{|s| s.profile.certification.include?(certificate_data)}
+      filtered_records = filtered_records.select{|s| s.profile.certifications.map(&:certification_name).include?(certificate_data)}
     end
 
     if params[:search_freelancers].present? || params[:find_freelancers].present?
