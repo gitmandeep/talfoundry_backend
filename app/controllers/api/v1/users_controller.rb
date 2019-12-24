@@ -51,11 +51,19 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def get_user_info
+    # PayPal::SDK.configure({
+    # :openid_client_id     => ENV["PAYPAL_CLIENT_ID"],
+    # :openid_client_secret => ENV["PAYPAL_CLIENT_SECRET"],
+    # :openid_redirect_uri  => "http://18.188.205.31"
+    # })
+
     PayPal::SDK.configure({
-    :openid_client_id     => ENV["PAYPAL_CLIENT_ID"],
-    :openid_client_secret => ENV["PAYPAL_CLIENT_SECRET"],
+    :openid_client_id     => "AUImaOhjsZfe5DoZiMz30cAbalsnpCVkpOpBeMsXrs6gTYUhX7-CqFBumGO-8iQiFvZywfLX_1Jeoyof",
+    :openid_client_secret => "EDBuTHXpSJ7982mzyviNAuFzlCxF4-WzbmsYFntFYR4bmnaZuZzPWAAcDDxdsYkOvs-bdP4vhFd8G3IJ",
     :openid_redirect_uri  => "http://18.188.205.31"
     })
+
+
 
     tokeninfo = Tokeninfo.create(params[:auth_code])
 
