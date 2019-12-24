@@ -2,6 +2,7 @@ class ProjectManagerSerializer < ActiveModel::Serializer
 	attributes :id, :uuid, :email, :country, :first_name, :last_name, :full_name, :user_name, :image_url, :account_active, :project_manager_jobs, :created_at, :number_of_jobs_posted
 	#has_one :profile, serializer: ProfileSerializer
 	has_one :company, serializer: CompanySerializer
+	has_many :payment_methods, serializer: PaymentMethodSerializer
 
 	def full_name
 		object.first_name + " " + object.last_name

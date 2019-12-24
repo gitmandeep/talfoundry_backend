@@ -27,6 +27,7 @@ gem "active_model_serializers"
 gem 'searchkick'
 gem 'kaminari'
 gem 'api-pagination'
+gem 'paypal-sdk-rest'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

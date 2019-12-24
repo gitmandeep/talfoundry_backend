@@ -38,6 +38,7 @@ class User < ApplicationRecord
   has_many :favorites
   has_many :favorites_freelancers, through: :favorites, source: :favorited, source_type: 'User'
   has_many :favorite_jobs, through: :favorites, source: :favorited, source_type: 'Job'
+  has_many :payment_methods, :dependent => :destroy
 
   # # user types constants
   # TYPE_ADMIN = 1

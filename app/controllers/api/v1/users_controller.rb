@@ -1,3 +1,6 @@
+require 'paypal-sdk-rest'
+include PayPal::SDK::OpenIDConnect
+
 class Api::V1::UsersController < Api::V1::ApiController
 	before_action :authorize_request, except: [:create, :confirm_email, :user_full_name, :resend_confirmation_email]
 
@@ -44,6 +47,26 @@ class Api::V1::UsersController < Api::V1::ApiController
       render json: @user, serializer: ProjectManagerSerializer, success: true, status: 200 
     else
       render_error(@user.errors.full_messages, 401)
+    end
+  end
+
+  def get_user_info
+    PayPal::SDK.configure({
+    :openid_client_id     => ENV["PAYPAL_CLIENT_ID"],
+    :openid_client_secret => ENV["PAYPAL_CLIENT_SECRET"],
+    :openid_redirect_uri  => "http://18.188.205.31"
+    })
+
+    tokeninfo = Tokeninfo.create(params[:auth_code])
+
+    user_info = tokeninfo.userinfo
+    user_info = user_info.to_hash
+
+    payment_method = current_user.payment_methods.build(user_account_id: user_info["user_id"], name: user_info["name"], email: user_info["email"], account_type: "paypal", payer_id: user_info["payer_id"], verified: user_info["verified"], email_verified: user_info["email_verified"])
+    if payment_method.save! && payment_method.verified
+      render json: "User account verified", success: true, status: 200
+    else
+      render_error(payment_method.errors.full_messages, 401)
     end
   end
 
