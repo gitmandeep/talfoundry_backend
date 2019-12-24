@@ -16,6 +16,9 @@ Rails.application.routes.draw do
       resources :users, except: [:create] do
         member do
           get :user_details
+        end
+
+        collection do
           get :get_user_info
         end
       end
