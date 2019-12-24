@@ -65,7 +65,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 
 
 
-    tokeninfo = Tokeninfo.create(params[:auth_code])
+    tokeninfo = Tokeninfo.create(params[:code])
 
     user_info = tokeninfo.userinfo
     user_info = user_info.to_hash
