@@ -52,9 +52,9 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def get_user_info
     PayPal::SDK.configure({
-    :openid_client_id     => "AUImaOhjsZfe5DoZiMz30cAbalsnpCVkpOpBeMsXrs6gTYUhX7-CqFBumGO-8iQiFvZywfLX_1Jeoyof",
-    :openid_client_secret => "EDBuTHXpSJ7982mzyviNAuFzlCxF4-WzbmsYFntFYR4bmnaZuZzPWAAcDDxdsYkOvs-bdP4vhFd8G3IJ",
-    :openid_redirect_uri  => "http://18.188.205.31:4000"
+    :openid_client_id     => "AZDgGNKyQoBs3jyD6kGoTmh1KuWJBhjdjJCMuoCP4wz0MdFlPsE8fqYWC8rDOlsS_OgXzuMjUKRiBJ10",
+    :openid_client_secret => "EF_JSNfAelreGZD6o0vBuhH4HwfeRyNOovJFJsD2mkDzQ8i1sKLA5Bo7P92Q2qBfdpQPNSIKlVg2HD8X",
+    :openid_redirect_uri  => "http://18.188.205.31/settings"
     })
 
     tokeninfo = Tokeninfo.create(params[:code])
@@ -62,14 +62,9 @@ class Api::V1::UsersController < Api::V1::ApiController
     user_info = tokeninfo.userinfo
     user_info = user_info.to_hash
 
-    # payment_method = current_user.payment_methods.build(user_account_id: user_info["user_id"], name: user_info["name"], email: user_info["email"], account_type: "paypal", payer_id: user_info["payer_id"], verified: user_info["verified"], email_verified: user_info["email_verified"])
-    # if payment_method.save! && payment_method.verified
-    #   render json: "User account verified", success: true, status: 200
-    # else
-    #   render_error(payment_method.errors.full_messages, 401)
-    # end
-    if user_info.present?
-      render json: user_info, success: true, status: 200
+    payment_method = User.find(params[:id]).payment_methods.build(user_account_id: user_info["user_id"], name: user_info["name"], email: user_info["email"], account_type: "paypal", payer_id: user_info["payer_id"], verified: user_info["verified"], email_verified: user_info["email_verified"])
+    if payment_method.save! && payment_method.verified
+      render json: { success: true, message: "User account verified", status: 200 }
     else
       render_error("Something went wrong", 401)
     end
