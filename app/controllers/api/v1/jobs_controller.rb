@@ -78,7 +78,7 @@ class Api::V1::JobsController < Api::V1::ApiController
       favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
       render json: freelancer_users, each_serializer: FreelancerSerializer, favorited_freelancers: favorited_freelancers, status: :ok
     else
-      render_error("Not found", 404)
+      render json: [], status: :ok
     end
   end
 
@@ -89,8 +89,8 @@ class Api::V1::JobsController < Api::V1::ApiController
       favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
       render json: invited_freelancers, each_serializer: FreelancerSerializer, favorited_freelancers: favorited_freelancers, status: :ok
     else
-      render_error("Not found", 404)
-    end  
+      render json: [], status: :ok
+    end
   end
 
   def hired_freelancer
@@ -99,7 +99,7 @@ class Api::V1::JobsController < Api::V1::ApiController
       favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
       render json: hired_freelancers, each_serializer: FreelancerSerializer, status: :ok
     else
-      render_error("Not found", 404)
+      render json: [], status: :ok
     end  
   end
 
