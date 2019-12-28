@@ -1,5 +1,5 @@
 class HireFreelancerSerializer < ActiveModel::Serializer
-  attributes :id, :uuid, :full_name, :user_picture, :user_rate, :job_id
+  attributes :id, :uuid, :full_name, :user_picture, :user_rate, :job_id, :payment_method
   # has_one :profile, serializer: ProfileSerializer
 
   def full_name
@@ -20,5 +20,12 @@ class HireFreelancerSerializer < ActiveModel::Serializer
 
   def job_id
     @instance_options[:job_id]
+  end
+
+  def payment_method
+    billing_method = current_user.try(:payment_methods).where(account_type: 'paypal').first
+    if billing_method.present?
+      PaymentMethodSerializer.new(billing_method)
+    end
   end
 end

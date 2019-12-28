@@ -2,7 +2,7 @@ class JobSerializer < ActiveModel::Serializer
 	attributes :id, :uuid, :created_at, :job_title, :job_category, :job_speciality, :job_description, :job_document, :job_type, :job_api_integration, :job_expertise_required, :job_visibility, :number_of_freelancer_required, :job_pay_type, :job_pay_value, :job_experience_level, :job_duration, :job_time_requirement, :job_additional_expertise_required, :proposal_count, :favorited_job, :active_contract_count, :is_public
 	attributes :job_application_id
 	#has_one :user, serializer: UserSerializer
-	has_one :user, serializer: ProjectManagerSerializer 
+	has_one :user, serializer: ProjectManagerSerializer
 	has_many :job_screening_questions, serializer: JobScreeningQuestionSerializer
 	has_many :job_qualifications, serializer: JobQualificationSerializer
 
@@ -31,7 +31,7 @@ class JobSerializer < ActiveModel::Serializer
 	end
 
 	def proposal_count
-		object.job_applications.try(:count) 
+		object.job_applications.try(:count)
 	end
 
 	def active_contract_count
@@ -42,10 +42,10 @@ class JobSerializer < ActiveModel::Serializer
 		if @instance_options[:favorited_jobs].present?
 			return @instance_options[:favorited_jobs].include? object.id
 		else
-			return false 
+			return false
 		end
 	end
-	
+
 	def is_public
 		@current_user.present? ? false : true
 	end
