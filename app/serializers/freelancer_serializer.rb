@@ -1,5 +1,5 @@
 class FreelancerSerializer < ActiveModel::Serializer
-  attributes :id, :uuid, :email, :full_name, :user_picture, :profile_created, :call_schedule, :account_approved, :account_active, :created_at, :freelancer_employments, :profile_uuid, :favorited_freelancer
+  attributes :id, :uuid, :email, :full_name, :user_picture, :profile_created, :call_schedule, :account_approved, :account_active, :created_at, :freelancer_employments, :profile_uuid, :favorited_freelancer, :payment_method
   has_one :profile, serializer: ProfileSerializer
 
   def full_name
@@ -33,5 +33,12 @@ class FreelancerSerializer < ActiveModel::Serializer
     else
       return false 
     end
+  end
+
+  def payment_method
+    current_user.try(:payment_methods).where(account_type: 'paypal')
+    # if billing_method.present?
+    #   PaymentMethodSerializer.new(billing_method.first)
+    # end
   end
 end
