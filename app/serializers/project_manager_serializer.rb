@@ -2,7 +2,7 @@ class ProjectManagerSerializer < ActiveModel::Serializer
 	attributes :id, :uuid, :email, :country, :first_name, :last_name, :full_name, :user_name, :image_url, :account_active, :project_manager_jobs, :created_at, :number_of_jobs_posted, :payment_method
 	#has_one :profile, serializer: ProfileSerializer
 	has_one :company, serializer: CompanySerializer
-	#has_many :payment_methods, serializer: PaymentMethodSerializer
+	has_many :payment_methods, serializer: PaymentMethodSerializer
 
 	def full_name
 		object.first_name + " " + object.last_name
@@ -29,11 +29,8 @@ class ProjectManagerSerializer < ActiveModel::Serializer
 	end
 
 	def payment_method
-		billing_method = object.try(:payment_methods).where(account_type: 'paypal').first
-		if billing_method.present?
-			PaymentMethodSerializer.new(billing_method)
-		end
-	end
+    object.try(:payment_methods).where(account_type: 'paypal')
+  end
 
 	# def image_base64
 	# 	if current_user.role != "admin"
