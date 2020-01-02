@@ -23,7 +23,7 @@ class HireFreelancerSerializer < ActiveModel::Serializer
   end
 
   def payment_method
-    current_user.try(:payment_methods).where(account_type: 'paypal')
+    current_user.try(:payment_methods).where(account_type: 'paypal') if current_user
     # if billing_method.present?
     #   PaymentMethodSerializer.new(billing_method.first)
     # end
