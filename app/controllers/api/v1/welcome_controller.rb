@@ -35,11 +35,11 @@ class Api::V1::WelcomeController < Api::V1::ApiController
     elsif params[:find_freelancers].present?
       filtered_records = User.manager_freelancer_index
     elsif params[:find_jobs]
-      filtered_records = Job.recent
+      filtered_records = Job.all
     end
 
     if params[:search_freelancers].present? && certificate_data.present?
-      if where_data.blank?
+      if filtered_data.blank?
         filtered_records = User.manager_freelancer_index
       end
       #filtered_records = filtered_records.select{|s| s.profile.certifications.map(&:certification_name).include?(certificate_data)}
