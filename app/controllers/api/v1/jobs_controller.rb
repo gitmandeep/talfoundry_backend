@@ -45,6 +45,11 @@ class Api::V1::JobsController < Api::V1::ApiController
     end
   end
 
+  def get_all_jobs
+    jobs = Job.public_data.order(created_at: :desc)
+    jobs.present? ? (render json: jobs, each_serializer: JobSerializer) : (render json: [])
+  end
+
 	def create
     job = @current_user.jobs.build(job_params)   
     if job.save

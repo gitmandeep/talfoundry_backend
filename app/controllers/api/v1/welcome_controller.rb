@@ -20,7 +20,8 @@ class Api::V1::WelcomeController < Api::V1::ApiController
       end
 
       if params[:sort_by].present?
-        if where_data.present?
+        # if where_data.present?
+        if filtered_data.present?
           data_to_sort_by = model.where(id: filtered_data.map(&:id))
           sorted_data = data_to_sort_by.send(params[:sort_by].downcase).public_data
         else
@@ -37,19 +38,20 @@ class Api::V1::WelcomeController < Api::V1::ApiController
       filtered_records = Job.recent
     end
 
+    if params[:search_freelancers].present? && certificate_data.present?
+      if where_data.blank?
+        filtered_records = User.manager_freelancer_index
+      end
+      #filtered_records = filtered_records.select{|s| s.profile.certifications.map(&:certification_name).include?(certificate_data)}
+      filtered_records = filtered_records.select{|s| certificate_data == "Yes" ? (s.profile.certifications.present?) : (s.profile.certifications.blank?)}
+    end
+
     if params[:search].present?
       if params[:search_freelancers].present?
         filtered_records = filtered_records.select{|s| s.first_name.downcase == params[:search].downcase || s.last_name.downcase == params[:search].downcase}
       elsif params[:search_jobs].present? || params[:find_jobs].present?
         filtered_records = filtered_records.select{|s| s.job_title.downcase.include?(params[:search].downcase)}
       end
-    end
-
-    if params[:search_freelancers].present? && certificate_data.present?
-      if where_data.blank?
-        filtered_records = User.manager_freelancer_index
-      end
-      filtered_records = filtered_records.select{|s| s.profile.certifications.map(&:certification_name).include?(certificate_data)}
     end
 
     if params[:search_freelancers].present? || params[:find_freelancers].present?
