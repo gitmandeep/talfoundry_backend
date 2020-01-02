@@ -68,6 +68,7 @@ Rails.application.routes.draw do
       resources :jobs do
         get :jobs_by_user, on: :collection
         get :get_all_jobs, on: :collection
+        get :get_all_hired_freelancers, on: :collection
 
         member do
           get :job_related_freelancer

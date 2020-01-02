@@ -47,7 +47,7 @@ class Api::V1::JobsController < Api::V1::ApiController
 
   def get_all_jobs
     jobs = Job.public_data.order(created_at: :desc)
-    jobs.present? ? (render json: jobs, each_serializer: JobSerializer) : (render json: [])
+    jobs.present? ? (render json: jobs, each_serializer: JobSerializer) : (render json: [], status: :ok)
   end
 
 	def create
@@ -105,7 +105,17 @@ class Api::V1::JobsController < Api::V1::ApiController
       render json: hired_freelancers, each_serializer: FreelancerSerializer, status: :ok
     else
       render json: [], status: :ok
-    end  
+    end
+  end
+
+  def get_all_hired_freelancers
+    hired_freelancers = User.where(id: @current_user.contracts.pluck(:freelancer_id))
+    if hired_freelancers.present?
+      favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
+      render json: hired_freelancers, each_serializer: FreelancerSerializer, status: :ok
+    else
+      render json: [], status: :ok
+    end
   end
 
   def get_job_proposals
