@@ -1,6 +1,3 @@
-require 'paypal-sdk-rest'
-include PayPal::SDK::OpenIDConnect
-
 class Api::V1::UsersController < Api::V1::ApiController
 	before_action :authorize_request, except: [:create, :confirm_email, :user_full_name, :resend_confirmation_email, :get_user_info]
 
@@ -51,14 +48,7 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def get_user_info
-    PayPal::SDK.configure({
-    :openid_client_id     => "AZDgGNKyQoBs3jyD6kGoTmh1KuWJBhjdjJCMuoCP4wz0MdFlPsE8fqYWC8rDOlsS_OgXzuMjUKRiBJ10",
-    :openid_client_secret => "EF_JSNfAelreGZD6o0vBuhH4HwfeRyNOovJFJsD2mkDzQ8i1sKLA5Bo7P92Q2qBfdpQPNSIKlVg2HD8X",
-    :openid_redirect_uri  => "http://18.188.205.31/settings"
-    })
-
     tokeninfo = Tokeninfo.create(params[:code])
-
     user_info = tokeninfo.userinfo
     user_info = user_info.to_hash
 
