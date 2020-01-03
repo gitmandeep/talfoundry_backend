@@ -10,7 +10,7 @@ class Api::V1::JobsController < Api::V1::ApiController
     else
       jobs = params[:search].present? ? Job.search(params[:search]).results : Job.recent
     end
-    if params[:search].present?
+    if @current_user.is_freelancer? && params[:search].present?
       if @current_user.search_histories.where("keyword ~* ?", params[:search]).order(created_at: :desc).limit(5).uniq.blank?
         create_search_history(params[:search])
       end
@@ -46,7 +46,12 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def get_all_jobs
-    jobs = Job.public_data.order(created_at: :desc)
+    jobs = Job.search(params[:search]).results if params[:search].present?
+    if jobs.present?
+      jobs = jobs.select{|job| job.job_visibility == "Anyone"}
+    else
+      jobs = Job.public_data.order(created_at: :desc)
+    end
     jobs.present? ? (render json: jobs, each_serializer: JobSerializer) : (render json: [], status: :ok)
   end
 
@@ -102,7 +107,7 @@ class Api::V1::JobsController < Api::V1::ApiController
     hired_freelancers = User.where(id: @job.contracts.pluck(:freelancer_id))
     if hired_freelancers.present?
       favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
-      render json: hired_freelancers, each_serializer: FreelancerSerializer, status: :ok
+      render json: hired_freelancers, each_serializer: FreelancerSerializer, favorited_freelancers: favorited_freelancers, status: :ok
     else
       render json: [], status: :ok
     end
