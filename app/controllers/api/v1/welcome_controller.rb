@@ -38,12 +38,15 @@ class Api::V1::WelcomeController < Api::V1::ApiController
       filtered_records = Job.all
     end
 
-    if params[:search_freelancers].present? && certificate_data.present?
+    if certificate_data.present?
       if filtered_data.blank?
-        filtered_records = User.manager_freelancer_index
+        filtered_records = params[:search_freelancers].present? ? (User.manager_freelancer_index) : (Job.all)
       end
-      #filtered_records = filtered_records.select{|s| s.profile.certifications.map(&:certification_name).include?(certificate_data)}
-      filtered_records = filtered_records.select{|s| certificate_data == "Yes" ? (s.profile.certifications.present?) : (s.profile.certifications.blank?)}
+      if params[:search_freelancers].present?
+        filtered_records = filtered_records.select{|s| certificate_data == "Yes" ? (s.profile.certifications.present?) : (s.profile.certifications.blank?)}
+      elsif params[:search_jobs].present?
+        filtered_records = filtered_records.select{|s| certificate_data == "Yes" ? (s.job_qualifications.present? && s.job_qualifications[0].qualification_group != "No") : (s.job_qualifications.blank? || s.try(:job_qualifications)[0].try(:qualification_group) == "No")}
+      end
     end
 
     if params[:search].present?
