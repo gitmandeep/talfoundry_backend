@@ -4,7 +4,8 @@ class Api::V1::FreelancerController < Api::V1::ApiController
 
   def freelancer_index
     if @current_user.is_admin?
-      freelancer_users = User.admin_freelancer_index
+      users = User.search(params[:search]) if params[:search].present?
+      freelancer_users = (users.present? ? users.results : User.all).select{|u| u.role == "freelancer" && u.profile_created == true}.sort_by {|s| s.created_at}.reverse
     elsif @current_user.is_hiring_manager? || @current_user.is_freelancer?
       if params[:search].present?
         freelancer_users = User.search(params[:search])
@@ -19,11 +20,6 @@ class Api::V1::FreelancerController < Api::V1::ApiController
       end
     end
 
-    # if @current_user.is_hiring_manager? && params[:search].present?
-    #   if @current_user.search_histories.where("keyword ~* ?", params[:search]).order(created_at: :desc).limit(5).uniq.blank?
-    #     create_search_history(params[:search])
-    #   end
-    # end
     favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
     render json: freelancer_users, each_serializer: FreelancerSerializer, favorited_freelancers: favorited_freelancers, status: :ok
   end
