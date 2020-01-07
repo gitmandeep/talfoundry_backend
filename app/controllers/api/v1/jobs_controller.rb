@@ -4,13 +4,17 @@ class Api::V1::JobsController < Api::V1::ApiController
   before_action :find_job, only: [:edit, :update, :destroy, :show, :job_related_freelancer, :invited_freelancer, :get_job_proposals, :hired_freelancer, :get_job_active_contract]
 
   def index
-    if params[:search_by_category] || params[:search_by_recommended]
-      search_by = params[:search_by_category].present? ? params[:search_by_category] : @current_user.try(:profile).try(:category)
-      jobs = Job.search(search_by, operator: "or", fields: [:job_category]).results
+    if @current_user.is_admin?
+      jobs = Job.admin_jobs(params[:job_status])
     else
-      jobs = params[:search].present? ? Job.search(params[:search]).results : Job.recent
+      if params[:search_by_category] || params[:search_by_recommended]
+        search_by = params[:search_by_category].present? ? params[:search_by_category] : @current_user.try(:profile).try(:category)
+        jobs = Job.search(search_by, operator: "or", fields: [:job_category]).results
+      else
+        jobs = params[:search].present? ? Job.search(params[:search]).results : Job.recent
+      end
+      if @current_user.is_freelancer? && params[:search].present?
     end
-    if @current_user.is_freelancer? && params[:search].present?
       if @current_user.search_histories.where("keyword ~* ?", params[:search]).order(created_at: :desc).limit(5).uniq.blank?
         create_search_history(params[:search])
       end

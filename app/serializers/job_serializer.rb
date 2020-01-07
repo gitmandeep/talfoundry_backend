@@ -1,5 +1,5 @@
 class JobSerializer < ActiveModel::Serializer
-	attributes :id, :uuid, :created_at, :job_title, :job_category, :job_speciality, :job_description, :job_document, :job_type, :job_api_integration, :job_expertise_required, :job_visibility, :number_of_freelancer_required, :job_pay_type, :job_pay_value, :job_experience_level, :job_duration, :job_time_requirement, :job_additional_expertise_required, :proposal_count, :favorited_job, :active_contract_count, :is_public
+	attributes :id, :uuid, :created_at, :job_title, :job_category, :job_speciality, :job_description, :job_document, :job_type, :job_api_integration, :job_expertise_required, :job_visibility, :number_of_freelancer_required, :job_pay_type, :job_pay_value, :job_experience_level, :job_duration, :job_time_requirement, :job_additional_expertise_required, :proposal_count, :favorited_job, :active_contract_count, :is_public, :job_status
 	attributes :job_application_id
 	#has_one :user, serializer: UserSerializer
 	has_one :user, serializer: ProjectManagerSerializer
