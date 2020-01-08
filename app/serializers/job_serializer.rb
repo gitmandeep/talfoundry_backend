@@ -39,7 +39,7 @@ class JobSerializer < ActiveModel::Serializer
   end
 
   def hired_freelancers
-    if current_user.is_admin? && object.contracts.try(:active_contract).present?
+    if current_user && current_user.is_admin? && object.contracts.try(:active_contract).present?
       object.contracts.active_contract.map{|c| c.freelancer.slice(:first_name, :last_name).merge( c.freelancer.profile.slice(:id, :uuid, :current_job_title, :hourly_rate, :current_location_country, :about_me, :profile_picture) ) }
     end
   end
