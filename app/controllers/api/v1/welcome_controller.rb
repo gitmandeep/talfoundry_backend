@@ -60,7 +60,7 @@ class Api::V1::WelcomeController < Api::V1::ApiController
     if params[:search_freelancers].present? || params[:find_freelancers].present?
       render json: filtered_records, each_serializer: FreelancerSerializer, include: 'profile', status: :ok
     elsif params[:search_jobs].present? || params[:find_jobs].present?
-      render json: filtered_records, each_serializer: JobSerializer, include: 'job.**', status: :ok
+      render json: filtered_records, each_serializer: JobSerializer, status: :ok
     end
   end
 
