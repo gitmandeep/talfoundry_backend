@@ -41,6 +41,41 @@ class Api::V1::JobsController < Api::V1::ApiController
   end
 
   def jobs_by_user
+    # ***************************************************
+
+  #   PayPal::SDK::REST.set_config(
+  #     :mode => "sandbox", # "sandbox" or "live"
+  #     :client_id => ENV["PAYPAL_CLIENT_ID"],
+  #     :client_secret => ENV["PAYPAL_CLIENT_SECRET"]
+  #   )
+
+  #   payment = Payment.new({
+  # :intent =>  "sale",
+  # :payer =>  {
+  #   :payment_method =>  "paypal" },
+  # :redirect_urls => {
+  #   :return_url => "http://localhost:3000/payment/execute",
+  #   :cancel_url => "http://localhost:3000/" },
+  # :transactions =>  [{
+  #   :item_list => {
+  #     :items => [{
+  #       :name => "item",
+  #       :sku => "item",
+  #       :price => "5",
+  #       :currency => "USD",
+  #       :quantity => 1 }]},
+  #   :amount =>  {
+  #     :total =>  "5",
+  #     :currency =>  "USD" },
+  #   :description =>  "This is the payment transaction description." }]})
+
+  #   if payment.create
+  #     order.token = payment.token
+  #     order.charge_id = payment.id
+  #     return payment.token if order.save
+  #   end
+
+    # ***************************************************
     jobs = @current_user.jobs.all.order(created_at: :desc)
     if jobs
       render json: jobs, each_serializer: JobSerializer
