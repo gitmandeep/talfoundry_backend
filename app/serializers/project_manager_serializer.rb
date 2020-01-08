@@ -1,5 +1,5 @@
 class ProjectManagerSerializer < ActiveModel::Serializer
-	attributes :id, :uuid, :email, :country, :first_name, :last_name, :full_name, :user_name, :image_url, :account_active, :project_manager_jobs, :created_at, :number_of_jobs_posted, :payment_method
+	attributes :id, :uuid, :email, :country, :first_name, :last_name, :full_name, :user_name, :image_url, :account_active, :project_manager_jobs, :created_at, :number_of_jobs_posted, :number_of_active_jobs, :payment_method
 	#has_one :profile, serializer: ProfileSerializer
 	has_one :company, serializer: CompanySerializer
 	has_many :payment_methods, serializer: PaymentMethodSerializer
@@ -11,7 +11,7 @@ class ProjectManagerSerializer < ActiveModel::Serializer
 	def project_manager_jobs
 		if current_user
 			unless current_user.is_hiring_manager?
-				object.jobs.limit(5).offset(1)
+				object.jobs.limit(5)
 			end
 		end
 	end
@@ -20,6 +20,14 @@ class ProjectManagerSerializer < ActiveModel::Serializer
 		if current_user
 			unless current_user.is_hiring_manager?
 				object.jobs.try(:count)
+			end
+		end
+	end
+
+	def number_of_active_jobs
+		if current_user
+			unless current_user.is_hiring_manager?
+				object.jobs.present? ? object.jobs.admin_jobs("active").try(:count) : 0
 			end
 		end
 	end
