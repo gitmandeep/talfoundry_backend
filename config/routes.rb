@@ -27,7 +27,7 @@ Rails.application.routes.draw do
       get 'manager_active_contracts', to: "contract#manager_active_contracts"
       get 'get_template_details', to: "jobs#get_template_details"
 
-      resources :project_managers, only: [:index]
+      resources :project_managers, only: [:index, :show]
       resources :favorites, only: [:create, :index]
       get 'remove_favorited', to: "favorites#remove_favorited"
       resources :profiles
