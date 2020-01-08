@@ -26,6 +26,11 @@ class Api::V1::ContractController < Api::V1::ApiController
       @contract.status_updated_at = Time.now
       @contract.save!
       notify_user(@contract.freelancer_id, @contract.hired_by_id, "Offer update", "Your offer \"#{@contract.title}\" was #{@contract.status.downcase} ")
+      
+      if contract_params[:status] == "Accepted"
+        @contract.job.update(:job_status => "active")
+      end
+
       render json: { success: true, message: "Offer updated successfully...!", status: 200 }
     else
       render_error(@contract.errors.full_messages, 422)
