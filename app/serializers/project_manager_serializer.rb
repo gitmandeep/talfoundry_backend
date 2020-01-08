@@ -10,7 +10,7 @@ class ProjectManagerSerializer < ActiveModel::Serializer
 
 	def project_manager_jobs
 		if current_user
-			unless current_user.is_hiring_manager?
+			unless current_user.is_hiring_manager? || current_user.is_admin?
 				object.jobs.limit(5).offset(1)
 			end
 		end
