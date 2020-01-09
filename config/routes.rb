@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       get 'admins/approve_freelancer/:id', to: 'admins#approve_freelancer'
       get 'admins/block_freelancer/:id', to: 'admins#block_freelancer'
       get 'admins/admin_filter', to: 'admins#admin_filter'
+      resources :admins, only: [:index]
 
       resources :users, except: [:create] do
         member do

@@ -1,29 +1,32 @@
 class Api::V1::AdminsController < Api::V1::ApiController
-	
-	before_action :authorize_request
+  before_action :authorize_request
 
-	def approve_freelancer
-		freelancer_user = User.find_by_uuid(params[:id])
-		if freelancer_user
-			freelancer_user.account_approved = true
-			freelancer_user.save
+  def index
+    @admins = User.where(role: "admin")
+    render json: @admins, status: :ok
+  end
+
+  def approve_freelancer
+    freelancer_user = User.find_by_uuid(params[:id])
+    if freelancer_user
+      freelancer_user.account_approved = true
+      freelancer_user.save
       render json: { success: true, message: "Profile approved", status: 200 }
     else
-    	render_error("Not found", 401)
+      render_error("Not found", 401)
     end
-	end
+  end
 
-	def block_freelancer
-		freelancer_user = User.find_by_uuid(params[:id])
-		if freelancer_user
-			freelancer_user.account_active = false
-			freelancer_user.save
+  def block_freelancer
+    freelancer_user = User.find_by_uuid(params[:id])
+    if freelancer_user
+      freelancer_user.account_active = false
+      freelancer_user.save
       render json: { success: true, message: "Profile blocked", status: 200 }
     else
-    	render_error("Not found", 401)
+      render_error("Not found", 401)
     end
-	end
-
+  end
 
   def admin_filter
     if params[:search_freelancers].present? || params[:search_jobs].present?
