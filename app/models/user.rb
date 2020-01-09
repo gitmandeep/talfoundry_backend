@@ -34,6 +34,8 @@ class User < ApplicationRecord
   scope :manager_freelancer_index, -> { where({ role: "freelancer", account_approved: true }).order(:created_at) }
   scope :newest, lambda {where("created_at > ?", 1.month.ago)}
   scope :public_data, -> {where(account_approved: true)}
+  scope :search_by_status, -> (status) {where(account_approved: status, role: "freelancer", profile_created: true).order(created_at: :desc)}
+
 
   has_many :favorites
   has_many :favorites_freelancers, through: :favorites, source: :favorited, source_type: 'User'

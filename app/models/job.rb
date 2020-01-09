@@ -21,6 +21,8 @@ class Job < ApplicationRecord
   scope :newest, lambda {where("created_at > ?", 10.days.ago)}
   scope :public_data, -> {where(job_visibility: "Anyone")}
   scope :admin_jobs, -> (status) {where(job_status: status).order(created_at: :desc)}
+  scope :search_by_status, -> (status) {where(job_status: status).order(created_at: :desc)}
+
 
   def search_data
     {
