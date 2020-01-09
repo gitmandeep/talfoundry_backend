@@ -89,7 +89,6 @@ class Api::V1::AdminsController < Api::V1::ApiController
     elsif params[:search_jobs].present? || params[:find_jobs].present?
       render json: filtered_records, each_serializer: JobSerializer, status: :ok
     end
-    byebug
   end
 
   private
