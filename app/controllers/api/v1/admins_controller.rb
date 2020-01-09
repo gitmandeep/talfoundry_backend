@@ -1,4 +1,4 @@
-class Api::V1::AdminController < Api::V1::ApiController
+class Api::V1::AdminsController < Api::V1::ApiController
 	
 	before_action :authorize_request
 
@@ -25,7 +25,7 @@ class Api::V1::AdminController < Api::V1::ApiController
 	end
 
 
-  def admin_fillter
+  def admin_filter
     if params[:search_freelancers].present? || params[:search_jobs].present?
       original_filters = JSON.parse(params[:search_freelancers] || params[:search_jobs]).symbolize_keys
       original_filters = original_filters.reject { |key,value| value.empty? }
@@ -41,20 +41,18 @@ class Api::V1::AdminController < Api::V1::ApiController
 
       filtered_data = model.search(search_by, where: where_data, fields: search_fields)
 
-      # unless current_user 
-      #   if params[:search_freelancers].present?
-      #     filtered_data = filtered_data.select{|data| (data.account_approved == true)}
-      #   else
-      #     filtered_data = filtered_data.select{|data| (data.job_visibility == "Anyone")} 
-      #   end
-      # end
-
+      if params[:search_freelancers].present?
+        filtered_data = filtered_data.select{|data| (data.role == "freelancer" && data.profile_created == true)} 
+      # else
+      #   filtered_data = filtered_data.select{|data| (data.job_visibility == "Anyone")} 
+      end
+     
       if params[:status].present?
         if filtered_data.present?
           data_to_sort_by = model.where(id: filtered_data.map(&:id))
-          sorted_data = data_to_sort_by.admin_jobs(params[:status])
+          sorted_data = data_to_sort_by.search_by_status(params[:status])
         else
-          sorted_data = model.admin_jobs(params[:status])
+          sorted_data = model.search_by_status(params[:status])
         end
         filtered_records = sorted_data.uniq.sort_by {|s| s.created_at}.reverse
       else
@@ -64,12 +62,12 @@ class Api::V1::AdminController < Api::V1::ApiController
     elsif params[:find_freelancers].present?
       filtered_records = User.admin_freelancer_index
     elsif params[:find_jobs]
-      filtered_records = Job.admin_jobs("new")
+      filtered_records = Job.search_by_status("new")
     end
 
     if certificate_data.present?
       if filtered_data.blank?
-        filtered_records = params[:search_freelancers].present? ? (User.admin_freelancer_index) : (Job.admin_jobs("new"))
+        filtered_records = params[:search_freelancers].present? ? (User.admin_freelancer_index) : (Job.search_by_status("new"))
       end
       if params[:search_freelancers].present?
         filtered_records = filtered_records.select{|s| certificate_data == "Yes" ? (s.profile.certifications.present?) : (s.profile.certifications.blank?)}
@@ -91,6 +89,7 @@ class Api::V1::AdminController < Api::V1::ApiController
     elsif params[:search_jobs].present? || params[:find_jobs].present?
       render json: filtered_records, each_serializer: JobSerializer, status: :ok
     end
+    byebug
   end
 
   private
