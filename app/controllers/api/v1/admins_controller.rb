@@ -28,7 +28,7 @@ class Api::V1::AdminsController < Api::V1::ApiController
     end
   end
 
-  def admin_filter
+  def admin_filter 
     if params[:search_freelancers].present? || params[:search_jobs].present?
       original_filters = JSON.parse(params[:search_freelancers] || params[:search_jobs]).symbolize_keys
       original_filters = original_filters.reject { |key,value| value.empty? }
@@ -44,14 +44,14 @@ class Api::V1::AdminsController < Api::V1::ApiController
 
       filtered_data = model.search(search_by, where: where_data, fields: search_fields)
 
-      if params[:search_freelancers].present?
-        filtered_data = filtered_data.select{|data| (data.role == "freelancer" && data.profile_created == true)} 
-      # else
-      #   filtered_data = filtered_data.select{|data| (data.job_visibility == "Anyone")} 
-      end
+      # if params[:search_freelancers].present?
+      #   filtered_data = filtered_data.select{|data| (data.role == "freelancer" && data.profile_created == true)} 
+      # # else
+      # #   filtered_data = filtered_data.select{|data| (data.job_visibility == "Anyone")} 
+      # end
      
       if params[:status].present?
-        if filtered_data.present?
+        if where_data.present? || filtered_data.present?
           data_to_sort_by = model.where(id: filtered_data.map(&:id))
           sorted_data = data_to_sort_by.search_by_status(params[:status])
         else
@@ -86,7 +86,7 @@ class Api::V1::AdminsController < Api::V1::ApiController
         filtered_records = filtered_records.select{|s| s.job_title.downcase.include?(params[:search].downcase)}
       end
     end
-
+    
     if params[:search_freelancers].present? || params[:find_freelancers].present?
       render json: filtered_records, each_serializer: FreelancerSerializer, include: 'profile', status: :ok
     elsif params[:search_jobs].present? || params[:find_jobs].present?
