@@ -28,7 +28,7 @@ class Api::V1::AdminsController < Api::V1::ApiController
     end
   end
 
-  def admin_filter 
+  def admin_filter
     if params[:search_freelancers].present? || params[:search_jobs].present?
       original_filters = JSON.parse(params[:search_freelancers] || params[:search_jobs]).symbolize_keys
       original_filters = original_filters.reject { |key,value| value.empty? }
@@ -65,12 +65,12 @@ class Api::V1::AdminsController < Api::V1::ApiController
     elsif params[:find_freelancers].present?
       filtered_records = User.search_by_status(params[:status])
     elsif params[:find_jobs]
-      filtered_records = Job.search_by_status("new")
+      filtered_records = Job.search_by_status(params[:status])
     end
 
     if certificate_data.present?
       if filtered_data.blank?
-        filtered_records = params[:search_freelancers].present? ? (User.search_by_status(params[:status])) : (Job.search_by_status("new"))
+        filtered_records = params[:search_freelancers].present? ? (User.search_by_status(params[:status])) : (Job.search_by_status(params[:status]))
       end
       if params[:search_freelancers].present?
         filtered_records = filtered_records.select{|s| certificate_data == "Yes" ? (s.profile.certifications.present?) : (s.profile.certifications.blank?)}
@@ -78,7 +78,6 @@ class Api::V1::AdminsController < Api::V1::ApiController
         filtered_records = filtered_records.select{|s| certificate_data == "Yes" ? (s.job_qualifications.present? && s.job_qualifications[0].qualification_group != "No") : (s.job_qualifications.blank? || s.try(:job_qualifications)[0].try(:qualification_group) == "No")}
       end
     end
-
     if params[:search].present?
       if params[:search_freelancers].present?
         filtered_records = filtered_records.select{|s| s.first_name.downcase == params[:search].downcase || s.last_name.downcase == params[:search].downcase}
@@ -86,7 +85,7 @@ class Api::V1::AdminsController < Api::V1::ApiController
         filtered_records = filtered_records.select{|s| s.job_title.downcase.include?(params[:search].downcase)}
       end
     end
-    
+
     if params[:search_freelancers].present? || params[:find_freelancers].present?
       render json: filtered_records, each_serializer: FreelancerSerializer, include: 'profile', status: :ok
     elsif params[:search_jobs].present? || params[:find_jobs].present?

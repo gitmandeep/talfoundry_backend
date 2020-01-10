@@ -36,10 +36,12 @@ class User < ApplicationRecord
   scope :public_data, -> {where(account_approved: true)}
   
   scope :search_by_status, -> (status) {
-      if status == true || status == false 
-        where(account_approved: status, role: "freelancer", profile_created: true).order(created_at: :desc)
+      if status == "true"  
+        where(account_approved: true, role: "freelancer", profile_created: true).order(created_at: :desc)
+      elsif status == "false"
+        where(account_approved: false, role: "freelancer", profile_created: true).order(created_at: :desc)
       elsif status == "banned"
-        where(account_active: true, role: "freelancer", profile_created: true).order(created_at: :desc)
+        where(account_active: false, role: "freelancer", profile_created: true).order(created_at: :desc)
       else
         where(role: "freelancer", profile_created: true).order(created_at: :desc)
       end
