@@ -3,10 +3,7 @@ class Api::V1::FreelancerController < Api::V1::ApiController
   before_action :authorize_request
 
   def freelancer_index
-    if @current_user.is_admin?
-      users = User.search(params[:search]) if params[:search].present?
-      freelancer_users = (users.present? ? users.results : User.all).select{|u| u.role == "freelancer" && u.profile_created == true}.sort_by {|s| s.created_at}.reverse
-    elsif @current_user.is_hiring_manager? || @current_user.is_freelancer?
+    if @current_user.is_hiring_manager? || @current_user.is_freelancer?
       if params[:search].present?
         freelancer_users = User.search(params[:search])
       elsif params[:search_by_category].present?
