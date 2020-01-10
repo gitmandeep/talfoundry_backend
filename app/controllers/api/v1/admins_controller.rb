@@ -63,14 +63,14 @@ class Api::V1::AdminsController < Api::V1::ApiController
       end
       #filtered_records = (filtered_data.push(sorted_data)).flatten.uniq.sort_by {|s| s.created_at}.reverse
     elsif params[:find_freelancers].present?
-      filtered_records = User.admin_freelancer_index
+      filtered_records = User.search_by_status(params[:status])
     elsif params[:find_jobs]
       filtered_records = Job.search_by_status("new")
     end
 
     if certificate_data.present?
       if filtered_data.blank?
-        filtered_records = params[:search_freelancers].present? ? (User.admin_freelancer_index) : (Job.search_by_status("new"))
+        filtered_records = params[:search_freelancers].present? ? (User.search_by_status(params[:status])) : (Job.search_by_status("new"))
       end
       if params[:search_freelancers].present?
         filtered_records = filtered_records.select{|s| certificate_data == "Yes" ? (s.profile.certifications.present?) : (s.profile.certifications.blank?)}

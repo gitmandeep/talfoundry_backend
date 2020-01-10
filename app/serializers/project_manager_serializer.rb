@@ -27,7 +27,7 @@ class ProjectManagerSerializer < ActiveModel::Serializer
 	def number_of_active_jobs
 		if current_user
 			unless current_user.is_hiring_manager?
-				object.jobs.present? ? object.jobs.admin_jobs("active").try(:count) : 0
+				object.jobs.present? ? object.jobs.search_by_status("active").try(:count) : 0
 			end
 		end
 	end

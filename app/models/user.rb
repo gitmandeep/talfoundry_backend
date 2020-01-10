@@ -34,7 +34,16 @@ class User < ApplicationRecord
   scope :manager_freelancer_index, -> { where({ role: "freelancer", account_approved: true }).order(:created_at) }
   scope :newest, lambda {where("created_at > ?", 1.month.ago)}
   scope :public_data, -> {where(account_approved: true)}
-  scope :search_by_status, -> (status) {where(account_approved: status, role: "freelancer", profile_created: true).order(created_at: :desc)}
+  
+  scope :search_by_status, -> (status) {
+      if status == true || status == false 
+        where(account_approved: status, role: "freelancer", profile_created: true).order(created_at: :desc)
+      elsif status == "banned"
+        where(account_active: true, role: "freelancer", profile_created: true).order(created_at: :desc)
+      else
+        where(role: "freelancer", profile_created: true).order(created_at: :desc)
+      end
+    }
 
 
   has_many :favorites
