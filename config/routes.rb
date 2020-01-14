@@ -54,6 +54,8 @@ Rails.application.routes.draw do
       post '/payments/set_payment_method' => 'payments#set_payment_method'
       get '/payments/remove_payment_method' => 'payments#remove_payment_method'
 
+      resources :payments, only: [:create]
+
       resources :invite, only: [:update, :show]
       resources :welcome, only: [:index, :show]
 
