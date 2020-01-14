@@ -87,9 +87,9 @@ class Api::V1::AdminsController < Api::V1::ApiController
     end
 
     if params[:search_freelancers].present? || params[:find_freelancers].present?
-      render json: filtered_records, each_serializer: FreelancerSerializer, include: 'profile', status: :ok
+      render json: (filtered_records.present? ? filtered_records : []), each_serializer: FreelancerSerializer, include: 'profile', status: :ok
     elsif params[:search_jobs].present? || params[:find_jobs].present?
-      render json: filtered_records, each_serializer: JobSerializer, status: :ok
+      render json: (filtered_records.present? ? filtered_records : []), each_serializer: JobSerializer, status: :ok
     end
   end
 

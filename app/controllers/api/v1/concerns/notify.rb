@@ -10,6 +10,6 @@ module Api::V1::Concerns
       notification.message = message
       notification.message_type = type
       notification.save!
-  end
+    end
   end
 end

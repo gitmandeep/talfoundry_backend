@@ -7,6 +7,19 @@ class Api::V1::ContractController < Api::V1::ApiController
     @contract = Contract.new(contract_params)
     if @contract.save
       notify_user(@current_user.id, @contract.freelancer_id, @contract.uuid, "Job offer", "You have received an offer for the job \"#{@contract.title}\" ")
+# ***********************************************************************************
+      payment = @contract.payments.build
+      payment.payment_mode = "paypal"
+      payment.order_id = params[:pay_data][:orderID]
+      payment.payer_id = params[:pay_data][:payerID]  
+      payment.amount = params[:pay_details][:purchase_units][0][:payments][:captures][0][:amount][:value]
+      payment.payee_id = params[:pay_details]['purchase_units'][0]['payee']['merchant_id']
+      payment.intent = params[:pay_details][:intent]
+      payment.status = params[:pay_details][:status]
+      payment.capture_id = params[:pay_details]['purchase_units'][0]['payments']['captures'][0]['id']
+      payment.save!
+
+# ***********************************************************************************
       render json: {succes: true, status: 200}
     else
       render_error("Something went wrong....!", 404)
