@@ -30,6 +30,7 @@ class ContractSerializer < ActiveModel::Serializer
 	has_one :freelancer, serializer: FreelancerSerializer
 
 	has_many :milestones, serializer: MilestoneSerializer
+	has_many :payments, serializer: PaymentSerializer
 
 	#has_one :job, serializer: JobSerializer
 
