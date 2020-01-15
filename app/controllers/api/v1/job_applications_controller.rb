@@ -1,7 +1,7 @@
 class Api::V1::JobApplicationsController < Api::V1::ApiController
   include Api::V1::Concerns::Notify
   before_action :authorize_request
-  before_action :find_job_application, only: [:show, :view_job_proposal]
+  before_action :find_job_application, only: [:show, :view_job_proposal, :destroy]
 
 	def create
     job_application = @current_user.job_applications.build(job_application_params)   
@@ -24,10 +24,17 @@ class Api::V1::JobApplicationsController < Api::V1::ApiController
     render json: job_application, serializer: JobProposalSerializer, include: 'user.profile', status: :ok
   end
 
+  def destroy
+    if @job_application.destroy
+      render json: {success: true, message: "Job application deleted", status: 200} 
+    end 
+  end
+
 	private
 
   def find_job_application
     @job_application = JobApplication.where(uuid: params[:id]).or(JobApplication.where(id: params[:id])).first
+    render_error("Not found", 404) unless @job_application
   end
 
   def job_application_params
