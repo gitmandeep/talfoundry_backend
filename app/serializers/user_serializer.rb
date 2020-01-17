@@ -13,13 +13,14 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def user_profile
+    user_profile_details = {}
     if object.role == "freelancer"
-      user_profile_details = []
       profile_picture = object.profile ? object.profile.profile_picture.try(:url) : ""
       profile_uuid = object.profile ? object.profile.uuid : ""
-      user_profile_details << profile_picture
-      user_profile_details << profile_uuid
+      user_profile_details['freelancer_image'] = profile_picture
+      user_profile_details['freelancer_uuid'] = profile_uuid
     end
+    return user_profile_details
   end
 
   def image_url
