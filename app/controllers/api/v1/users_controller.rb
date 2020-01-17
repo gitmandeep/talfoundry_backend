@@ -108,12 +108,6 @@ class Api::V1::UsersController < Api::V1::ApiController
     render json: freelancers, each_serializer: FreelancerSerializer, favorited_freelancers: freelancers.pluck(:id), status: :ok
   end
 
-  def favorited_jobs
-    jobs = @current_user.favorite_jobs
-    render json: jobs, each_serializer: JobSerializer, favorited_jobs: jobs.pluck(:id), status: :ok
-  end
-
-
   private
 
   def user_params
