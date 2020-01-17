@@ -103,11 +103,6 @@ class Api::V1::UsersController < Api::V1::ApiController
     render json: @current_user, success: true, message: "Email sent", status: 200
   end
 
-  def favorited_freelancers
-    freelancers = @current_user.favorites_freelancers
-    render json: freelancers, each_serializer: FreelancerSerializer, favorited_freelancers: freelancers.pluck(:id), status: :ok
-  end
-
   private
 
   def user_params

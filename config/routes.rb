@@ -23,11 +23,15 @@ Rails.application.routes.draw do
       get 'active_contracts', to: 'freelancer#active_contracts'
       get 'get_submitted_proposals', to: 'freelancer#get_submitted_proposals'
       get 'get_favorited_jobs', to: 'freelancer#favorited_jobs'
-      get 'get_favorited_freelancers', to: "users#favorited_freelancers"
       get 'manager_active_contracts', to: "contract#manager_active_contracts"
       get 'get_template_details', to: "jobs#get_template_details"
 
-      resources :project_managers, only: [:index, :show]
+      resources :project_managers, only: [:index, :show] do
+        collection do
+          get :favorited_freelancers
+        end
+      end
+
       resources :favorites, only: [:create, :index]
       get 'remove_favorited', to: "favorites#remove_favorited"
       resources :profiles

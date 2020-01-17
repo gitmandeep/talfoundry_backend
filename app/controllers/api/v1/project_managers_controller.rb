@@ -15,4 +15,9 @@ class Api::V1::ProjectManagersController < Api::V1::ApiController
     end
   end
 
+  def favorited_freelancers
+    freelancers = @current_user.favorites_freelancers
+    render json: freelancers, each_serializer: FreelancerSerializer, favorited_freelancers: freelancers.pluck(:id), status: :ok
+  end
+
 end
