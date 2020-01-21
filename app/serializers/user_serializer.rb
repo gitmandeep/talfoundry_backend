@@ -14,7 +14,7 @@ class UserSerializer < ActiveModel::Serializer
 
   def user_profile
     user_profile_details = {}
-    if object.role == "freelancer"
+    if object.is_freelancer?
       profile_picture = object.profile ? object.profile.profile_picture.try(:url) : ""
       profile_uuid = object.profile ? object.profile.uuid : ""
       user_profile_details['freelancer_image'] = profile_picture
