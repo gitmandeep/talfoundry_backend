@@ -3,7 +3,7 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	before_action :find_job, only: [:show]
 
 	def show
-		profile = Profile.where(uuid: params[:id]).or(Profile.where(id: params[:id])).first
+		profile = Profile.where(uuid: params[:id]).first
 		if profile
 			favorited_freelancers = @current_user.favorites_freelancers.pluck(:id) rescue []
 			invite_id = profile.user.invites.where(sender_id: @current_user.id, job_id: @job)
@@ -33,11 +33,11 @@ class Api::V1::ProfilesController < Api::V1::ApiController
 	end
 
 	def edit
-		@profile = Profile.where(uuid: params[:id]).or(Profile.where(id: params[:id])).first
+		@profile = Profile.where(uuid: params[:id]).first
 	end
 
 	def update
-		@profile = Profile.where(uuid: params[:id]).or(Profile.where(id: params[:id])).first
+		@profile = Profile.where(uuid: params[:id]).first
 		# if params[:profile][:skill]
 		# 	@profile.skill = (params[:profile][:skill]).try(:join, (','))
 		# 	@profile.save
