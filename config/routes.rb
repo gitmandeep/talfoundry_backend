@@ -13,9 +13,12 @@ Rails.application.routes.draw do
         member do
           get :user_details
         end
+        collection do
+          post :create_security_questions
+        end
       end
 
-      resources :security_questions, only: [:index, :create]
+      resources :security_questions, only: [:index, :edit, :destroy]
 
       get 'freelancer_index', to: 'freelancer#freelancer_index'
       get 'freelancer_details/:id', to: 'freelancer#freelancer_details'

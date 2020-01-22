@@ -5,12 +5,6 @@ class Api::V1::SecurityQuestionsController < Api::V1::ApiController
 	end
 
 	def create
-		security_question = @current_user.security_questions.build(security_question_params)
-		if security_question.save
-      render json: {success: true, message: "Created", status: 200} 	
-		else
-			render_error("Something went wrong....!", 404)
-		end
 	end
 
 	def update

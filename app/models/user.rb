@@ -53,6 +53,7 @@ class User < ApplicationRecord
   has_many :favorite_jobs, through: :favorites, source: :favorited, source_type: 'Job'
   has_many :payment_methods, :dependent => :destroy
   has_many :security_questions, :dependent => :destroy
+  accepts_nested_attributes_for :security_questions
 
   # # user types constants
   # TYPE_ADMIN = 1
