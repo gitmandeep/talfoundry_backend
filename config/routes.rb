@@ -15,6 +15,8 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :security_questions, only: [:index, :create]
+
       get 'freelancer_index', to: 'freelancer#freelancer_index'
       get 'freelancer_details/:id', to: 'freelancer#freelancer_details'
       get 'hire_freelancer_details/:id', to: 'freelancer#hire_freelancer_details'
