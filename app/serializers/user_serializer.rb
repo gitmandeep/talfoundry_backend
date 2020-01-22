@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :uuid, :email, :first_name, :last_name, :role, :profile_created, :image_url, :call_schedule, :account_approved, :professional_profile_created, :user_profile, :full_name, :country, :country_id, :created_at
+  attributes :id, :uuid, :email, :first_name, :last_name, :role, :profile_created, :image_url, :call_schedule, :account_approved, :professional_profile_created, :user_profile, :full_name, :country, :country_id, :created_at, :is_security_qus_added
   #has_one :profile, serializer: ProfileSerializer
 
   def full_name
@@ -25,6 +25,10 @@ class UserSerializer < ActiveModel::Serializer
 
   def image_url
     object.image.try(:url)
+  end
+
+  def is_security_qus_added
+    object.security_questions.present?
   end
 
 end
