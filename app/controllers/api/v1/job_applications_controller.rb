@@ -7,7 +7,7 @@ class Api::V1::JobApplicationsController < Api::V1::ApiController
     job_application = @current_user.job_applications.build(job_application_params)   
     if job_application.save
       job_application.reload
-      notify_user(@current_user.id, job_application.job.user_id, job_application.uuid, "New job application", "\"#{job_application.user.display_full_name}\" has applied on the job \"#{job_application.job.try(:job_title)}\" ")
+      notify_user(@current_user.id, job_application.job.user_id, job_application.uuid, "New job application", "\"#{job_application.user.display_full_name}\" has applied on the job \"#{job_application.job.try(:job_title)}\" ", "proposal-details")
       render json: job_application.uuid, success: true, message: "Job application submitted", status: 200
     else
       render_error(job_application.errors.full_messages, 422)

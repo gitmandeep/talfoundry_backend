@@ -6,7 +6,8 @@ class Api::V1::ContractController < Api::V1::ApiController
   def create
     @contract = Contract.new(contract_params)
     if @contract.save
-      notify_user(@current_user.id, @contract.freelancer_id, @contract.uuid, "Job offer", "You have received an offer for the job \"#{@contract.title}\" ")
+      @contract.reload
+      notify_user(@current_user.id, @contract.freelancer_id, @contract.uuid, "Job offer", "You have received an offer for the job \"#{@contract.title}\" ", "offer-details")
 # ***********************************************************************************
       payment = @contract.payments.build
       payment.payment_mode = "paypal"
@@ -38,7 +39,7 @@ class Api::V1::ContractController < Api::V1::ApiController
     if @contract.update(contract_params)
       @contract.status_updated_at = Time.now
       @contract.save!
-      notify_user(@contract.freelancer_id, @contract.hired_by_id, "Offer update", "Your offer \"#{@contract.title}\" was #{@contract.status.downcase} ")
+      notify_user(@contract.freelancer_id, @contract.hired_by_id, @contract.uuid, "Offer update", "Your offer \"#{@contract.title}\" was #{@contract.status.downcase} ", "offer-details")
       
       if contract_params[:status] == "Accepted"
         @contract.job.update(:job_status => "active")
