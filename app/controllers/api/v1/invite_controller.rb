@@ -39,7 +39,8 @@ class Api::V1::InviteController < Api::V1::ApiController
   end
 
   def find_invite
-    @invite = Invite.find(params[:id])
+    @invite = Invite.find_by_uuid(params[:id])
+    @invite = Invite.find(params[:id]) if @invite.blank?
   end
 
 end
