@@ -105,7 +105,7 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def create_security_questions
     if current_user.update(update_user_params)
-        render json: {success: true, message: "Created", status: 200}   
+        render json: {success: true, message: "Created", status: 200}
     else
       render_error("Something went wrong....!", 404)
     end
