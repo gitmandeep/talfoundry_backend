@@ -47,11 +47,13 @@ class User < ApplicationRecord
       end
     }
 
-
   has_many :favorites
   has_many :favorites_freelancers, through: :favorites, source: :favorited, source_type: 'User'
   has_many :favorite_jobs, through: :favorites, source: :favorited, source_type: 'Job'
   has_many :payment_methods, :dependent => :destroy
+  has_many :requested_payments, dependent: :destroy
+  has_many :manager_transaction_histories, class_name: "TransactionHistory", foreign_key: "manager_id"
+  has_many :freelancer_transaction_histories, class_name: "TransactionHistory", foreign_key: "freelancer_id"
   has_many :security_questions, :dependent => :destroy
   accepts_nested_attributes_for :security_questions
 

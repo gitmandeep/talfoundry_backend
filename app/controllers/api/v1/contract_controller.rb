@@ -9,18 +9,22 @@ class Api::V1::ContractController < Api::V1::ApiController
       @contract.reload
       notify_user(@current_user.id, @contract.freelancer_id, @contract.uuid, "Job offer", "You have received an offer for the job \"#{@contract.title}\" ", "offer-details")
 # ***********************************************************************************
-      payment = @contract.payments.build
-      payment.payment_mode = "paypal"
-      payment.order_id = params[:pay_data][:orderID]
-      payment.payer_id = params[:pay_data][:payerID]  
-      payment.amount = params[:pay_details][:purchase_units][0][:payments][:captures][0][:amount][:value]
-      payment.payee_id = params[:pay_details]['purchase_units'][0]['payee']['merchant_id']
-      payment.intent = params[:pay_details][:intent]
-      payment.status = params[:pay_details][:status]
-      payment.capture_id = params[:pay_details]['purchase_units'][0]['payments']['captures'][0]['id']
-      payment.save!
 
-# ***********************************************************************************
+      # transaction = @contract.transaction_histories.build
+      # transaction.manager_id = @contract.hired_by_id
+      # transaction.freelancer_id = @contract.freelancer_id
+      # transaction.payment_mode = "paypal"
+      # transaction.transaction_type = "Offer creation"
+      # transaction.payment_type = ""
+      # transaction.order_id = params[:pay_data][:orderID]
+      # transaction.payer_id = params[:pay_data][:payerID]  
+      # transaction.amount = params[:pay_details][:purchase_units][0][:payments][:captures][0][:amount][:value]
+      # transaction.payee_id = params[:pay_details]['purchase_units'][0]['payee']['merchant_id']
+      # transaction.status = params[:pay_details][:status]
+      # transaction.capture_id = params[:pay_details]['purchase_units'][0]['payments']['captures'][0]['id']
+      # transaction.save!
+
+# ************************************************************************************
       render json: {succes: true, status: 200}
     else
       render_error("Something went wrong....!", 404)
@@ -44,6 +48,10 @@ class Api::V1::ContractController < Api::V1::ApiController
       if contract_params[:status] == "Accepted"
         @contract.job.update(:job_status => "active")
       end
+
+      # if @contract.status == "Declined"
+      #   @contract.transaction_history.refund_payment
+      # end
 
       render json: { success: true, message: "Offer updated successfully...!", status: 200 }
     else
