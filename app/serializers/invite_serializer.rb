@@ -1,4 +1,4 @@
 class InviteSerializer < ActiveModel::Serializer
-	attributes :id, :message
+	attributes :id, :uuid, :message
 	has_one :job, serializer: JobSerializer
 end
