@@ -8,10 +8,11 @@ class ContractSerializer < ActiveModel::Serializer
   attributes :freelacer_name
   attributes :freelacer_picture
   attributes :proposal_id
+  attributes :escrow_amount
   has_one :hired_by, serializer: ProjectManagerSerializer
   has_one :freelancer, serializer: FreelancerSerializer
   has_many :milestones, serializer: MilestoneSerializer
-  has_many :transaction_histories, serializer: TransactionHistorySerializer
+  #has_many :transaction_histories, serializer: TransactionHistorySerializer
   #has_one :job, serializer: JobSerializer
 
   def attachment
@@ -52,5 +53,9 @@ class ContractSerializer < ActiveModel::Serializer
       end
     end
     return @proposal_uuid || ''
+  end
+
+  def escrow_amount
+    object.transaction_histories.last.balance
   end
 end

@@ -10,4 +10,9 @@ PayPal::SDK.configure({
 	:openid_client_secret => ENV['PAYPAL_CLIENT_SECRET'],
 	:openid_redirect_uri  => ENV['PAYPAL_REDIRECT_URI']
 })
+PayPal::SDK::REST.set_config(
+	:mode => "sandbox", # "sandbox" or "live"
+	:client_id => ENV["PAYPAL_CLIENT_ID"],
+	:client_secret => ENV["PAYPAL_CLIENT_SECRET"],
+)
 PayPal::SDK.logger.level = Logger::INFO
