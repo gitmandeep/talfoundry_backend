@@ -56,6 +56,6 @@ class ContractSerializer < ActiveModel::Serializer
   end
 
   def escrow_amount
-    object.transaction_histories.last.balance
+    object.transaction_histories.last.try(:balance)
   end
 end
