@@ -32,4 +32,19 @@ class Api::V1::PaymentsController < Api::V1::ApiController
     end
   end
 
+  def request_payment
+    requested_payment = RequestedPayment.new(payment_params)
+    if requested_payment.save!
+      render json: {success: true, message: "Payment Requested", status: 200}
+    else
+      render_error("Something went wrong", 401)
+    end
+  end
+
+  private
+
+  def payment_params
+    params.require(:requested_payments).permit(:id, :user_id, :amount_requested, :contract_id, :milestone_id, :request_message)
+  end
+
 end

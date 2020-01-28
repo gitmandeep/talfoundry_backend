@@ -62,6 +62,7 @@ Rails.application.routes.draw do
       get '/payments/authenticate_payment_method' => 'payments#authenticate_payment_method'
       post '/payments/set_payment_method' => 'payments#set_payment_method'
       get '/payments/remove_payment_method' => 'payments#remove_payment_method'
+      post '/payments/request_payment' => 'payments#request_payment'
 
       resources :payments, only: [:create]
 

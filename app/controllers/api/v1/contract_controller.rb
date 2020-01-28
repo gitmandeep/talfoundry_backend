@@ -5,36 +5,56 @@ class Api::V1::ContractController < Api::V1::ApiController
   
   def create
     @contract = Contract.new(contract_params)
-    if @contract.save
-      @contract.reload
-      notify_user(@current_user.id, @contract.freelancer_id, @contract.uuid, "Job offer", "You have received an offer for the job \"#{@contract.title}\" ", "offer-details")
-# ***********************************************************************************
-
-      transaction = @contract.transaction_histories.build
-      if @contract.milestones.present?
-        transaction.milestone_id = @contract.milestones.first.id
-      end
-      transaction.manager_id = @contract.hired_by_id
-      transaction.freelancer_id = @contract.freelancer_id
-      transaction.payment_mode = "paypal"
-      transaction.transaction_type = "Offer creation"
-      transaction.payment_type = "credited"
-      transaction.order_id = params[:pay_data][:orderID]
-      transaction.payer_id = params[:pay_data][:payerID]
-      transaction.amount = params[:pay_details][:purchase_units][0][:payments][:captures][0][:amount][:value]
-      last_balance = current_user.manager_transaction_histories.last.try(:balance)
-      transaction.balance = (last_balance ? last_balance : 0) + transaction.amount
-      transaction.payee_id = params[:pay_details]['purchase_units'][0]['payee']['merchant_id']
-      transaction.status = params[:pay_details][:status]
-      transaction.capture_id = params[:pay_details]['purchase_units'][0]['payments']['captures'][0]['id']
-      transaction.save!
-
-# ************************************************************************************
+    @transaction_history = TransactionHistory.new
+    @transaction_history.order_id = params[:pay_data][:orderID]
+    @transaction_history.payer_id = params[:pay_data][:payerID]
+    @transaction_history.amount = params[:pay_details][:purchase_units][0][:payments][:captures][0][:amount][:value]
+    @transaction_history.payee_id = params[:pay_details]['purchase_units'][0]['payee']['merchant_id']
+    @transaction_history.status = params[:pay_details][:status]
+    @transaction_history.capture_id = params[:pay_details]['purchase_units'][0]['payments']['captures'][0]['id']
+    last_balance = current_user.manager_transaction_histories.last.try(:balance)
+    @transaction_history.balance = (last_balance ? last_balance : 0) + @transaction_history.amount
+    creator = ContractCreator.new(@contract, @transaction_history)
+    if creator.create
+      notify_user(@contract.hired_by_id, @contract.freelancer_id, @contract.uuid, "Job offer", "You have received an offer for the job \"#{@contract.title}\" ", "offer-details")
       render json: {succes: true, status: 200}
     else
       render_error("Something went wrong....!", 404)
     end
   end
+
+#   def create
+#     @contract = Contract.new(contract_params)
+#     if @contract.save
+#       @contract.reload
+#       notify_user(@current_user.id, @contract.freelancer_id, @contract.uuid, "Job offer", "You have received an offer for the job \"#{@contract.title}\" ", "offer-details")
+# # ***********************************************************************************
+
+#       transaction = @contract.transaction_histories.build
+#       if @contract.milestones.present?
+#         transaction.milestone_id = @contract.milestones.first.id
+#       end
+#       transaction.manager_id = @contract.hired_by_id
+#       transaction.freelancer_id = @contract.freelancer_id
+#       transaction.payment_mode = "paypal"
+#       transaction.transaction_type = "Offer creation"
+#       transaction.payment_type = "credited"
+#       transaction.order_id = params[:pay_data][:orderID]
+#       transaction.payer_id = params[:pay_data][:payerID]
+#       transaction.amount = params[:pay_details][:purchase_units][0][:payments][:captures][0][:amount][:value]
+#       last_balance = current_user.manager_transaction_histories.last.try(:balance)
+#       transaction.balance = (last_balance ? last_balance : 0) + transaction.amount
+#       transaction.payee_id = params[:pay_details]['purchase_units'][0]['payee']['merchant_id']
+#       transaction.status = params[:pay_details][:status]
+#       transaction.capture_id = params[:pay_details]['purchase_units'][0]['payments']['captures'][0]['id']
+#       transaction.save!
+
+# # ************************************************************************************
+#       render json: {succes: true, status: 200}
+#     else
+#       render_error("Something went wrong....!", 404)
+#     end
+#   end
 
   def show
     if @contract.present?
@@ -72,7 +92,7 @@ class Api::V1::ContractController < Api::V1::ApiController
   private
 
   def contract_params
-    params.require(:contract).permit(:job_id, :title, :payment_mode,  :hourly_rate, :time_period, :time_period_limit, :start_date, :weekly_payment, :description, :attachment, :fixed_price_mode, :fixed_price_amount, :hired_by_id, :freelancer_id, :status, milestones_attributes:  [:description, :due_date, :deposite_amount])
+    params.require(:contract).permit(:job_id, :title, :payment_mode, :hourly_rate, :time_period, :time_period_limit, :start_date, :weekly_payment, :description, :attachment, :fixed_price_mode, :fixed_price_amount, :hired_by_id, :freelancer_id, :status, milestones_attributes: [:description, :due_date, :deposite_amount])
   end
 
   def set_contract
