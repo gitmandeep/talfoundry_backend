@@ -57,6 +57,11 @@ class User < ApplicationRecord
   has_many :security_questions, :dependent => :destroy
   accepts_nested_attributes_for :security_questions
 
+  scope :unverified_phones,  -> { where(phone_verified: false) }
+
+  before_create :set_phone_attributes, if: :phone_verification_needed?
+  after_create :send_sms_for_phone_verification
+
   # # user types constants
   # TYPE_ADMIN = 1
   # TYPE_FREELANCER = 2
@@ -117,6 +122,35 @@ class User < ApplicationRecord
     if users.present?
       create_username
     end
+  end
+
+  def mark_phone_as_verified!
+    update!(phone_verified: true, phone_verification_code: nil)
+  end
+
+  private
+
+  def set_phone_attributes
+    self.phone_verification_code = generate_phone_verification_code
+
+    # removes all white spaces, hyphens, and parenthesis
+    self.phone_number.gsub!(/[\s\-\(\)]/, '')
+  end
+
+  def send_sms_for_phone_verification
+    PhoneVerification.new(user_id: id).process
+  end
+
+  def generate_phone_verification_code
+    begin
+     verification_code = SecureRandom.hex(3)
+    end while self.class.exists?(phone_verification_code: verification_code)
+
+    verification_code
+  end
+
+  def phone_verification_needed?
+    phone_number.present? && phone_number_changed?
   end
 
 end

@@ -28,6 +28,7 @@ gem 'searchkick'
 gem 'kaminari'
 gem 'api-pagination'
 gem 'paypal-sdk-rest'
+gem 'twilio-ruby', '~> 5.31.3'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
