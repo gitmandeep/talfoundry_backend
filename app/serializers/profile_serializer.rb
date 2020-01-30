@@ -1,5 +1,5 @@
 class ProfileSerializer < ActiveModel::Serializer
-  attributes :id, :uuid, :user_id, :user_uuid, :profile_type, :profile_picture, :current_job_title, :current_location_country, :current_location_city, :professional_title, :professional_overview, :category, :skill, :user_certification, :youtube_video_link, :hourly_rate, :availability, :visibility, :english_proficiency, :about_me, :development_experience, :experience_level, :search_engine_privacy, :project_preference, :earnings_privacy, :name, :available_jobs, :available_jobs_for_contract, :search_keywords, :favorited_freelancer, :invites_count, :contracts_count, :invite_id, :contract_id, :profile_strength, :is_certified
+  attributes :id, :uuid, :user_id, :user_uuid, :profile_type, :profile_picture, :current_job_title, :current_location_country, :current_location_city, :professional_title, :professional_overview, :category, :skill, :user_certification, :youtube_video_link, :hourly_rate, :availability, :visibility, :english_proficiency, :about_me, :development_experience, :experience_level, :search_engine_privacy, :project_preference, :earnings_privacy, :name, :available_jobs, :available_jobs_for_contract, :search_keywords, :favorited_freelancer, :invites_count, :contracts_count, :invite_id, :contract_id, :profile_strength, :is_certified, :payment_method
   #attributes :profile_picture_base64
 
   has_many :educations, serializer: EducationSerializer
@@ -115,6 +115,10 @@ class ProfileSerializer < ActiveModel::Serializer
     certification_score =  object.certifications.present? ? 40 : 0  
     total_score =  profile_picture_score + education_score + employment_score + certification_score
     return total_score
+  end
+
+  def payment_method
+    current_user.try(:payment_methods).where(account_type: 'paypal') if current_user
   end
 
 end
