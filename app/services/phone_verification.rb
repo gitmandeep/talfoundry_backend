@@ -1,5 +1,5 @@
 class PhoneVerification
-  attr_reader :user
+  attr_reader :user, :error
 
   def initialize(options)
     @user = User.find(options[:user_id])
@@ -14,23 +14,17 @@ class PhoneVerification
 
       client.messages.create(
         from: '+13174276190',
-        # to: '+917987392544',
         to: to,
         body: body
       )
-    rescue Twilio::REST::RestError => error
-      @error = error
+      return true
+    rescue Twilio::REST::TwilioError => e
+      @error = e.message.split("\n")[1]
       return false
     end
   end
 
   private
-
-  # def from
-  #   # Add your twilio phone number (programmable phone number)
-  #   Twilio.configuration.from
-  #   # Settings.twilio_number_for_app
-  # end
 
   def to
     "#{user.phone_number}"
@@ -39,11 +33,5 @@ class PhoneVerification
   def body
     "Please reply with this code '#{user.phone_verification_code}' to verify your phone number"
   end
-
-  # def twilio_client
-  #   # Pass your twilio account sid and auth token
-  #   @twilio ||= Twilio::REST::Client.new(Settings.twilio_account_sid,
-  #                                        Settings.twilio_auth_token)
-  # end
 
 end

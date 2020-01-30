@@ -129,13 +129,9 @@ class User < ApplicationRecord
     self.phone_verified
   end
 
-  def send_sms_for_phone_verification
-    PhoneVerification.new(user_id: id).send_sms
-  end
-
-  def set_phone_attributes
+  def set_phone_attributes(phone_number)
+    self.phone_number = phone_number
     self.phone_verification_code = generate_phone_verification_code
-
     # removes all white spaces, hyphens, and parenthesis
     self.phone_number.gsub!(/[\s\-\(\)]/, '')
     self.save!

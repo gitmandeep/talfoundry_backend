@@ -12,18 +12,19 @@ class Api::V1::PhoneVerificationsController < Api::V1::ApiController
 
   def send_otp
     @user = User.find(params[:id])
-    @user.update!(phone_number: params[:phone_number])
-    @user.set_phone_attributes
-    @user.send_sms_for_phone_verification
-    render json: "Phone number verified", success: true, status: 200
+    @user.set_phone_attributes(params[:phone_number])
+    message = PhoneVerification.new(user_id: @user.id)
+    if message.send_sms
+      render json: "Phone number verified", success: true, status: 200
+    else
+      render json: {message: "#{message.error}", status: 401}
+    end
   end
 
   private
 
   def get_user_for_phone_verification
     phone_verification_code = params['otp'].try(:strip)
-    phone_number            = params['phone'].gsub('+1', '')
-
     condition = { phone_verification_code: phone_verification_code, phone_number: phone_number }
     User.unverified_phones.where(condition).first
   end
