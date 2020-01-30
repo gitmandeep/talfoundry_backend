@@ -22,7 +22,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
           render_error( user.account_active ? 'Please confirm your email' : 'Your account temporarily blocked', 401)
         end
       else
-        render_error("Phone number not verified", 403)
+        render json: user, message: "Phone number not verified", status: 403
       end
     else
       render_error('Invalid email', 401)
