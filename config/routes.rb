@@ -38,7 +38,8 @@ Rails.application.routes.draw do
       end
 
       resources :favorites, only: [:create, :index]
-      post "phone_verifications/verify_from_message" => "phone_verifications#verify_from_message"
+      post "phone_verifications/verify_user_from_otp" => "phone_verifications#verify_user_from_otp"
+      post "phone_verifications/send_otp" => "phone_verifications#send_otp"
       get 'remove_favorited', to: "favorites#remove_favorited"
       resources :profiles
       resources :educations
