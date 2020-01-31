@@ -25,6 +25,7 @@ class Api::V1::PhoneVerificationsController < Api::V1::ApiController
 
   def get_user_for_phone_verification
     phone_verification_code = params['otp'].try(:strip)
+    phone_number = params[:phone]
     condition = { phone_verification_code: phone_verification_code, phone_number: phone_number }
     User.unverified_phones.where(condition).first
   end
