@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :uuid, :email, :first_name, :last_name, :role, :profile_created, :image_url, :call_schedule, :account_approved, :professional_profile_created, :user_profile, :full_name, :country, :country_id, :created_at, :is_security_qus_added
+  attributes :id, :uuid, :email, :first_name, :last_name, :role, :profile_created, :image_url, :call_schedule, :account_approved, :professional_profile_created, :user_profile, :full_name, :country, :country_id, :created_at, :is_security_qus_added, :number_of_jobs_posted
   #has_one :profile, serializer: ProfileSerializer
 
   def full_name
@@ -29,6 +29,12 @@ class UserSerializer < ActiveModel::Serializer
 
   def is_security_qus_added
     object.security_questions.present?
+  end
+
+  def number_of_jobs_posted
+    if current_user && current_user.is_hiring_manager?
+      object.jobs.try(:count)
+    end
   end
 
 end
