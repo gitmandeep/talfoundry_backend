@@ -16,18 +16,20 @@ class Api::V1::JobApplicationsController < Api::V1::ApiController
 
   def update
     if @job_application.update(job_application_params)
-      notify_user(@current_user.id, @job_application.user_id, @job_application.uuid, "Archive job proposal", "\"#{@job_application.job.user.display_full_name}\" has archived this job proposal", "proposal-details")
+      @job_application.archived_by = @current_user.id
+      @job_application.save!
+      notify_user(@current_user.id, @job_application.user_id, @job_application.uuid, "Archive job proposal", "\"#{@job_application.job.user.display_full_name}\" has archived your job proposal", "proposal-details")
       render json: {success: true, message: "Job Proposal archived successfully", status: :ok}
     end
   end
 
   def get_archived_proposals
     if @current_user.is_hiring_manager?
-      @archived_proposals = @current_user.jobs.joins(:job_applications).where("job_applications.archived_at is not null")
+      @archived_proposals = JobApplication.where(archived_by: @current_user.id)
     else
       @archived_proposals = @current_user.job_applications.where("archived_at is not null")
     end
-    render json: @archived_proposals, each_serializer: JobApplicationSerializer, message: "Job Proposal archived successfully", status: :ok
+    render json: @archived_proposals, each_serializer: ArchivedProposalSerializer, message: "Job Proposal archived successfully", status: :ok
   end
 
   def show
