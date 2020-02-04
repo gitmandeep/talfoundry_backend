@@ -14,6 +14,17 @@ class Api::V1::JobApplicationsController < Api::V1::ApiController
     end
   end
 
+  def update
+    if @job_application.update(job_application_params)
+      render json: {success: true, message: "Job Proposal archived successfully", status: :ok}
+    end
+  end
+
+  def get_archived_proposals
+    @archived_proposals = @current_user.jobs.joins(:job_applications).where("job_applications.archived_at is not null")
+    render json: @archived_proposals, each_serializer: JobApplicationSerializer, message: "Job Proposal archived successfully", status: :ok
+  end
+
   def show
     job_application = @job_application.present? ? @job_application : []
     render json: job_application, serializer: JobApplicationSerializer, include: 'job.**', status: :ok
@@ -38,6 +49,6 @@ class Api::V1::JobApplicationsController < Api::V1::ApiController
   end
 
   def job_application_params
-    params.require(:job_application).permit(:job_id, :cover_letter, :document, :price, job_application_answers_attributes: [:question_id, :answer, :question_label])
+    params.require(:job_application).permit(:job_id, :cover_letter, :document, :price, :archived_at, job_application_answers_attributes: [:question_id, :answer, :question_label])
   end
 end

@@ -1,5 +1,5 @@
 class JobApplicationSerializer < ActiveModel::Serializer
-	attributes :id, :uuid, :job_id, :cover_letter, :job_application_document, :price, :job_aplication_answer
+	attributes :id, :uuid, :job_id, :cover_letter, :price, :archived_at, :job_application_document, :job_aplication_answer
 	has_one :job, serializer: JobSerializer
 
 	def job_application_document
