@@ -17,7 +17,7 @@ class Api::V1::PhoneVerificationsController < Api::V1::ApiController
     if message.send_sms
       render json: "Phone number verified", success: true, status: 200
     else
-      render_error("#{messag.error}", 401)
+      render_error("#{message.error}", 401)
     end
   end
 
