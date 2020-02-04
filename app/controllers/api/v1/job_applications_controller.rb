@@ -21,7 +21,11 @@ class Api::V1::JobApplicationsController < Api::V1::ApiController
   end
 
   def get_archived_proposals
-    @archived_proposals = @current_user.jobs.joins(:job_applications).where("job_applications.archived_at is not null")
+    if @current_user.is_hiring_manager?
+      @archived_proposals = @current_user.jobs.joins(:job_applications).where("job_applications.archived_at is not null")
+    else
+      @archived_proposals = @current_user.job_applications.where("archived_at is not null")
+    end
     render json: @archived_proposals, each_serializer: JobApplicationSerializer, message: "Job Proposal archived successfully", status: :ok
   end
 
