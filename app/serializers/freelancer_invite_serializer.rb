@@ -1,5 +1,5 @@
 class FreelancerInviteSerializer < ActiveModel::Serializer
-  attributes :id, :job_uuid, :message, :created_at, :status_updated_at, :status, :job_title, :client_name
+  attributes :id, :uuid, :job_uuid, :message, :created_at, :status_updated_at, :status, :job_title, :client_name
 
   def job_title
   	object.try(:job).try(:job_title)

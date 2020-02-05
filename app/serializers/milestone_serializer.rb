@@ -1,7 +1,7 @@
 class MilestoneSerializer < ActiveModel::Serializer
-	attributes :id
-	attributes :uuid
-	attributes :description
-	attributes :due_date
-	attributes :deposite_amount
+	attributes :id, :uuid, :description, :due_date, :deposite_amount, :payment_requested?
+
+	def payment_requested?
+		object.try(:requested_payments)
+	end
 end
