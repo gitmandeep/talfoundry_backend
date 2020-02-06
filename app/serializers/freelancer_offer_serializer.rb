@@ -1,5 +1,5 @@
 class FreelancerOfferSerializer < ActiveModel::Serializer
-  attributes :id, :uuid, :title, :created_at, :time_period_limit, :status, :status_updated_at, :payment_mode, :hourly_rate, :fixed_price_amount, :contract_uniq_id, 
+  attributes :id, :uuid, :title, :created_at, :time_period_limit, :status, :status_updated_at, :payment_mode, :hourly_rate, :fixed_price_amount, :contract_uniq_id
   attributes :job_title
   attributes :client_name
   attributes :freelacer_name
