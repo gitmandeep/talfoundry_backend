@@ -56,6 +56,6 @@ class ContractSerializer < ActiveModel::Serializer
   end
 
   def escrow_amount
-    object.transaction_histories.last.try(:balance)
+    object.weekly_payment.present? ? object.weekly_payment : object.fixed_price_amount
   end
 end

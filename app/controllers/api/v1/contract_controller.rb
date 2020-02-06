@@ -16,7 +16,7 @@ class Api::V1::ContractController < Api::V1::ApiController
     @transaction_history.balance = (last_balance ? last_balance : 0) + @transaction_history.amount
     creator = ContractCreator.new(@contract, @transaction_history)
     if creator.create
-      notify_user(@contract.hired_by_id, @contract.freelancer_id, @contract.uuid, "Job offer", "You have received an offer for the job \"#{@contract.title}\" ", "offer-details")
+      notify_user(@contract.hired_by_id, @contract.freelancer_id, @contract.uuid, "Job offer", "You have received an offer for the job \"#{@contract.job.job_title}\" ", "offer-details")
       render json: {succes: true, status: 200}
     else
       render_error("Something went wrong....!", 404)
