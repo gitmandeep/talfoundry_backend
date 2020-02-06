@@ -1,21 +1,12 @@
 class FreelancerOfferSerializer < ActiveModel::Serializer
-  attributes :id
-  attributes :uuid
-  attributes :title
-  attributes :job_uuid
-  attributes :created_at
-  attributes :time_period_limit
-  attributes :status
-  attributes :status_updated_at
-  attributes :payment_mode
-  attributes :hourly_rate
-  attributes :fixed_price_amount
-  attributes :contract_uniq_id
+  attributes :id, :uuid, :title, :created_at, :time_period_limit, :status, :status_updated_at, :payment_mode, :hourly_rate, :fixed_price_amount, :contract_uniq_id, 
   attributes :job_title
   attributes :client_name
   attributes :freelacer_name
-  attributes :freelacer_country
   attributes :freelacer_picture
+  attributes :freelacer_country
+  attributes :job_uuid
+  attributes :payment_requested?
 
   has_many :milestones, serializer: MilestoneSerializer
 
@@ -40,9 +31,12 @@ class FreelancerOfferSerializer < ActiveModel::Serializer
     object.try(:freelancer).try(:profile) ? object.freelancer.profile.current_location_country : "" 
   end
 
-
   def job_uuid
     object.job.uuid
+  end
+
+  def payment_requested?
+    object.try(:requested_payments).where(status: "requested")
   end
 
 end

@@ -44,7 +44,7 @@ class Api::V1::PaymentsController < Api::V1::ApiController
   private
 
   def payment_params
-    params.require(:requested_payments).permit(:id, :user_id, :amount_requested, :contract_id, :milestone_id, :request_message)
+    params.require(:requested_payments).permit(:id, :user_id, :amount_requested, :contract_id, :milestone_id, :request_message, :status)
   end
 
 end
