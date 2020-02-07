@@ -21,8 +21,8 @@ class Api::V1::JobApplicationsController < Api::V1::ApiController
         @job_application.save!
         notify_user(@current_user.id, @job_application.user_id, @job_application.uuid, "Archive job proposal", "\"#{@job_application.job.user.display_full_name}\" has archived your job proposal", "proposal-details")
       elsif job_application_params[:status] == "withdrawal"
-        notify_user(@current_user.id, @job_application.job.user_id, @job_application.uuid, "Withdrawa job proposal", "\"#{@job_application.user.display_full_name}\" has withdrawal the job proposal", "proposal-details")
-      elsif job_application_params[:status] == "terms changed"        
+        notify_user(@current_user.id, @job_application.job.user_id, @job_application.uuid, "Withdrawa job proposal", "\"#{@job_application.user.display_full_name}\" has withdrawal the job proposal", "freelancer-proposal")
+      elsif job_application_params[:status] == "terms changed"       
         notify_user(@current_user.id, @job_application.job.user_id, @job_application.uuid, "Edit job proposal", "\"#{@job_application.user.display_full_name}\" has changed the job proposal", "proposal-details")
       end
       render json: {success: true, status: :ok}

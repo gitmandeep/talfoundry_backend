@@ -6,7 +6,7 @@ class FreelancerOfferSerializer < ActiveModel::Serializer
   attributes :freelacer_picture
   attributes :freelacer_country
   attributes :job_uuid
-  attributes :payment_requested?
+  attributes :payment_requested
 
   has_many :milestones, serializer: MilestoneSerializer
 
@@ -35,7 +35,7 @@ class FreelancerOfferSerializer < ActiveModel::Serializer
     object.job.uuid
   end
 
-  def payment_requested?
+  def payment_requested
     object.try(:requested_payments).where(status: "requested")
   end
 
