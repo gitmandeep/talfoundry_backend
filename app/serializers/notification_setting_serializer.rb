@@ -1,0 +1,3 @@
+class NotificationSettingSerializer < ActiveModel::Serializer
+  attributes :id, :uuid,:someone_sends_me_an_invitation, :a_job_is_posted_or_modified, :a_proposal_is_received, :an_interview_is_accepted_or_offer_terms_are_modified, :an_interview_or_offer_is_declined_or_withdrawan, :an_offer_is_accepted, :a_job_posting_will_expire_soon, :a_job_posting_expired, :an_interview_is_initiated, :an_offer_or_interview_invitation_is_received, :an_offer_or_interview_invitation_is_withdrawn, :a_proposal_is_rejected, :a_job_I_applied_to_has_been_cancelled_or_closed, :a_hire_is_made_or_a_contract_begins, :contract_terms_are_modified, :a_contract_ends, :payment_receipts_and_other_finacial_related_emails
+end
