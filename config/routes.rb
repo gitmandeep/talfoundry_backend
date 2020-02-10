@@ -96,6 +96,7 @@ Rails.application.routes.draw do
         end
       end
       resources :messages, only: [:create]
+      resources :notification_settings, only: [:show, :update] 
     end
   end
 

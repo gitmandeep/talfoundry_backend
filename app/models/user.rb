@@ -57,6 +57,8 @@ class User < ApplicationRecord
   has_many :security_questions, :dependent => :destroy
   accepts_nested_attributes_for :security_questions
 
+  has_one :notification_setting, :dependent => :destroy
+
   scope :unverified_phones,  -> { where(phone_verified: false) }
 
   # # user types constants
