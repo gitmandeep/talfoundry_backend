@@ -16,7 +16,12 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params)   
+    
+    # temporary added this line as twillio has only one registered phone number , will remove in future
+    @user.mark_phone_as_verified!
+    # we have to remove this line in future in order to make phone verification works
+
     if @user.role == "Project Manager"
       @user.skip_confirmation!
       @user.confirmed_at = Time.now
