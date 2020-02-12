@@ -17,16 +17,14 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def create
     @user = User.new(user_params)   
-    
-    # temporary added this line as twillio has only one registered phone number , will remove in future
-    @user.mark_phone_as_verified!
-    # we have to remove this line in future in order to make phone verification works
-
     if @user.role == "Project Manager"
       @user.skip_confirmation!
       @user.confirmed_at = Time.now
     end
     if @user.save
+      # temporary added this line as twillio has only one registered phone number , will remove in future
+      @user.mark_phone_as_verified!
+      # we have to remove this line in future in order to make phone verification works
       render json: @user, status: :created
     else
       render_error(@user.errors.full_messages, 422)
